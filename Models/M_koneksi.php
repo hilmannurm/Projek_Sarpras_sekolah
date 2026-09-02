@@ -19,7 +19,7 @@ class m_koneksi{
         );
 
         if ($this->koneksi) {
-            echo "koneksi ke database". $this->db . "berhasil";
+            //echo "koneksi ke database". $this->db . "berhasil";
             return $this->koneksi;
         } else(
             die("koneksi ke database gagal:" . mysqli_connect_error())
