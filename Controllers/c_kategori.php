@@ -1,5 +1,5 @@
 <?php
-include_once __DIR__ . '/../Models/m_kategori.php';
+require_once __DIR__ . '/../Models/m_kategori.php';
 
 $kategori = new m_kategori();
 

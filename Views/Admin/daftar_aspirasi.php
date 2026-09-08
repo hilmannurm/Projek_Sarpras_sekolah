@@ -1,296 +1,189 @@
+<?php
+require_once '../../Controllers/c_aspirasi.php';
+?>
+
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Data Aspirasi - Admin</title>
+    <title>Daftar Aspirasi</title>
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#2F7D5A',
-                        'primary-dark': '#256348',
-                        'soft-green': '#EAF5EF'
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-gray-50 text-gray-700">
+<body class="bg-gray-50">
 
-<div class="flex min-h-screen">
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white shadow-md">
 
-    <!-- SIDEBAR -->
-    <aside class="w-64 bg-white border-r border-gray-200 fixed left-0 top-0 bottom-0">
+        <!-- Logo -->
+        <div class="h-20 px-6 border-b flex items-center gap-3">
 
-        <!-- LOGO -->
-        <div class="h-20 flex items-center gap-3 px-6 border-b border-gray-100">
-
-            <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-6 h-6 text-white"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M3 21h18M5 21V5l7-3 7 3v16M9 21v-5h6v5M8 9h1m6 0h1m-8 4h1m6 0h1"/>
-
-                </svg>
-
+            <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-bullhorn text-green-600 text-lg"></i>
             </div>
 
             <div>
-                <h1 class="font-semibold text-gray-800 text-sm">
-                    Pengaduan Sarpras
+                <h1 class="font-bold text-gray-800">
+                    Pengaduan
                 </h1>
 
-                <p class="text-xs text-gray-400">
-                    Sekolah
+                <p class="text-xs text-gray-500">
+                    Sarpras Sekolah
                 </p>
             </div>
 
         </div>
 
 
-        <!-- MENU -->
-        <nav class="px-4 py-6 space-y-1">
+        <!-- Menu -->
+        <nav class="p-4">
 
-            <!-- DASHBOARD -->
+            <!-- Dashboard -->
             <a href="dashboard_admin.php"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg
-                      text-gray-600 hover:bg-soft-green hover:text-primary transition">
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-lg text-gray-600
+                       hover:bg-green-50 hover:text-green-700
+                       mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-gauge"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M3 13h8V3H3v10zm10 8h8V3h-8v18zM3 21h8v-6H3v6z"/>
-
-                </svg>
-
-                <span>Dashboard</span>
+                <span>
+                    Dashboard
+                </span>
 
             </a>
 
 
-            <!-- ASPIRASI ACTIVE -->
+            <!-- Aspirasi ACTIVE -->
             <a href="daftar_aspirasi.php"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg
-                      bg-soft-green text-primary font-medium">
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-lg bg-green-100 text-green-700
+                       font-medium mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-file-lines"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M8 10h8M8 14h5M5 4h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/>
-
-                </svg>
-
-                <span>Aspirasi</span>
+                <span>
+                    Aspirasi
+                </span>
 
             </a>
 
 
-            <!-- HISTORI -->
-            <a href="histori.php"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg
-                      text-gray-600 hover:bg-soft-green hover:text-primary transition">
+            <!-- Histori -->
+            <a href="/Projek_sapras_hilman/Controllers/c_histori.php"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-lg text-gray-600
+                       hover:bg-green-50 hover:text-green-700
+                       mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-clock-rotate-left"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M12 8v4l3 2M20 12a8 8 0 11-16 0 8 8 0 0116 0z"/>
-
-                </svg>
-
-                <span>Histori</span>
+                <span>
+                    Histori
+                </span>
 
             </a>
 
 
-            <!-- UMPAN BALIK -->
-            <a href="umpan_balik.php"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg
-                      text-gray-600 hover:bg-soft-green hover:text-primary transition">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M8 10h8M8 14h5M5 4h14a2 2 0 012 2v10a2 2 0 01-2 2h-6l-4 3v-3H5a2 2 0 01-2-2V6a2 2 0 012-2z"/>
-
-                </svg>
-
-                <span>Umpan Balik</span>
-
-            </a>
-
-
-            <!-- SISWA -->
+            <!-- Siswa -->
             <a href="daftar_siswa.php"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg
-                      text-gray-600 hover:bg-soft-green hover:text-primary transition">
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-lg text-gray-600
+                       hover:bg-green-50 hover:text-green-700
+                       mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-user-graduate"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2
-                             M9 11a4 4 0 100-8 4 4 0 000 8
-                             M19 8v6m3-3h-6"/>
-
-                </svg>
-
-                <span>Siswa</span>
+                <span>
+                    Siswa
+                </span>
 
             </a>
 
 
-            <!-- KATEGORI -->
+            <!-- Kategori -->
             <a href="kategori.php"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg
-                      text-gray-600 hover:bg-soft-green hover:text-primary transition">
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-lg text-gray-600
+                       hover:bg-green-50 hover:text-green-700
+                       mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-layer-group"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M20 13l-7 7-9-9V4h7l9 9z"/>
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M7 7h.01"/>
-
-                </svg>
-
-                <span>Kategori</span>
+                <span>
+                    Kategori
+                </span>
 
             </a>
 
 
-            <!-- LOGOUT -->
-            <div class="pt-5 mt-5 border-t border-gray-100">
+            <!-- Logout -->
+            <a href="../../Controllers/c_logout.php"
+                class="flex items-center gap-3 px-4 py-3
+                       rounded-lg text-gray-600
+                       hover:bg-red-50 hover:text-red-600
+                       mt-8">
 
-                <a href="#"
-                   class="flex items-center gap-3 px-4 py-3 rounded-lg
-                          text-gray-600 hover:bg-red-50 hover:text-red-500 transition">
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="1.8">
+                <span>
+                    Logout
+                </span>
 
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M10 17l5-5-5-5M15 12H3m12-7h4a2 2 0 012 2v10a2 2 0 01-2 2h-4"/>
-
-                    </svg>
-
-                    <span>Logout</span>
-
-                </a>
-
-            </div>
+            </a>
 
         </nav>
 
     </aside>
 
 
-    <!-- MAIN -->
-    <main class="ml-64 flex-1">
+    <!-- ================= MAIN CONTENT ================= -->
+    <main class="ml-64 min-h-screen">
 
-        <!-- HEADER -->
-        <header class="h-20 bg-white border-b border-gray-200
-                       flex items-center justify-between px-8">
+
+        <!-- ================= TOPBAR ================= -->
+        <header class="bg-white h-20 shadow-sm flex items-center justify-between px-8">
 
             <div>
 
-                <h2 class="text-lg font-semibold text-gray-800">
-                    Data Aspirasi
+                <h2 class="text-xl font-bold text-gray-800">
+                    Daftar Aspirasi
                 </h2>
 
-                <p class="text-sm text-gray-400">
-                    Kelola dan pantau seluruh pengaduan siswa
+                <p class="text-sm text-gray-500">
+                    Kelola pengaduan sarana dan prasarana sekolah
                 </p>
 
             </div>
 
 
-            <!-- ADMIN -->
+            <!-- Profile -->
             <div class="flex items-center gap-3">
 
                 <div class="text-right">
 
-                    <p class="text-sm font-medium text-gray-700">
+                    <p class="font-semibold text-gray-700">
                         Admin
                     </p>
 
-                    <p class="text-xs text-gray-400">
+                    <p class="text-xs text-gray-500">
                         Administrator
                     </p>
 
                 </div>
 
-                <div class="w-10 h-10 rounded-full bg-soft-green
-                            flex items-center justify-center">
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5 text-primary"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="1.8">
-
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M20 21a8 8 0 00-16 0M12 13a4 4 0 100-8 4 4 0 000 8z"/>
-
-                    </svg>
+                    <i class="fa-solid fa-user-shield text-green-600"></i>
 
                 </div>
 
@@ -299,244 +192,325 @@
         </header>
 
 
-        <!-- CONTENT -->
+        <!-- ================= CONTENT ================= -->
         <section class="p-8">
 
-            <!-- TITLE -->
+
+            <!-- Judul Halaman -->
             <div class="mb-6">
 
-                <h3 class="text-2xl font-semibold text-gray-800">
-                    Daftar Aspirasi
-                </h3>
+                <h1 class="text-2xl font-bold text-gray-800">
+                    Aspirasi Siswa
+                </h1>
 
-                <p class="text-sm text-gray-500 mt-1">
-                    Lihat dan kelola pengaduan sarana dan prasarana dari siswa.
+                <p class="text-gray-500 mt-1">
+                    Daftar pengaduan sarana dan prasarana yang dikirim oleh siswa.
                 </p>
 
             </div>
 
 
-            <!-- FILTER -->
-            <div class="bg-white border border-gray-200 rounded-xl p-6 mb-6">
+            <!-- ================= FILTER ================= -->
+            <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
 
-                <div class="flex items-center gap-2 mb-5">
+                <!-- Judul Filter + Reset -->
+                <div class="flex items-start justify-between mb-5">
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5 text-primary"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="1.8">
+                    <div class="flex items-center gap-3">
 
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M3 5h18M6 12h12M10 19h4"/>
+                        <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
 
-                    </svg>
+                            <i class="fa-solid fa-filter text-green-600"></i>
 
-                    <h4 class="font-semibold text-gray-800">
-                        Filter Aspirasi
-                    </h4>
+                        </div>
 
-                </div>
+                        <div>
 
+                            <h2 class="text-lg font-semibold text-gray-800">
+                                Filter Aspirasi
+                            </h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+                            <p class="text-sm text-gray-500">
+                                Saring aspirasi berdasarkan tanggal, bulan, siswa, atau kategori.
+                            </p>
 
-                    <!-- TANGGAL -->
-                    <div>
-
-                        <label class="block text-sm font-medium text-gray-600 mb-2">
-                            Tanggal
-                        </label>
-
-                        <input type="date"
-                               class="w-full border border-gray-300 rounded-lg
-                                      px-3 py-2.5 text-sm
-                                      focus:outline-none focus:ring-2
-                                      focus:ring-green-200 focus:border-primary">
+                        </div>
 
                     </div>
 
 
-                    <!-- BULAN -->
-                    <div>
+                    <!-- Reset -->
+                    <a
+                        href="daftar_aspirasi.php"
+                        class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg
+                               hover:bg-gray-200 transition">
 
-                        <label class="block text-sm font-medium text-gray-600 mb-2">
-                            Bulan
-                        </label>
-
-                        <select
-                            class="w-full border border-gray-300 rounded-lg
-                                   px-3 py-2.5 text-sm
-                                   focus:outline-none focus:ring-2
-                                   focus:ring-green-200 focus:border-primary">
-
-                            <option value="">Semua Bulan</option>
-                            <option>Januari</option>
-                            <option>Februari</option>
-                            <option>Maret</option>
-                            <option>April</option>
-                            <option>Mei</option>
-                            <option>Juni</option>
-                            <option>Juli</option>
-                            <option>Agustus</option>
-                            <option>September</option>
-                            <option>Oktober</option>
-                            <option>November</option>
-                            <option>Desember</option>
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- SISWA -->
-                    <div>
-
-                        <label class="block text-sm font-medium text-gray-600 mb-2">
-                            Siswa
-                        </label>
-
-                        <select
-                            class="w-full border border-gray-300 rounded-lg
-                                   px-3 py-2.5 text-sm
-                                   focus:outline-none focus:ring-2
-                                   focus:ring-green-200 focus:border-primary">
-
-                            <option value="">Semua Siswa</option>
-                            <option>1001 - Ahmad</option>
-                            <option>1002 - Siti</option>
-                            <option>1003 - Budi</option>
-                            <option>1004 - Rizky</option>
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- KATEGORI -->
-                    <div>
-
-                        <label class="block text-sm font-medium text-gray-600 mb-2">
-                            Kategori
-                        </label>
-
-                        <select
-                            class="w-full border border-gray-300 rounded-lg
-                                   px-3 py-2.5 text-sm
-                                   focus:outline-none focus:ring-2
-                                   focus:ring-green-200 focus:border-primary">
-
-                            <option value="">Semua Kategori</option>
-                            <option>Fasilitas</option>
-                            <option>Kelistrikan</option>
-                            <option>Kebersihan</option>
-                            <option>Air</option>
-                            <option>Teknologi</option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <!-- BUTTON -->
-                <div class="flex gap-3 mt-5">
-
-                    <button
-                        class="flex items-center gap-2 px-5 py-2.5
-                               bg-primary hover:bg-primary-dark
-                               text-white rounded-lg text-sm
-                               font-medium transition">
-
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                             class="w-4 h-4"
-                             fill="none"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor"
-                             stroke-width="1.8">
-
-                            <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  d="M21 21l-4.35-4.35m2.35-5.65a8 8 0 11-16 0 8 8 0 0116 0z"/>
-
-                        </svg>
-
-                        Terapkan Filter
-
-                    </button>
-
-
-                    <button
-                        class="px-5 py-2.5 border border-gray-300
-                               text-gray-600 rounded-lg text-sm
-                               hover:bg-gray-50 transition">
-
+                        <i class="fa-solid fa-rotate-left mr-2"></i>
                         Reset
 
-                    </button>
+                    </a>
 
                 </div>
+
+
+                <!-- Form Filter -->
+                <form action="daftar_aspirasi.php" method="GET">
+
+                    <div class="flex items-end gap-4">
+
+
+                        <!-- Filter Tanggal -->
+                        <div class="flex-1">
+
+                            <label class="block mb-2 text-sm font-medium text-gray-700">
+                                Tanggal
+                            </label>
+
+                            <input
+                                type="date"
+                                name="tanggal"
+                                value="<?= htmlspecialchars($tanggal); ?>"
+                                class="w-full border border-gray-300 rounded-lg
+                                       px-3 py-2.5
+                                       focus:outline-none focus:ring-2
+                                       focus:ring-green-500">
+
+                        </div>
+
+
+                        <!-- Filter Bulan -->
+                        <div class="flex-1">
+
+                            <label class="block mb-2 text-sm font-medium text-gray-700">
+                                Bulan
+                            </label>
+
+                            <select
+                                name="bulan"
+                                class="w-full border border-gray-300 rounded-lg
+                                       px-3 py-2.5
+                                       focus:outline-none focus:ring-2
+                                       focus:ring-green-500">
+
+                                <option value="">
+                                    Semua Bulan
+                                </option>
+
+                                <option value="1">
+                                    Januari
+                                </option>
+
+                                <option value="2">
+                                    Februari
+                                </option>
+
+                                <option value="3">
+                                    Maret
+                                </option>
+
+                                <option value="4">
+                                    April
+                                </option>
+
+                                <option value="5">
+                                    Mei
+                                </option>
+
+                                <option value="6">
+                                    Juni
+                                </option>
+
+                                <option value="7">
+                                    Juli
+                                </option>
+
+                                <option value="8">
+                                    Agustus
+                                </option>
+
+                                <option value="9">
+                                    September
+                                </option>
+
+                                <option value="10">
+                                    Oktober
+                                </option>
+
+                                <option value="11">
+                                    November
+                                </option>
+
+                                <option value="12">
+                                    Desember
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Filter Siswa -->
+                        <div class="flex-1">
+
+                            <label class="block mb-2 text-sm font-medium text-gray-700">
+                                Siswa
+                            </label>
+
+                            <select
+                                name="id_siswa"
+                                class="w-full border border-gray-300 rounded-lg
+                                       px-3 py-2.5
+                                       focus:outline-none focus:ring-2
+                                       focus:ring-green-500">
+
+                                <option value="">
+                                    Semua Siswa
+                                </option>
+
+                                <?php foreach ($data_siswa as $s) : ?>
+
+                                    <option value="<?= $s->id_siswa; ?>">
+
+                                        <?= htmlspecialchars($s->nama_siswa); ?>
+
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Filter Kategori -->
+                        <div class="flex-1">
+
+                            <label class="block mb-2 text-sm font-medium text-gray-700">
+                                Kategori
+                            </label>
+
+                            <select
+                                name="id_kategori"
+                                class="w-full border border-gray-300 rounded-lg
+                                       px-3 py-2.5
+                                       focus:outline-none focus:ring-2
+                                       focus:ring-green-500">
+
+                                <option value="">
+                                    Semua Kategori
+                                </option>
+
+                                <?php foreach ($data_kategori as $k) : ?>
+
+                                    <option value="<?= $k->id_kategori; ?>">
+
+                                        <?= htmlspecialchars($k->nama_kategori); ?>
+
+                                    </option>
+
+                                <?php endforeach; ?>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Terapkan -->
+                        <button
+                            type="submit"
+                            class="px-5 py-2.5
+                                   bg-green-600
+                                   hover:bg-green-700
+                                   text-white
+                                   rounded-lg
+                                   font-medium
+                                   transition
+                                   whitespace-nowrap">
+
+                            <i class="fa-solid fa-filter mr-2"></i>
+                            Terapkan
+
+                        </button>
+
+                    </div>
+
+                </form>
 
             </div>
 
 
-            <!-- TABLE -->
-            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <!-- ================= TABLE ================= -->
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
 
-                <!-- TABLE HEADER -->
-                <div class="px-6 py-5 border-b border-gray-200">
 
-                    <h4 class="font-semibold text-gray-800">
-                        Seluruh Aspirasi
-                    </h4>
+                <!-- Header Card -->
+                <div class="px-6 py-5 border-b">
 
-                    <p class="text-sm text-gray-400 mt-1">
-                        Data pengaduan yang disampaikan oleh siswa
-                    </p>
+                    <div class="flex items-center justify-between">
+
+                        <div>
+
+                            <h2 class="text-lg font-semibold text-gray-800">
+                                Daftar Aspirasi
+                            </h2>
+
+                            <p class="text-sm text-gray-500 mt-1">
+                                Kelola dan tanggapi aspirasi siswa.
+                            </p>
+
+                        </div>
+
+
+                        <!-- Icon -->
+                        <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
+
+                            <i class="fa-solid fa-file-lines text-green-600"></i>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
 
+                <!-- Table -->
                 <div class="overflow-x-auto">
 
                     <table class="w-full text-sm">
 
-                        <thead class="bg-gray-50 text-gray-500">
+                        <thead class="bg-gray-50 border-b">
 
                             <tr>
 
-                                <th class="text-left px-6 py-4 font-medium">
+                                <th class="px-6 py-4 text-left font-semibold text-gray-600">
                                     No
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
+                                <th class="px-6 py-4 text-left font-semibold text-gray-600">
                                     Siswa
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
-                                    Judul
-                                </th>
-
-                                <th class="text-left px-6 py-4 font-medium">
+                                <th class="px-6 py-4 text-left font-semibold text-gray-600">
                                     Kategori
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
-                                    Prioritas
+                                <th class="px-6 py-4 text-left font-semibold text-gray-600">
+                                    Judul Laporan
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
+                                <th class="px-6 py-4 text-left font-semibold text-gray-600">
+                                    Lokasi
+                                </th>
+
+                                <th class="px-6 py-4 text-left font-semibold text-gray-600">
                                     Tanggal
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
+                                <th class="px-6 py-4 text-left font-semibold text-gray-600">
                                     Status
                                 </th>
 
-                                <th class="text-center px-6 py-4 font-medium">
+                                <th class="px-6 py-4 text-center font-semibold text-gray-600">
                                     Aksi
                                 </th>
 
@@ -545,301 +519,238 @@
                         </thead>
 
 
-                        <tbody class="divide-y divide-gray-100">
+                        <tbody class="divide-y">
 
-                            <!-- DATA 1 -->
-                            <tr class="hover:bg-gray-50">
+                            <?php if (!empty($aspirasis)) : ?>
 
-                                <td class="px-6 py-4">
-                                    1
-                                </td>
+                                <?php
+                                $no = 1;
 
-                                <td class="px-6 py-4 font-medium">
-                                    Ahmad
-                                </td>
+                                while ($data = mysqli_fetch_object($aspirasis)) :
+                                ?>
 
-                                <td class="px-6 py-4">
-                                    Lampu Kelas Mati
-                                </td>
+                                    <tr class="hover:bg-gray-50">
 
-                                <td class="px-6 py-4">
-                                    Kelistrikan
-                                </td>
 
-                                <td class="px-6 py-4">
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-red-50 text-red-600">
-                                        Tinggi
-                                    </span>
-                                </td>
+                                        <!-- No -->
+                                        <td class="px-6 py-4 text-gray-600">
 
-                                <td class="px-6 py-4 text-gray-500">
-                                    25-08-2026
-                                </td>
+                                            <?= $no++; ?>
 
-                                <td class="px-6 py-4">
+                                        </td>
 
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-blue-50 text-blue-600">
-                                        Diproses
-                                    </span>
 
-                                </td>
+                                        <!-- Siswa -->
+                                        <td class="px-6 py-4">
 
-                                <td class="px-6 py-4">
+                                            <div>
 
-                                    <div class="flex justify-center gap-2">
+                                                <p class="font-semibold text-gray-800">
 
-                                        <!-- DETAIL -->
-                                        <button
-                                            title="Lihat Detail"
-                                            class="w-9 h-9 rounded-lg
-                                                   bg-gray-100 text-gray-600
-                                                   hover:bg-gray-200
-                                                   flex items-center justify-center">
+                                                    <?= htmlspecialchars($data->nama_siswa); ?>
 
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="w-4 h-4"
-                                                 fill="none"
-                                                 viewBox="0 0 24 24"
-                                                 stroke="currentColor"
-                                                 stroke-width="1.8">
+                                                </p>
 
-                                                <path stroke-linecap="round"
-                                                      stroke-linejoin="round"
-                                                      d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/>
+                                                <p class="text-xs text-gray-500 mt-1">
 
-                                                <circle cx="12"
-                                                        cy="12"
-                                                        r="2.5"/>
+                                                    NIS:
+                                                    <?= htmlspecialchars($data->nis); ?>
 
-                                            </svg>
+                                                </p>
 
-                                        </button>
+                                                <p class="text-xs text-gray-500">
 
+                                                    Kelas:
+                                                    <?= htmlspecialchars($data->kelas); ?>
 
-                                        <!-- PROSES -->
-                                        <button
-                                            title="Proses Aspirasi"
-                                            class="w-9 h-9 rounded-lg
-                                                   bg-soft-green text-primary
-                                                   hover:bg-green-100
-                                                   flex items-center justify-center">
+                                                </p>
 
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="w-4 h-4"
-                                                 fill="none"
-                                                 viewBox="0 0 24 24"
-                                                 stroke="currentColor"
-                                                 stroke-width="1.8">
+                                            </div>
 
-                                                <path stroke-linecap="round"
-                                                      stroke-linejoin="round"
-                                                      d="M12 3v18M3 12h18"/>
+                                        </td>
 
-                                            </svg>
 
-                                        </button>
+                                        <!-- Kategori -->
+                                        <td class="px-6 py-4">
 
-                                    </div>
+                                            <span
+                                                class="inline-flex items-center
+                                                       px-3 py-1
+                                                       rounded-full
+                                                       bg-gray-100
+                                                       text-gray-700
+                                                       text-xs
+                                                       font-medium">
 
-                                </td>
+                                                <?= htmlspecialchars($data->nama_kategori); ?>
 
-                            </tr>
+                                            </span>
 
+                                        </td>
 
-                            <!-- DATA 2 -->
-                            <tr class="hover:bg-gray-50">
 
-                                <td class="px-6 py-4">
-                                    2
-                                </td>
+                                        <!-- Judul -->
+                                        <td class="px-6 py-4">
 
-                                <td class="px-6 py-4 font-medium">
-                                    Siti
-                                </td>
+                                            <p class="font-medium text-gray-800">
 
-                                <td class="px-6 py-4">
-                                    Kursi Rusak
-                                </td>
+                                                <?= htmlspecialchars($data->judul_laporan); ?>
 
-                                <td class="px-6 py-4">
-                                    Fasilitas
-                                </td>
+                                            </p>
 
-                                <td class="px-6 py-4">
+                                        </td>
 
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-yellow-50 text-yellow-600">
-                                        Sedang
-                                    </span>
 
-                                </td>
+                                        <!-- Lokasi -->
+                                        <td class="px-6 py-4 text-gray-600">
 
-                                <td class="px-6 py-4 text-gray-500">
-                                    26-08-2026
-                                </td>
+                                            <?= htmlspecialchars($data->lokasi); ?>
 
-                                <td class="px-6 py-4">
+                                        </td>
 
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-yellow-50 text-yellow-600">
-                                        Diperbaiki
-                                    </span>
 
-                                </td>
+                                        <!-- Tanggal -->
+                                        <td class="px-6 py-4 text-gray-600">
 
-                                <td class="px-6 py-4">
+                                            <?= date(
+                                                'd-m-Y',
+                                                strtotime($data->tanggal_dikirim)
+                                            ); ?>
 
-                                    <div class="flex justify-center">
+                                        </td>
 
-                                        <button
-                                            title="Lihat Detail"
-                                            class="w-9 h-9 rounded-lg
-                                                   bg-gray-100 text-gray-600
-                                                   hover:bg-gray-200
-                                                   flex items-center justify-center">
 
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="w-4 h-4"
-                                                 fill="none"
-                                                 viewBox="0 0 24 24"
-                                                 stroke="currentColor"
-                                                 stroke-width="1.8">
+                                        <!-- Status -->
+                                        <td class="px-6 py-4">
 
-                                                <path stroke-linecap="round"
-                                                      stroke-linejoin="round"
-                                                      d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/>
+                                            <?php if ($data->status == 'diproses') : ?>
 
-                                                <circle cx="12"
-                                                        cy="12"
-                                                        r="2.5"/>
+                                                <span
+                                                    class="inline-flex items-center
+                                                           px-3 py-1
+                                                           rounded-full
+                                                           bg-yellow-100
+                                                           text-yellow-700
+                                                           text-xs
+                                                           font-medium">
 
-                                            </svg>
+                                                    Diproses
 
-                                        </button>
+                                                </span>
 
-                                    </div>
+                                            <?php elseif ($data->status == 'diperbaiki') : ?>
 
-                                </td>
+                                                <span
+                                                    class="inline-flex items-center
+                                                           px-3 py-1
+                                                           rounded-full
+                                                           bg-orange-100
+                                                           text-orange-700
+                                                           text-xs
+                                                           font-medium">
 
-                            </tr>
+                                                    Diperbaiki
 
+                                                </span>
 
-                            <!-- DATA 3 -->
-                            <tr class="hover:bg-gray-50">
+                                            <?php elseif ($data->status == 'selesai') : ?>
 
-                                <td class="px-6 py-4">
-                                    3
-                                </td>
+                                                <span
+                                                    class="inline-flex items-center
+                                                           px-3 py-1
+                                                           rounded-full
+                                                           bg-green-100
+                                                           text-green-700
+                                                           text-xs
+                                                           font-medium">
 
-                                <td class="px-6 py-4 font-medium">
-                                    Budi
-                                </td>
+                                                    Selesai
 
-                                <td class="px-6 py-4">
-                                    Keran Air Bocor
-                                </td>
+                                                </span>
 
-                                <td class="px-6 py-4">
-                                    Air
-                                </td>
+                                            <?php endif; ?>
 
-                                <td class="px-6 py-4">
+                                        </td>
 
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-red-50 text-red-600">
-                                        Tinggi
-                                    </span>
 
-                                </td>
+                                        <!-- Aksi -->
+                                        <td class="px-6 py-4 text-center">
 
-                                <td class="px-6 py-4 text-gray-500">
-                                    26-08-2026
-                                </td>
+                                            <a
+                                                href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
+                                                class="inline-flex items-center gap-2
+                                                       px-4 py-2
+                                                       bg-green-600
+                                                       hover:bg-green-700
+                                                       text-white
+                                                       rounded-lg
+                                                       text-sm
+                                                       font-medium
+                                                       transition">
 
-                                <td class="px-6 py-4">
+                                                <i class="fa-solid fa-reply"></i>
 
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-green-50 text-green-600">
-                                        Selesai
-                                    </span>
+                                                Tanggapi
 
-                                </td>
+                                            </a>
 
-                                <td class="px-6 py-4">
+                                        </td>
 
-                                    <div class="flex justify-center">
+                                    </tr>
 
-                                        <button
-                                            title="Lihat Detail"
-                                            class="w-9 h-9 rounded-lg
-                                                   bg-gray-100 text-gray-600
-                                                   hover:bg-gray-200
-                                                   flex items-center justify-center">
+                                <?php endwhile; ?>
 
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="w-4 h-4"
-                                                 fill="none"
-                                                 viewBox="0 0 24 24"
-                                                 stroke="currentColor"
-                                                 stroke-width="1.8">
+                            <?php else : ?>
 
-                                                <path stroke-linecap="round"
-                                                      stroke-linejoin="round"
-                                                      d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/>
+                                <!-- Data kosong -->
+                                <tr>
 
-                                                <circle cx="12"
-                                                        cy="12"
-                                                        r="2.5"/>
+                                    <td
+                                        colspan="8"
+                                        class="px-6 py-12 text-center">
 
-                                            </svg>
+                                        <div class="flex flex-col items-center">
 
-                                        </button>
+                                            <div
+                                                class="w-14 h-14 rounded-full
+                                                       bg-gray-100
+                                                       flex items-center
+                                                       justify-center
+                                                       mb-4">
 
-                                    </div>
+                                                <i
+                                                    class="fa-solid fa-file-circle-xmark
+                                                           text-gray-400
+                                                           text-xl">
+                                                </i>
 
-                                </td>
+                                            </div>
 
-                            </tr>
+
+                                            <h3 class="font-semibold text-gray-700">
+
+                                                Belum ada aspirasi
+
+                                            </h3>
+
+
+                                            <p class="text-sm text-gray-500 mt-1">
+
+                                                Belum ada pengaduan yang dikirim oleh siswa.
+
+                                            </p>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            <?php endif; ?>
 
                         </tbody>
 
                     </table>
-
-                </div>
-
-
-                <!-- PAGINATION -->
-                <div class="px-6 py-4 border-t border-gray-200
-                            flex items-center justify-between">
-
-                    <p class="text-sm text-gray-500">
-                        Menampilkan 1–3 dari 3 aspirasi
-                    </p>
-
-                    <div class="flex gap-1">
-
-                        <button
-                            class="px-3 py-2 border border-gray-200
-                                   rounded-lg text-sm text-gray-400">
-                            Sebelumnya
-                        </button>
-
-                        <button
-                            class="px-3 py-2 rounded-lg text-sm
-                                   bg-primary text-white">
-                            1
-                        </button>
-
-                        <button
-                            class="px-3 py-2 border border-gray-200
-                                   rounded-lg text-sm text-gray-600
-                                   hover:bg-gray-50">
-                            Berikutnya
-                        </button>
-
-                    </div>
 
                 </div>
 
@@ -849,7 +760,6 @@
 
     </main>
 
-</div>
-
 </body>
+
 </html>

@@ -1,21 +1,33 @@
+<?php
+session_start();
+
+require_once '../../Models/m_kategori.php';
+
+$kategori = new m_kategori();
+$data_kategori = $kategori->tampil_kategori();
+?>
+
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Ajukan Pengaduan - Pengaduan Sarpras</title>
+    <title>Buat Aspirasi</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#2F7D5A',
-                        'primary-dark': '#256348',
-                        'soft-green': '#EAF5EF'
+                        primary: '#15803d',
+                        'soft-green': '#f0fdf4'
                     }
                 }
             }
@@ -23,45 +35,25 @@
     </script>
 </head>
 
-<body class="bg-gray-50 text-gray-700">
-
-<div class="flex min-h-screen">
+<body class="bg-gray-50">
 
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-white border-r border-gray-200
-                  fixed left-0 top-0 bottom-0">
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200">
 
         <!-- LOGO -->
-        <div class="h-20 flex items-center gap-3 px-6
-                    border-b border-gray-100">
+        <div class="h-20 px-6 border-b border-gray-200 flex items-center gap-3">
 
-            <div class="w-10 h-10 rounded-xl bg-primary
-                        flex items-center justify-center">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-6 h-6 text-white"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M3 21h18M5 21V5l7-3 7 3v16
-                             M9 21v-5h6v5M8 9h1m6 0h1
-                             m-8 4h1m6 0h1"/>
-
-                </svg>
-
+            <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-bullhorn text-green-600 text-lg"></i>
             </div>
 
             <div>
-                <h1 class="font-semibold text-gray-800 text-sm">
-                    Pengaduan Sarpras
+                <h1 class="font-bold text-gray-800">
+                    Pengaduan
                 </h1>
 
-                <p class="text-xs text-gray-400">
-                    Sekolah
+                <p class="text-xs text-gray-500">
+                    Sarpras Sekolah
                 </p>
             </div>
 
@@ -69,141 +61,54 @@
 
 
         <!-- MENU -->
-        <nav class="px-4 py-6 space-y-1">
+        <nav class="p-4">
 
-            <!-- DASHBOARD -->
             <a href="dashboard_siswa.php"
-               class="flex items-center gap-3 px-4 py-3
-                      rounded-lg text-gray-600
-                      hover:bg-soft-green hover:text-primary">
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-gauge"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M3 13h8V3H3v10zm10 8h8V3h-8v18z
-                             M3 21h8v-6H3v6z"/>
-
-                </svg>
-
-                <span>Dashboard</span>
+                <span>
+                    Dashboard
+                </span>
 
             </a>
 
 
-            <!-- PENGADUAN SAYA -->
-            <a href="pengaduan.php"
-               class="flex items-center gap-3 px-4 py-3
-                      rounded-lg text-gray-600
-                      hover:bg-soft-green hover:text-primary">
+            <a href="daftar_aspirasi.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-file-lines"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M8 10h8M8 14h5M5 4h14a2
-                             2 0 012 2v12a2 2 0
-                             01-2 2H5a2 2 0
-                             01-2-2V6a2 2
-                             0 012-2z"/>
-
-                </svg>
-
-                <span>Pengaduan Saya</span>
+                <span>
+                    Aspirasi Saya
+                </span>
 
             </a>
 
 
-            <!-- AJUKAN PENGADUAN ACTIVE -->
             <a href="tambah_pengaduan.php"
-               class="flex items-center gap-3 px-4 py-3
-                      rounded-lg bg-soft-green text-primary
-                      font-medium">
+                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-100 text-green-700 font-medium mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-plus"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M12 5v14M5 12h14"/>
-
-                </svg>
-
-                <span>Ajukan Pengaduan</span>
+                <span>
+                    Buat Aspirasi
+                </span>
 
             </a>
 
 
-            <!-- UMPAN BALIK -->
-            <a href="umpan_balik_siswa.php"
-               class="flex items-center gap-3 px-4 py-3
-                      rounded-lg text-gray-600
-                      hover:bg-soft-green hover:text-primary">
+            <a href="../../Controllers/c_logout.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M8 10h8M8 14h5M5 4h14a2
-                             2 0 012 2v10a2 2 0
-                             01-2 2h-6l-4 3v-3H5a2
-                             2 0 01-2-2V6a2 2
-                             0 012-2z"/>
-
-                </svg>
-
-                <span>Umpan Balik</span>
+                <span>
+                    Logout
+                </span>
 
             </a>
-
-
-            <!-- LOGOUT -->
-            <div class="pt-5 mt-5 border-t border-gray-100">
-
-                <a href="#"
-                   class="flex items-center gap-3 px-4 py-3
-                          rounded-lg text-gray-600
-                          hover:bg-red-50 hover:text-red-500">
-
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="1.8">
-
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M10 17l5-5-5-5M15 12H3
-                                 m12-7h4a2 2 0 012 2v10a2
-                                 2 0 01-2 2h-4"/>
-
-                    </svg>
-
-                    <span>Logout</span>
-
-                </a>
-
-            </div>
 
         </nav>
 
@@ -211,20 +116,21 @@
 
 
     <!-- MAIN -->
-    <main class="ml-64 flex-1">
+    <main class="ml-64 min-h-screen">
 
         <!-- HEADER -->
-        <header class="h-20 bg-white border-b border-gray-200
-                       flex items-center justify-between px-8">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8">
 
             <div>
+
                 <h2 class="text-lg font-semibold text-gray-800">
-                    Ajukan Pengaduan
+                    Buat Aspirasi
                 </h2>
 
                 <p class="text-sm text-gray-400">
-                    Sampaikan masalah sarana dan prasarana sekolah.
+                    Sampaikan laporan mengenai sarana dan prasarana sekolah
                 </p>
+
             </div>
 
 
@@ -234,32 +140,18 @@
                 <div class="text-right">
 
                     <p class="text-sm font-medium text-gray-700">
-                        Ahmad Fauzan
+                        <?= htmlspecialchars($_SESSION['nama_siswa']); ?>
                     </p>
 
                     <p class="text-xs text-gray-400">
-                        XI RPL 1
+                        NIS <?= htmlspecialchars($_SESSION['nis']); ?>
                     </p>
 
                 </div>
 
-                <div class="w-10 h-10 rounded-full bg-soft-green
-                            flex items-center justify-center">
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5 text-primary"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="1.8">
-
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M20 21a8 8 0 00-16 0
-                                 M12 13a4 4 0 100-8
-                                 4 4 0 000 8z"/>
-
-                    </svg>
+                    <i class="fa-solid fa-user text-green-600"></i>
 
                 </div>
 
@@ -271,228 +163,153 @@
         <!-- CONTENT -->
         <section class="p-8">
 
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-4xl">
 
                 <!-- TITLE -->
                 <div class="mb-6">
 
-                    <h3 class="text-2xl font-semibold text-gray-800">
-                        Form Pengaduan
+                    <h3 class="text-xl font-semibold text-gray-800">
+                        Form Aspirasi
                     </h3>
 
                     <p class="text-sm text-gray-500 mt-1">
-                        Isi informasi pengaduan dengan jelas agar
-                        dapat segera ditangani.
+                        Isi data laporan dengan lengkap agar dapat segera ditindaklanjuti.
                     </p>
 
                 </div>
 
 
-                <!-- FORM CARD -->
-                <div class="bg-white border border-gray-200
-                            rounded-xl p-7">
+                <!-- FORM -->
+                <div class="bg-white rounded-xl border border-gray-200">
 
-                    <form action="#" method="POST"
-                          enctype="multipart/form-data">
+                    <form action="../../Controllers/c_aspirasi.php?aksi=tambah"
+                        method="POST"
+                        enctype="multipart/form-data">
 
-                        <!-- KATEGORI -->
-                        <div class="mb-5">
 
-                            <label class="block text-sm font-medium
-                                          text-gray-700 mb-2">
+                        <!-- ID SISWA -->
+                        <input type="hidden"
+                            name="id_siswa"
+                            value="<?= $_SESSION['id_siswa']; ?>">
 
-                                Kategori Pengaduan
 
-                                <span class="text-red-500">*</span>
+                        <div class="p-6 space-y-6">
 
-                            </label>
 
-                            <select name="id_kategori"
+                            <!-- KATEGORI -->
+                            <div>
+
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Kategori
+                                </label>
+
+                                <select name="id_kategori"
                                     required
-                                    class="w-full px-4 py-3 border
-                                           border-gray-200 rounded-lg
-                                           text-sm bg-white
-                                           focus:outline-none
-                                           focus:ring-2
-                                           focus:ring-primary/20
-                                           focus:border-primary">
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
 
-                                <option value="">
-                                    Pilih kategori
-                                </option>
+                                    <option value="">
+                                        Pilih kategori
+                                    </option>
 
-                                <option value="1">
-                                    Fasilitas
-                                </option>
+                                    <?php while ($data = mysqli_fetch_object($data_kategori)) : ?>
 
-                                <option value="2">
-                                    Kelistrikan
-                                </option>
+                                        <option value="<?= $data->id_kategori; ?>">
+                                            <?= htmlspecialchars($data->nama_kategori); ?>
+                                        </option>
 
-                                <option value="3">
-                                    Kebersihan
-                                </option>
+                                    <?php endwhile; ?>
 
-                                <option value="4">
-                                    Air
-                                </option>
+                                </select>
 
-                                <option value="5">
-                                    Keamanan
-                                </option>
-
-                                <option value="6">
-                                    Lainnya
-                                </option>
-
-                            </select>
-
-                            <p class="text-xs text-gray-400 mt-1.5">
-                                Pilih kategori yang sesuai dengan masalah.
-                            </p>
-
-                        </div>
+                            </div>
 
 
-                        <!-- JUDUL -->
-                        <div class="mb-5">
+                            <!-- JUDUL -->
+                            <div>
 
-                            <label class="block text-sm font-medium
-                                          text-gray-700 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Judul Laporan
+                                </label>
 
-                                Judul Pengaduan
+                                <input type="text"
+                                    name="judul_laporan"
+                                    required
+                                    placeholder="Contoh: Keran air toilet rusak"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
 
-                                <span class="text-red-500">*</span>
-
-                            </label>
-
-                            <input type="text"
-                                   name="judul"
-                                   required
-                                   placeholder="Contoh: Lampu kelas mati"
-                                   class="w-full px-4 py-3 border
-                                          border-gray-200 rounded-lg
-                                          text-sm
-                                          focus:outline-none
-                                          focus:ring-2
-                                          focus:ring-primary/20
-                                          focus:border-primary">
-
-                        </div>
+                            </div>
 
 
-                        <!-- LOKASI -->
-                        <div class="mb-5">
+                            <!-- KETERANGAN -->
+                            <div>
 
-                            <label class="block text-sm font-medium
-                                          text-gray-700 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Keterangan
+                                </label>
 
-                                Lokasi
+                                <textarea name="keterangan"
+                                    rows="5"
+                                    required
+                                    placeholder="Jelaskan kondisi atau masalah sarana dan prasarana yang ingin dilaporkan..."
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"></textarea>
 
-                                <span class="text-red-500">*</span>
-
-                            </label>
-
-                            <input type="text"
-                                   name="lokasi"
-                                   required
-                                   placeholder="Contoh: Ruang XI RPL 1"
-                                   class="w-full px-4 py-3 border
-                                          border-gray-200 rounded-lg
-                                          text-sm
-                                          focus:outline-none
-                                          focus:ring-2
-                                          focus:ring-primary/20
-                                          focus:border-primary">
-
-                        </div>
+                            </div>
 
 
-                        <!-- ISI PENGADUAN -->
-                        <div class="mb-5">
+                            <!-- LOKASI -->
+                            <div>
 
-                            <label class="block text-sm font-medium
-                                          text-gray-700 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Lokasi
+                                </label>
 
-                                Isi Pengaduan
+                                <input type="text"
+                                    name="lokasi"
+                                    required
+                                    placeholder="Contoh: Toilet lantai 2"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
 
-                                <span class="text-red-500">*</span>
-
-                            </label>
-
-                            <textarea name="isi_pengaduan"
-                                      rows="6"
-                                      required
-                                      placeholder="Jelaskan masalah sarana atau prasarana yang ditemukan..."
-                                      class="w-full px-4 py-3 border
-                                             border-gray-200 rounded-lg
-                                             text-sm resize-none
-                                             focus:outline-none
-                                             focus:ring-2
-                                             focus:ring-primary/20
-                                             focus:border-primary"></textarea>
-
-                            <p class="text-xs text-gray-400 mt-1.5">
-                                Jelaskan masalah secara jelas dan lengkap.
-                            </p>
-
-                        </div>
+                            </div>
 
 
-                        <!-- FOTO -->
-                        <div class="mb-7">
+                            <!-- FOTO -->
+                            <div>
 
-                            <label class="block text-sm font-medium
-                                          text-gray-700 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Bukti Foto
+                                </label>
 
-                                Foto Bukti
+                                <div class="border border-dashed border-gray-300 rounded-lg p-5">
 
-                                <span class="text-gray-400">
-                                    (Opsional)
-                                </span>
+                                    <div class="flex items-center gap-3">
 
-                            </label>
+                                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
 
-                            <div class="border-2 border-dashed
-                                        border-gray-200 rounded-lg
-                                        p-6 text-center
-                                        hover:border-primary
-                                        transition">
+                                            <i class="fa-solid fa-image text-green-600"></i>
 
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     class="w-8 h-8 mx-auto
-                                            text-gray-400 mb-2"
-                                     fill="none"
-                                     viewBox="0 0 24 24"
-                                     stroke="currentColor"
-                                     stroke-width="1.5">
+                                        </div>
 
-                                    <path stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          d="M4 16l4.586-4.586a2
-                                             2 0 012.828 0L16
-                                             16m-2-2l1.586-1.586a2
-                                             2 0 012.828 0L20
-                                             14M4 19h16a1 1 0
-                                             001-1V6a1 1 0
-                                             00-1-1H4a1 1 0
-                                             00-1 1v12a1 1 0
-                                             001 1z"/>
+                                        <div>
 
-                                </svg>
+                                            <p class="text-sm font-medium text-gray-700">
+                                                Upload foto kondisi sarana
+                                            </p>
 
-                                <p class="text-sm text-gray-500">
-                                    Pilih foto bukti pengaduan
-                                </p>
+                                            <p class="text-xs text-gray-400 mt-1">
+                                                Pilih foto yang sesuai dengan laporan
+                                            </p>
 
-                                <p class="text-xs text-gray-400 mt-1">
-                                    JPG, JPEG atau PNG
-                                </p>
+                                        </div>
 
-                                <input type="file"
-                                       name="foto"
-                                       accept=".jpg,.jpeg,.png"
-                                       class="mt-4 text-sm">
+                                    </div>
+
+                                    <input type="file"
+                                        name="bukti_foto"
+                                        accept="image/*"
+                                        required
+                                        class="mt-4 block w-full text-sm text-gray-500">
+
+                                </div>
 
                             </div>
 
@@ -500,30 +317,22 @@
 
 
                         <!-- BUTTON -->
-                        <div class="flex items-center justify-end
-                                    gap-3 border-t border-gray-100
-                                    pt-5">
+                        <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-3">
 
-                            <button type="button"
-                                    class="px-5 py-2.5 border
-                                           border-gray-200
-                                           rounded-lg text-sm
-                                           text-gray-600
-                                           hover:bg-gray-50">
+                            <a href="dashboard_siswa.php"
+                                class="px-4 py-2.5 border border-gray-300 text-gray-600 hover:bg-gray-100 rounded-lg text-sm font-medium transition">
 
                                 Batal
 
-                            </button>
+                            </a>
 
 
                             <button type="submit"
-                                    class="px-5 py-2.5 bg-primary
-                                           hover:bg-primary-dark
-                                           text-white rounded-lg
-                                           text-sm font-medium
-                                           transition">
+                                class="inline-flex items-center gap-2 px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition">
 
-                                Kirim Pengaduan
+                                <i class="fa-solid fa-paper-plane"></i>
+
+                                Kirim Aspirasi
 
                             </button>
 
@@ -539,7 +348,6 @@
 
     </main>
 
-</div>
-
 </body>
+
 </html>

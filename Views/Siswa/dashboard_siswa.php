@@ -1,21 +1,28 @@
+<?php
+require_once '../../Controllers/c_dashboard_siswa.php';
+?>
+
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard Siswa - Pengaduan Sarpras</title>
+    <title>Dashboard Siswa</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#2F7D5A',
-                        'primary-dark': '#256348',
-                        'soft-green': '#EAF5EF'
+                        primary: '#15803d',
+                        'soft-green': '#f0fdf4'
                     }
                 }
             }
@@ -23,186 +30,84 @@
     </script>
 </head>
 
-<body class="bg-gray-50 text-gray-700">
-
-<div class="flex min-h-screen">
+<body class="bg-gray-50">
 
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-white border-r border-gray-200
-                  fixed left-0 top-0 bottom-0">
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-gray-200">
 
         <!-- LOGO -->
-        <div class="h-20 flex items-center gap-3 px-6
-                    border-b border-gray-100">
+        <div class="h-20 px-6 border-b border-gray-200 flex items-center gap-3">
 
-            <div class="w-10 h-10 rounded-xl bg-primary
-                        flex items-center justify-center">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-6 h-6 text-white"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M3 21h18M5 21V5l7-3 7 3v16
-                             M9 21v-5h6v5M8 9h1m6 0h1
-                             m-8 4h1m6 0h1"/>
-
-                </svg>
-
+            <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-bullhorn text-green-600 text-lg"></i>
             </div>
 
             <div>
-
-                <h1 class="font-semibold text-gray-800 text-sm">
-                    Pengaduan Sarpras
+                <h1 class="font-bold text-gray-800">
+                    Pengaduan
                 </h1>
 
-                <p class="text-xs text-gray-400">
-                    Sekolah
+                <p class="text-xs text-gray-500">
+                    Sarpras Sekolah
                 </p>
-
             </div>
 
         </div>
 
 
         <!-- MENU -->
-        <nav class="px-4 py-6 space-y-1">
+        <nav class="p-4">
 
-            <!-- DASHBOARD ACTIVE -->
+            <!-- DASHBOARD -->
             <a href="dashboard_siswa.php"
-               class="flex items-center gap-3 px-4 py-3
-                      rounded-lg bg-soft-green text-primary
-                      font-medium">
+                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-100 text-green-700 font-medium mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-gauge"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M3 13h8V3H3v10zm10 8h8V3h-8v18z
-                             M3 21h8v-6H3v6z"/>
-
-                </svg>
-
-                <span>Dashboard</span>
+                <span>
+                    Dashboard
+                </span>
 
             </a>
 
 
-            <!-- PENGADUAN SAYA -->
-            <a href="pengaduan.php"
-               class="flex items-center gap-3 px-4 py-3
-                      rounded-lg text-gray-600
-                      hover:bg-soft-green hover:text-primary">
+            <!-- ASPIRASI SAYA -->
+            <a href="daftar_aspirasi.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-file-lines"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M8 10h8M8 14h5M5 4h14a2 2 0
-                             012 2v12a2 2 0 01-2 2H5a2 2
-                             0 01-2-2V6a2 2 0 012-2z"/>
-
-                </svg>
-
-                <span>Pengaduan Saya</span>
+                <span>
+                    Aspirasi Saya
+                </span>
 
             </a>
 
 
-            <!-- AJUKAN PENGADUAN -->
+            <!-- BUAT ASPIRASI -->
             <a href="tambah_pengaduan.php"
-               class="flex items-center gap-3 px-4 py-3
-                      rounded-lg text-gray-600
-                      hover:bg-soft-green hover:text-primary">
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 mb-2">
 
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
+                <i class="fa-solid fa-plus"></i>
 
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M12 5v14M5 12h14"/>
-
-                </svg>
-
-                <span>Ajukan Pengaduan</span>
-
-            </a>
-
-
-            <!-- UMPAN BALIK -->
-            <a href="umpan_balik_siswa.php"
-               class="flex items-center gap-3 px-4 py-3
-                      rounded-lg text-gray-600
-                      hover:bg-soft-green hover:text-primary">
-
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     class="w-5 h-5"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke="currentColor"
-                     stroke-width="1.8">
-
-                    <path stroke-linecap="round"
-                          stroke-linejoin="round"
-                          d="M8 10h8M8 14h5M5 4h14a2 2 0
-                             012 2v10a2 2 0 01-2 2h-6
-                             l-4 3v-3H5a2 2 0 01-2-2V6
-                             a2 2 0 012-2z"/>
-
-                </svg>
-
-                <span>Umpan Balik</span>
+                <span>
+                    Buat Aspirasi
+                </span>
 
             </a>
 
 
             <!-- LOGOUT -->
-            <div class="pt-5 mt-5 border-t border-gray-100">
+            <a href="../../Controllers/c_logout.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600">
 
-                <a href="#"
-                   class="flex items-center gap-3 px-4 py-3
-                          rounded-lg text-gray-600
-                          hover:bg-red-50 hover:text-red-500">
+                <i class="fa-solid fa-right-from-bracket"></i>
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="1.8">
+                <span>
+                    Logout
+                </span>
 
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M10 17l5-5-5-5M15 12H3
-                                 m12-7h4a2 2 0 012 2v10a2
-                                 2 0 01-2 2h-4"/>
-
-                    </svg>
-
-                    <span>Logout</span>
-
-                </a>
-
-            </div>
+            </a>
 
         </nav>
 
@@ -210,11 +115,10 @@
 
 
     <!-- MAIN -->
-    <main class="ml-64 flex-1">
+    <main class="ml-64 min-h-screen">
 
         <!-- HEADER -->
-        <header class="h-20 bg-white border-b border-gray-200
-                       flex items-center justify-between px-8">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8">
 
             <div>
 
@@ -223,44 +127,30 @@
                 </h2>
 
                 <p class="text-sm text-gray-400">
-                    Pantau pengaduan sarana dan prasarana sekolah
+                    Pantau perkembangan aspirasi kamu
                 </p>
 
             </div>
 
 
-            <!-- SISWA -->
+            <!-- PROFILE -->
             <div class="flex items-center gap-3">
 
                 <div class="text-right">
 
                     <p class="text-sm font-medium text-gray-700">
-                        Ahmad Fauzan
+                        <?= htmlspecialchars($_SESSION['nama_siswa']); ?>
                     </p>
 
                     <p class="text-xs text-gray-400">
-                        XI RPL 1
+                        NIS <?= htmlspecialchars($_SESSION['nis']); ?>
                     </p>
 
                 </div>
 
-                <div class="w-10 h-10 rounded-full bg-soft-green
-                            flex items-center justify-center">
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-5 h-5 text-primary"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="1.8">
-
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M20 21a8 8 0 00-16 0
-                                 M12 13a4 4 0 100-8
-                                 4 4 0 000 8z"/>
-
-                    </svg>
+                    <i class="fa-solid fa-user text-green-600"></i>
 
                 </div>
 
@@ -272,86 +162,46 @@
         <!-- CONTENT -->
         <section class="p-8">
 
-            <!-- WELCOME -->
-            <div class="bg-white border border-gray-200
-                        rounded-xl p-6 mb-6">
+            <!-- JUDUL -->
+            <div class="flex items-center justify-between mb-6">
 
-                <h3 class="text-xl font-semibold text-gray-800">
-                    Selamat datang, Ahmad Fauzan
-                </h3>
+                <div>
 
-                <p class="text-sm text-gray-500 mt-2">
-                    Sampaikan pengaduan mengenai sarana dan prasarana
-                    sekolah melalui sistem ini.
-                </p>
+                    <h3 class="text-xl font-semibold text-gray-800">
+                        Selamat datang, <?= htmlspecialchars($_SESSION['nama_siswa']); ?>
+                    </h3>
 
-                <button
-                    class="mt-5 flex items-center gap-2
-                           px-5 py-2.5 bg-primary
-                           hover:bg-primary-dark text-white
-                           rounded-lg text-sm font-medium">
+                    <p class="text-sm text-gray-500 mt-1">
+                        Sampaikan aspirasi terkait sarana dan prasarana sekolah.
+                    </p>
 
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         class="w-4 h-4"
-                         fill="none"
-                         viewBox="0 0 24 24"
-                         stroke="currentColor"
-                         stroke-width="1.8">
-
-                        <path stroke-linecap="round"
-                              stroke-linejoin="round"
-                              d="M12 5v14M5 12h14"/>
-
-                    </svg>
-
-                    Ajukan Pengaduan
-
-                </button>
-
+                </div>
             </div>
 
 
             <!-- STATISTIK -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+            <div class="grid grid-cols-4 gap-5 mb-6">
 
                 <!-- TOTAL -->
-                <div class="bg-white border border-gray-200
-                            rounded-xl p-5">
+                <div class="bg-white rounded-xl border border-gray-200 p-5">
 
                     <div class="flex items-center justify-between">
 
                         <div>
 
                             <p class="text-sm text-gray-500">
-                                Total Pengaduan
+                                Total Aspirasi
                             </p>
 
-                            <p class="text-2xl font-semibold
-                                      text-gray-800 mt-2">
-                                6
-                            </p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                                <?= $statistik->total; ?>
+                            </h3>
 
                         </div>
 
-                        <div class="w-11 h-11 rounded-lg
-                                    bg-soft-green flex items-center
-                                    justify-center">
+                        <div class="w-11 h-11 bg-green-100 rounded-lg flex items-center justify-center">
 
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 class="w-5 h-5 text-primary"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke="currentColor"
-                                 stroke-width="1.8">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M8 10h8M8 14h5M5 4h14a2
-                                         2 0 012 2v12a2 2 0
-                                         01-2 2H5a2 2 0
-                                         01-2-2V6a2 2 0 012-2z"/>
-
-                            </svg>
+                            <i class="fa-solid fa-file-lines text-green-600"></i>
 
                         </div>
 
@@ -361,42 +211,53 @@
 
 
                 <!-- DIPROSES -->
-                <div class="bg-white border border-gray-200
-                            rounded-xl p-5">
+                <div class="bg-white rounded-xl border border-gray-200 p-5">
 
                     <div class="flex items-center justify-between">
 
                         <div>
 
                             <p class="text-sm text-gray-500">
-                                Sedang Diproses
+                                Diproses
                             </p>
 
-                            <p class="text-2xl font-semibold
-                                      text-gray-800 mt-2">
-                                2
-                            </p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                                <?= $statistik->diproses; ?>
+                            </h3>
 
                         </div>
 
-                        <div class="w-11 h-11 rounded-lg
-                                    bg-blue-50 flex items-center
-                                    justify-center">
+                        <div class="w-11 h-11 bg-blue-100 rounded-lg flex items-center justify-center">
 
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 class="w-5 h-5 text-blue-500"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke="currentColor"
-                                 stroke-width="1.8">
+                            <i class="fa-solid fa-clock text-blue-600"></i>
 
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M12 8v4l3 2M20 12a8
-                                         8 0 11-16 0 8 8 0
-                                         0116 0z"/>
+                        </div>
 
-                            </svg>
+                    </div>
+
+                </div>
+
+
+                <!-- DIPERBAIKI -->
+                <div class="bg-white rounded-xl border border-gray-200 p-5">
+
+                    <div class="flex items-center justify-between">
+
+                        <div>
+
+                            <p class="text-sm text-gray-500">
+                                Diperbaiki
+                            </p>
+
+                            <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                                <?= $statistik->diperbaiki; ?>
+                            </h3>
+
+                        </div>
+
+                        <div class="w-11 h-11 bg-yellow-100 rounded-lg flex items-center justify-center">
+
+                            <i class="fa-solid fa-screwdriver-wrench text-yellow-600"></i>
 
                         </div>
 
@@ -406,8 +267,7 @@
 
 
                 <!-- SELESAI -->
-                <div class="bg-white border border-gray-200
-                            rounded-xl p-5">
+                <div class="bg-white rounded-xl border border-gray-200 p-5">
 
                     <div class="flex items-center justify-between">
 
@@ -417,29 +277,15 @@
                                 Selesai
                             </p>
 
-                            <p class="text-2xl font-semibold
-                                      text-gray-800 mt-2">
-                                4
-                            </p>
+                            <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                                <?= $statistik->selesai; ?>
+                            </h3>
 
                         </div>
 
-                        <div class="w-11 h-11 rounded-lg
-                                    bg-green-50 flex items-center
-                                    justify-center">
+                        <div class="w-11 h-11 bg-green-100 rounded-lg flex items-center justify-center">
 
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                 class="w-5 h-5 text-green-600"
-                                 fill="none"
-                                 viewBox="0 0 24 24"
-                                 stroke="currentColor"
-                                 stroke-width="1.8">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      d="M5 13l4 4L19 7"/>
-
-                            </svg>
+                            <i class="fa-solid fa-circle-check text-green-600"></i>
 
                         </div>
 
@@ -450,28 +296,25 @@
             </div>
 
 
-            <!-- PENGADUAN TERBARU -->
-            <div class="bg-white border border-gray-200
-                        rounded-xl overflow-hidden">
+            <!-- ASPIRASI TERBARU -->
+            <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
 
-                <div class="px-6 py-5 border-b border-gray-200
-                            flex items-center justify-between">
+                <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
 
                     <div>
 
-                        <h4 class="font-semibold text-gray-800">
-                            Pengaduan Terbaru
-                        </h4>
+                        <h3 class="font-semibold text-gray-800">
+                            Aspirasi Terbaru
+                        </h3>
 
-                        <p class="text-sm text-gray-400 mt-1">
-                            Pengaduan yang terakhir kamu buat.
+                        <p class="text-sm text-gray-500 mt-1">
+                            Aspirasi yang telah kamu kirim.
                         </p>
 
                     </div>
 
-                    <a href="#"
-                       class="text-sm text-primary
-                              hover:text-primary-dark">
+                    <a href="daftar_aspirasi.php"
+                        class="text-sm text-green-600 hover:text-green-700 font-medium">
 
                         Lihat Semua
 
@@ -484,28 +327,32 @@
 
                     <table class="w-full text-sm">
 
-                        <thead class="bg-gray-50 text-gray-500">
+                        <thead class="bg-gray-50 border-b border-gray-200">
 
                             <tr>
 
-                                <th class="text-left px-6 py-4 font-medium">
+                                <th class="text-left px-6 py-4 font-medium text-gray-600">
                                     No
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
-                                    Pengaduan
+                                <th class="text-left px-6 py-4 font-medium text-gray-600">
+                                    Judul Laporan
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
+                                <th class="text-left px-6 py-4 font-medium text-gray-600">
                                     Kategori
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
+                                <th class="text-left px-6 py-4 font-medium text-gray-600">
+                                    Tanggal
+                                </th>
+
+                                <th class="text-left px-6 py-4 font-medium text-gray-600">
                                     Status
                                 </th>
 
-                                <th class="text-left px-6 py-4 font-medium">
-                                    Tanggal
+                                <th class="text-center px-6 py-4 font-medium text-gray-600">
+                                    Aksi
                                 </th>
 
                             </tr>
@@ -515,146 +362,63 @@
 
                         <tbody class="divide-y divide-gray-100">
 
-                            <tr class="hover:bg-gray-50">
+                            <?php
+                            $no = 1;
+                            while ($data = mysqli_fetch_object($aspirasis)) :
+                            ?>
 
-                                <td class="px-6 py-4">
-                                    1
-                                </td>
+                                <tr class="hover:bg-gray-50 transition">
 
-                                <td class="px-6 py-4 font-medium text-gray-800">
-                                    Lampu Kelas Mati
-                                </td>
+                                    <td class="px-6 py-4 text-gray-500">
+                                        <?= $no++; ?>
+                                    </td>
 
-                                <td class="px-6 py-4">
-                                    Kelistrikan
-                                </td>
+                                    <td class="px-6 py-4">
 
-                                <td class="px-6 py-4">
+                                        <p class="font-medium text-gray-800">
+                                            <?= htmlspecialchars($data->judul_laporan); ?>
+                                        </p>
 
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-blue-50
-                                                 text-blue-600">
+                                    </td>
 
-                                        Diproses
+                                    <td class="px-6 py-4 text-gray-600">
+                                        <?= htmlspecialchars($data->nama_kategori); ?>
+                                    </td>
 
-                                    </span>
+                                    <td class="px-6 py-4 text-gray-600">
+                                        <?= date('d-m-Y H:i', strtotime($data->tanggal_dikirim)); ?>
+                                    </td>
 
-                                </td>
+                                    <td class="px-6 py-4">
 
-                                <td class="px-6 py-4 text-gray-500">
-                                    28-08-2026
-                                </td>
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
 
-                            </tr>
+                                            <?= htmlspecialchars($data->status); ?>
 
+                                        </span>
 
-                            <tr class="hover:bg-gray-50">
+                                    </td>
 
-                                <td class="px-6 py-4">
-                                    2
-                                </td>
+                                    <td class="px-6 py-4 text-center">
 
-                                <td class="px-6 py-4 font-medium text-gray-800">
-                                    Kursi Kelas Rusak
-                                </td>
+                                        <a href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
+                                            class="inline-flex items-center gap-2 px-3 py-2 border border-green-600 text-green-700 hover:bg-green-50 rounded-lg text-sm font-medium transition">
 
-                                <td class="px-6 py-4">
-                                    Fasilitas
-                                </td>
+                                            <i class="fa-solid fa-eye"></i>
 
-                                <td class="px-6 py-4">
+                                            Detail
 
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-yellow-50
-                                                 text-yellow-600">
+                                        </a>
 
-                                        Diperbaiki
+                                    </td>
 
-                                    </span>
+                                </tr>
 
-                                </td>
-
-                                <td class="px-6 py-4 text-gray-500">
-                                    27-08-2026
-                                </td>
-
-                            </tr>
-
-
-                            <tr class="hover:bg-gray-50">
-
-                                <td class="px-6 py-4">
-                                    3
-                                </td>
-
-                                <td class="px-6 py-4 font-medium text-gray-800">
-                                    Keran Air Bocor
-                                </td>
-
-                                <td class="px-6 py-4">
-                                    Air
-                                </td>
-
-                                <td class="px-6 py-4">
-
-                                    <span class="px-3 py-1 rounded-full
-                                                 text-xs bg-green-50
-                                                 text-green-600">
-
-                                        Selesai
-
-                                    </span>
-
-                                </td>
-
-                                <td class="px-6 py-4 text-gray-500">
-                                    25-08-2026
-                                </td>
-
-                            </tr>
+                            <?php endwhile; ?>
 
                         </tbody>
 
                     </table>
-
-                </div>
-
-
-                <!-- PAGINATION -->
-                <div class="px-6 py-4 border-t border-gray-200
-                            flex items-center justify-between">
-
-                    <p class="text-sm text-gray-500">
-                        Menampilkan 1–3 dari 6 pengaduan
-                    </p>
-
-                    <div class="flex gap-1">
-
-                        <button
-                            class="px-3 py-2 border border-gray-200
-                                   rounded-lg text-sm text-gray-400">
-
-                            Sebelumnya
-
-                        </button>
-
-                        <button
-                            class="px-3 py-2 rounded-lg text-sm
-                                   bg-primary text-white">
-
-                            1
-
-                        </button>
-
-                        <button
-                            class="px-3 py-2 border border-gray-200
-                                   rounded-lg text-sm text-gray-600">
-
-                            Berikutnya
-
-                        </button>
-
-                    </div>
 
                 </div>
 
@@ -664,7 +428,6 @@
 
     </main>
 
-</div>
-
 </body>
+
 </html>

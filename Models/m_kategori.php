@@ -1,5 +1,5 @@
 <?php
-include_once 'm_koneksi.php';
+require_once 'm_koneksi.php';
 
 class m_kategori {
 
