@@ -47,7 +47,7 @@
         <nav class="p-4">
 
             <!-- DASHBOARD -->
-            <a href="/Projek_Sapras_hilman/Controllers/dashboard_admin.php"
+            <a href="../Views/Admin/dashboard_admin.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
@@ -61,7 +61,7 @@
 
 
             <!-- ASPIRASI -->
-            <a href="/Projek_Sapras_hilman/Controllers/c_aspirasi.php"
+            <a href="../Views/Admin/daftar_aspirasi.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
@@ -75,7 +75,7 @@
 
 
             <!-- HISTORI -->
-            <a href="/Projek_Sapras_hilman/Controllers/c_histori.php"
+            <a href="../Views/Admin/histori.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg bg-green-100 text-green-700
                        font-medium mb-2">
@@ -88,7 +88,7 @@
 
 
             <!-- SISWA -->
-            <a href="/Projek_Sapras_hilman/Controllers/c_siswa.php"
+            <a href="../Views/Admin/daftar_siswa.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
@@ -102,7 +102,7 @@
 
 
             <!-- KATEGORI -->
-            <a href="/Projek_Sapras_hilman/Views/Admin/kategori.php"
+            <a href="../Views/Admin/kategori.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
@@ -116,7 +116,7 @@
 
 
             <!-- LOGOUT -->
-            <a href="/Projek_Sapras_hilman/Controllers/c_logout.php"
+            <a href="../Controllers/c_logout.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-red-50 hover:text-red-600
@@ -246,10 +246,6 @@
                                     Status
                                 </th>
 
-                                <th class="px-6 py-4 text-center text-sm
-                                           font-semibold text-gray-600">
-                                    Aksi
-                                </th>
 
                             </tr>
 
@@ -319,23 +315,6 @@
                                             <?php echo $data->status; ?>
 
                                         </span>
-
-                                    </td>
-
-
-                                    <td class="px-6 py-4 text-center">
-
-                                        <a
-                                            href="/Projek_Sapras_hilman/Controllers/c_aspirasi.php?id_aspirasi=<?php echo $data->id_aspirasi; ?>"
-                                            class="inline-flex items-center justify-center
-                                                   w-9 h-9 rounded-lg
-                                                   bg-blue-50 text-blue-600
-                                                   hover:bg-blue-100"
-                                            title="Lihat Detail">
-
-                                            <i class="fa-solid fa-eye"></i>
-
-                                        </a>
 
                                     </td>
 

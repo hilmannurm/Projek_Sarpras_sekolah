@@ -17,12 +17,24 @@ $aksi = $_GET['aksi'] ?? '';
 
 
 // ==================================================
+// SISWA - FORM TAMBAH ASPIRASI
+// ==================================================
+
+if ($aksi == 'form_tambah') {
+
+    $kategoris = $kategori->tampil_kategori();
+
+    include_once __DIR__ . '/../Views/Siswa/tambah_pengaduan.php';
+}
+
+
+// ==================================================
 // SISWA - TAMBAH ASPIRASI
 // ==================================================
 
-if ($aksi == 'tambah') {
+elseif ($aksi == 'tambah') {
 
-    $id_siswa = $_POST['id_siswa'];
+    $id_siswa = $_SESSION['id_siswa'];
     $id_kategori = $_POST['id_kategori'];
     $judul_laporan = $_POST['judul_laporan'];
     $keterangan = $_POST['keterangan'];
@@ -40,7 +52,7 @@ if ($aksi == 'tambah') {
 
         move_uploaded_file(
             $tmp_foto,
-            __DIR__ . '/../Views/Upload/' . $bukti_foto
+            __DIR__ . '/../Upload/' . $bukti_foto
         );
     }
 
@@ -53,16 +65,15 @@ if ($aksi == 'tambah') {
         $bukti_foto
     );
 
-    if ($hasil) {
+   if ($hasil) {
 
-        header("Location: ../Views/Siswa/daftar_aspirasi.php");
-        exit;
+    header("Location: c_aspirasi_siswa.php");
+    exit;
 
-    } else {
+} else {
 
-        echo "Gagal menambahkan aspirasi.";
-
-    }
+    echo "Gagal menambahkan aspirasi.";
+}
 }
 
 
@@ -101,7 +112,6 @@ elseif ($aksi == 'tanggapi') {
                 window.history.back();
               </script>";
         exit;
-
     }
 
     if ($status_lama == 'diperbaiki' && $status_baru != 'selesai') {
@@ -111,7 +121,6 @@ elseif ($aksi == 'tanggapi') {
                 window.history.back();
               </script>";
         exit;
-
     }
 
     if ($status_lama == 'selesai') {
@@ -121,7 +130,6 @@ elseif ($aksi == 'tanggapi') {
                 window.history.back();
               </script>";
         exit;
-
     }
 
 
@@ -136,7 +144,6 @@ elseif ($aksi == 'tanggapi') {
                 window.history.back();
               </script>";
         exit;
-
     }
 
 
@@ -146,26 +153,29 @@ elseif ($aksi == 'tanggapi') {
 
     $foto_bukti = '';
 
-if (!empty($_FILES['foto_bukti']['name'])) {
+    if (!empty($_FILES['foto_bukti']['name'])) {
 
-    $nama_foto = $_FILES['foto_bukti']['name'];
-    $tmp_foto = $_FILES['foto_bukti']['tmp_name'];
-    $foto_bukti = time() . '_' . $nama_foto;
+        $nama_foto = $_FILES['foto_bukti']['name'];
+        $tmp_foto = $_FILES['foto_bukti']['tmp_name'];
 
-    $tujuan = __DIR__ . '/../Upload/' . $foto_bukti;
+        $foto_bukti = time() . '_' . $nama_foto;
 
-    if ($_FILES['foto_bukti']['error'] != 0) {
-        echo "Error upload: " . $_FILES['foto_bukti']['error'];
-        exit;
+        $tujuan = __DIR__ . '/../Upload/' . $foto_bukti;
+
+        if ($_FILES['foto_bukti']['error'] != 0) {
+
+            echo "Error upload: " . $_FILES['foto_bukti']['error'];
+            exit;
+        }
+
+        if (!move_uploaded_file($tmp_foto, $tujuan)) {
+
+            echo "Gagal memindahkan file.<br>";
+            echo "Lokasi tujuan: " . $tujuan . "<br>";
+            echo "File sementara: " . $tmp_foto;
+            exit;
+        }
     }
-
-    if (!move_uploaded_file($tmp_foto, $tujuan)) {
-        echo "Gagal memindahkan file.<br>";
-        echo "Lokasi tujuan: " . $tujuan . "<br>";
-        echo "File sementara: " . $tmp_foto;
-        exit;
-    }
-}
 
 
     // ==============================================
@@ -201,7 +211,7 @@ if (!empty($_FILES['foto_bukti']['name'])) {
 
 
     // ==============================================
-    // Tambahkan histori jika status berubah
+    // Tambahkan histori
     // ==============================================
 
     if ($status_lama != $status_baru) {
@@ -230,7 +240,6 @@ if (!empty($_FILES['foto_bukti']['name'])) {
     } else {
 
         echo "Gagal menyimpan tanggapan.";
-
     }
 }
 
@@ -240,30 +249,39 @@ if (!empty($_FILES['foto_bukti']['name'])) {
 // ==================================================
 
 elseif (isset($_GET['id_aspirasi'])) {
+
     $id_aspirasi = $_GET['id_aspirasi'];
 
     $query_aspirasi = $aspirasi->tampil_by_id($id_aspirasi);
+
     $data_aspirasi = mysqli_fetch_object($query_aspirasi);
 
-    /*
-     * Menentukan status berikutnya.
-     * Status hanya boleh maju:
-     * Diproses → Diperbaiki → Selesai
-     */
+
+    // Menentukan status berikutnya
+    // Diproses → Diperbaiki → Selesai
 
     if ($data_aspirasi->status == 'diproses') {
+
         $status_berikutnya = 'diperbaiki';
         $form_tanggapan = true;
+
     } elseif ($data_aspirasi->status == 'diperbaiki') {
+
         $status_berikutnya = 'selesai';
         $form_tanggapan = true;
+
     } else {
+
         $status_berikutnya = '';
         $form_tanggapan = false;
     }
 
+
     $data_progres = $progres->tampil_by_aspirasi($id_aspirasi);
+
     $data_histori = $histori->tampil_by_aspirasi($id_aspirasi);
+
+    include_once __DIR__ . '/../Views/Admin/detail_aspirasi.php';
 }
 
 
@@ -278,8 +296,10 @@ else {
     $id_siswa = $_GET['id_siswa'] ?? '';
     $id_kategori = $_GET['id_kategori'] ?? '';
 
+
     // Data siswa untuk filter
     $data_siswa = $siswa->tampil_siswa();
+
 
     // Data kategori untuk filter
     $data_kategori = $kategori->tampil_kategori();
@@ -303,9 +323,9 @@ else {
     } else {
 
         $aspirasis = $aspirasi->tampil_aspirasi();
-
     }
 
-}
 
+    include_once __DIR__ . '/../Views/Admin/daftar_aspirasi.php';
+}
 ?>

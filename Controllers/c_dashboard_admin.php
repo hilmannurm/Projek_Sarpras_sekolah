@@ -8,6 +8,7 @@ $aspirasi = new m_aspirasi();
 try {
 
     $statistik = $aspirasi->statistik_aspirasi();
+    include_once __DIR__ . '/../Views/Admin/dashboard_admin.php';
 
 } catch (Exception $e) {
 

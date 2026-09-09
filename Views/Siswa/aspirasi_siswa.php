@@ -1,7 +1,3 @@
-<?php
-require_once '../../Controllers/c_kategori.php';
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 
@@ -9,7 +5,7 @@ require_once '../../Controllers/c_kategori.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Data Kategori</title>
+    <title>Aspirasi Saya</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -19,7 +15,6 @@ require_once '../../Controllers/c_kategori.php';
 
 <body class="bg-gray-100">
 
-    <!-- SIDEBAR -->
     <aside class="fixed left-0 top-0 h-screen w-64 bg-white shadow-md">
 
         <div class="h-20 flex items-center px-6 border-b">
@@ -43,8 +38,7 @@ require_once '../../Controllers/c_kategori.php';
 
         <nav class="p-4">
 
-            <!-- DASHBOARD -->
-            <a href="dashboard_admin.php"
+            <a href="/Projek_Sapras_hilman/Views/Siswa/dashboard_siswa.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
 
                 <i class="fa-solid fa-gauge w-5"></i>
@@ -54,52 +48,27 @@ require_once '../../Controllers/c_kategori.php';
             </a>
 
 
-            <!-- ASPIRASI -->
-            <a href="/Projek_Sapras_hilman/Views/Admin/daftar_aspirasi.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
+            <a href="c_aspirasi_siswa.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 text-green-600 mb-2">
 
                 <i class="fa-solid fa-file-lines w-5"></i>
 
-                Aspirasi
+                Aspirasi Saya
 
             </a>
 
 
-            <!-- HISTORI -->
-            <a href="/Projek_sapras_hilman/Controllers/c_histori.php"
+            <a href="c_aspirasi.php?aksi=form_tambah"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
 
-                <i class="fa-solid fa-clock-rotate-left w-5"></i>
+                <i class="fa-solid fa-pen-to-square w-5"></i>
 
-                Histori
-
-            </a>
-
-
-            <!-- SISWA -->
-            <a href="daftar_siswa.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
-
-                <i class="fa-solid fa-user-graduate w-5"></i>
-
-                Siswa
+                Buat Aspirasi
 
             </a>
 
 
-            <!-- KATEGORI -->
-            <a href="../../Controllers/c_kategori.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 text-green-600 mb-2">
-
-                <i class="fa-solid fa-layer-group w-5"></i>
-
-                Kategori
-
-            </a>
-
-
-            <!-- LOGOUT -->
-            <a href="../../Controllers/c_logout.php"
+            <a href="../Controllers/c_logout.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 mt-8">
 
                 <i class="fa-solid fa-right-from-bracket w-5"></i>
@@ -113,20 +82,18 @@ require_once '../../Controllers/c_kategori.php';
     </aside>
 
 
-    <!-- MAIN -->
     <main class="ml-64 min-h-screen">
 
-        <!-- HEADER -->
         <header class="bg-white h-20 shadow-sm flex items-center justify-between px-8">
 
             <div>
 
                 <h2 class="text-xl font-semibold text-gray-800">
-                    Data Kategori
+                    Aspirasi Saya
                 </h2>
 
                 <p class="text-sm text-gray-500">
-                    Kelola kategori pengaduan sarana dan prasarana sekolah
+                    Daftar laporan yang telah kamu kirim
                 </p>
 
             </div>
@@ -137,11 +104,11 @@ require_once '../../Controllers/c_kategori.php';
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
-                        <?= htmlspecialchars($_SESSION['username']); ?>
+                        <?= htmlspecialchars($_SESSION['nama_siswa']); ?>
                     </p>
 
                     <p class="text-xs text-gray-500">
-                        Administrator
+                        Nis <?= htmlspecialchars($_SESSION['nis']); ?>
                     </p>
 
                 </div>
@@ -162,7 +129,6 @@ require_once '../../Controllers/c_kategori.php';
         </header>
 
 
-        <!-- CONTENT -->
         <div class="p-8">
 
             <div class="bg-white rounded-xl shadow-sm p-8">
@@ -172,30 +138,28 @@ require_once '../../Controllers/c_kategori.php';
                     <div>
 
                         <h3 class="text-lg font-semibold text-gray-800">
-                            Daftar Kategori
+                            Daftar Aspirasi
                         </h3>
 
                         <p class="text-sm text-gray-500 mt-1">
-                            Kelola kategori yang digunakan dalam pengaduan.
+                            Lihat laporan dan perkembangan aspirasi kamu.
                         </p>
 
                     </div>
 
 
-                    <!-- TAMBAH KATEGORI -->
-                    <a href="form_tambah_kategori.php"
+                    <a href="c_aspirasi.php?aksi=form_tambah"
                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
 
                         <i class="fa-solid fa-plus mr-2"></i>
 
-                        Tambah Kategori
+                        Buat Aspirasi
 
                     </a>
 
                 </div>
 
 
-                <!-- TABLE -->
                 <div class="overflow-x-auto">
 
                     <table class="w-full">
@@ -209,11 +173,27 @@ require_once '../../Controllers/c_kategori.php';
                                 </th>
 
                                 <th class="px-4 py-3 text-sm font-semibold text-gray-600">
-                                    Nama Kategori
+                                    Judul Laporan
                                 </th>
 
                                 <th class="px-4 py-3 text-sm font-semibold text-gray-600">
-                                    Aksi
+                                    Kategori
+                                </th>
+
+                                <th class="px-4 py-3 text-sm font-semibold text-gray-600">
+                                    Lokasi
+                                </th>
+
+                                <th class="px-4 py-3 text-sm font-semibold text-gray-600">
+                                    Tanggal
+                                </th>
+
+                                <th class="px-4 py-3 text-sm font-semibold text-gray-600">
+                                    Status
+                                </th>
+
+                                <th class="px-4 py-3 text-sm font-semibold text-gray-600">
+                                    Detail
                                 </th>
 
                             </tr>
@@ -226,7 +206,7 @@ require_once '../../Controllers/c_kategori.php';
                             <?php
                             $no = 1;
 
-                            foreach ($kategoris as $kategori) {
+                            while ($data = mysqli_fetch_object($aspirasis)) {
                             ?>
 
                                 <tr class="border-b hover:bg-gray-50">
@@ -236,32 +216,54 @@ require_once '../../Controllers/c_kategori.php';
                                     </td>
 
 
-                                    <td class="px-4 py-4 text-sm text-gray-700">
+                                    <td class="px-4 py-4">
 
-                                        <?php echo htmlspecialchars($kategori->nama_kategori); ?>
+                                        <p class="text-sm font-medium text-gray-800">
+                                            <?php echo htmlspecialchars($data->judul_laporan); ?>
+                                        </p>
+
+                                    </td>
+
+
+                                    <td class="px-4 py-4 text-sm text-gray-600">
+
+                                        <?php echo htmlspecialchars($data->nama_kategori); ?>
+
+                                    </td>
+
+
+                                    <td class="px-4 py-4 text-sm text-gray-600">
+
+                                        <?php echo htmlspecialchars($data->lokasi); ?>
+
+                                    </td>
+
+
+                                    <td class="px-4 py-4 text-sm text-gray-600">
+
+                                        <?php echo date('d-m-Y', strtotime($data->tanggal_dikirim)); ?>
 
                                     </td>
 
 
                                     <td class="px-4 py-4">
 
-                                        <!-- EDIT -->
-                                        <a href="../../Controllers/c_kategori.php?aksi=edit&id=<?php echo $kategori->id_kategori; ?>"
-                                            class="text-blue-600 hover:text-blue-800 mr-4"
-                                            title="Edit">
+                                        <span class="px-3 py-1 text-xs rounded-full bg-gray-100 text-gray-700">
 
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <?php echo htmlspecialchars($data->status); ?>
 
-                                        </a>
+                                        </span>
+
+                                    </td>
 
 
-                                        <!-- HAPUS -->
-                                        <a href="../../Controllers/c_kategori.php?aksi=hapus&id=<?php echo $kategori->id_kategori; ?>"
-                                            class="text-red-600 hover:text-red-800"
-                                            title="Hapus"
-                                            onclick="return confirm('Yakin ingin menghapus kategori ini?');">
+                                    <td class="px-4 py-4">
 
-                                            <i class="fa-solid fa-trash"></i>
+                                        <a href="c_aspirasi_siswa.php?id_aspirasi=<?php echo $data->id_aspirasi; ?>"
+                                            class="text-green-600 hover:text-green-800"
+                                            title="Lihat detail">
+
+                                            <i class="fa-solid fa-eye"></i>
 
                                         </a>
 

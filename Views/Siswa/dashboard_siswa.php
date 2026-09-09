@@ -72,7 +72,7 @@ require_once '../../Controllers/c_dashboard_siswa.php';
 
 
             <!-- ASPIRASI SAYA -->
-            <a href="daftar_aspirasi.php"
+            <a href="../../Controllers/c_aspirasi_siswa.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 mb-2">
 
                 <i class="fa-solid fa-file-lines"></i>
@@ -85,7 +85,7 @@ require_once '../../Controllers/c_dashboard_siswa.php';
 
 
             <!-- BUAT ASPIRASI -->
-            <a href="tambah_pengaduan.php"
+            <a href="../../Controllers/c_aspirasi.php?aksi=form_tambah"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 mb-2">
 
                 <i class="fa-solid fa-plus"></i>
@@ -99,7 +99,7 @@ require_once '../../Controllers/c_dashboard_siswa.php';
 
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600">
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 mt-8">
 
                 <i class="fa-solid fa-right-from-bracket"></i>
 

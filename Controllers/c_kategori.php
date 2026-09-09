@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once __DIR__ . '/../Models/m_kategori.php';
 
 $kategori = new m_kategori();
@@ -78,6 +79,7 @@ try {
     } else {
 
         $kategoris = $kategori->tampil_kategori();
+        include_once __DIR__ . '/../Views/Admin/kategori.php';
 
     }
 

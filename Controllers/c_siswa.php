@@ -103,6 +103,7 @@ try {
     } else {
 
         $siswas = $siswa->tampil_siswa();
+        include_once __DIR__ . '/../Views/Admin/daftar_siswa.php';
 
     }
 
