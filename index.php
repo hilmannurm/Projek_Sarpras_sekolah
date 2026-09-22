@@ -3,10 +3,10 @@ session_start();
 
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] === 'admin') {
-        header("Location: ../Views/dashboard_admin.php");
+        header("Location: Views/Admin/dashboard_admin.php");
         exit();
     } elseif ($_SESSION['role'] === 'siswa') {
-        header("Location: ../Views/dashboard_siswa.php");
+        header("Location: Views/Siswa/dashboard_siswa.php");
         exit();
     } 
 }

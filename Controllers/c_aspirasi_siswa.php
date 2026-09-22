@@ -40,7 +40,7 @@ if (isset($_GET['id_aspirasi'])) {
     // Ambil histori perubahan status
     $data_histori = $histori->tampil_by_aspirasi($id_aspirasi);
 
-    include_once __DIR__ . '/../Views/Siswa/detail_aspirasi_siswa.php';
+    // include_once __DIR__ . '/../Views/Siswa/detail_aspirasi_siswa.php';
 
 }
 

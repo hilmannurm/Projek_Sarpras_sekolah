@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once __DIR__ . '/../Models/m_kategori.php';
 
 $kategori = new m_kategori();
@@ -15,11 +16,10 @@ try {
 
                 $kategoris = $kategori->tampil_by_id($id);
 
-                include_once '../Views/Admin/form_edit_kategori.php';
+                include_once __DIR__ . '/../Views/Admin/form_edit_kategori.php';
 
             } else {
 
-                $id = $_POST['id_kategori'];
                 $nama_kategori = $_POST['nama_kategori'];
 
                 if ($_GET['aksi'] == "tambah") {
@@ -40,6 +40,8 @@ try {
 
                 } elseif ($_GET['aksi'] == "update") {
 
+                    $id = $_POST['id_kategori'];
+                    
                     $hasil = $kategori->edit_kategori(
                         $id,
                         $nama_kategori

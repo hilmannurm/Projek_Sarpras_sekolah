@@ -1,3 +1,9 @@
+<?php
+require_once '../../Controllers/c_aspirasi_siswa.php';
+
+require_once __DIR__ . '/../../Controllers/auth_siswa.php';
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -54,13 +60,13 @@
 
 
             <!-- DASHBOARD -->
-            <a href="../Views/Siswa/dashboard_siswa.php"
+            <a href="dashboard_siswa.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-gauge"></i>
+                <i class="fa-solid fa-gauge w-5"></i>
 
                 <span>Dashboard</span>
 
@@ -68,40 +74,27 @@
 
 
             <!-- ASPIRASI SAYA -->
-            <a href="c_aspirasi_siswa.php"
+            <a href="aspirasi_siswa.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg bg-green-100 text-green-700
                        font-medium mb-2">
 
-                <i class="fa-solid fa-file-lines"></i>
+                <i class="fa-solid fa-file-lines w-5"></i>
 
                 <span>Aspirasi Saya</span>
 
             </a>
 
 
-            <!-- BUAT ASPIRASI -->
-            <a href="c_aspirasi.php?aksi=form_tambah"
-                class="flex items-center gap-3 px-4 py-3
-                       rounded-lg text-gray-600
-                       hover:bg-green-50 hover:text-green-700
-                       mb-2">
-
-                <i class="fa-solid fa-plus"></i>
-
-                <span>Buat Aspirasi</span>
-
-            </a>
-
-
             <!-- LOGOUT -->
-            <a href="c_logout.php"
+            <a href="../../Controllers/c_logout.php"
+                onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-red-50 hover:text-red-600
                        mt-8">
 
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
 
                 <span>Logout</span>
 
@@ -124,7 +117,7 @@
 
             <div>
 
-                <h2 class="text-xl font-bold text-gray-800">
+                <h2 class="text-xl font-semibold text-gray-800">
                     Detail Aspirasi
                 </h2>
 
@@ -144,8 +137,8 @@
                         <?= htmlspecialchars($_SESSION['nama_siswa']); ?>
                     </p>
 
-                    <p class="text-xs text-gray-500">
-                       Nis <?= htmlspecialchars($_SESSION['nis']); ?>
+                    <p class="text-xs text-gray-400">
+                        Nis <?= htmlspecialchars($_SESSION['nis']); ?>
                     </p>
 
                 </div>
@@ -173,7 +166,7 @@
             <!-- KEMBALI -->
             <div class="mb-6">
 
-                <a href="c_aspirasi_siswa.php"
+                <a href="aspirasi_siswa.php"
                     class="inline-flex items-center gap-2
                            text-gray-600 hover:text-green-600">
 
@@ -306,7 +299,7 @@
                     </p>
 
                     <img
-                        src="../Upload/<?= htmlspecialchars($data_aspirasi->bukti_foto); ?>"
+                        src="../../Upload/<?= htmlspecialchars($data_aspirasi->bukti_foto); ?>"
                         alt="Bukti foto"
                         class="max-w-md rounded-xl border">
 
@@ -395,7 +388,7 @@
 
 
                                 <img
-                                    src="../Upload/<?= htmlspecialchars($data->foto_bukti); ?>"
+                                    src="../../Upload/<?= htmlspecialchars($data->foto_bukti); ?>"
                                     alt="Foto bukti progres"
                                     class="max-w-sm rounded-lg border">
 

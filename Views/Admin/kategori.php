@@ -1,5 +1,7 @@
 <?php
 require_once '../../Controllers/c_kategori.php';
+
+require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +31,7 @@ require_once '../../Controllers/c_kategori.php';
             </div>
 
             <div>
-                <h1 class="font-bold text-gray-800">
+                <h1 class="font-bold text-green-700">
                     Pengaduan
                 </h1>
 
@@ -66,7 +68,7 @@ require_once '../../Controllers/c_kategori.php';
 
 
             <!-- HISTORI -->
-            <a href="/Projek_sapras_hilman/Controllers/c_histori.php"
+            <a href="histori.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
@@ -88,8 +90,8 @@ require_once '../../Controllers/c_kategori.php';
 
 
             <!-- KATEGORI -->
-            <a href="../../Controllers/c_kategori.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 text-green-600 mb-2">
+            <a href="kategori.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 text-green-600 font-medium mb-2">
 
                 <i class="fa-solid fa-layer-group w-5"></i>
 
@@ -100,6 +102,7 @@ require_once '../../Controllers/c_kategori.php';
 
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
+                onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 mt-8">
 
                 <i class="fa-solid fa-right-from-bracket w-5"></i>
@@ -246,7 +249,7 @@ require_once '../../Controllers/c_kategori.php';
                                     <td class="px-4 py-4">
 
                                         <!-- EDIT -->
-                                        <a href="../../Controllers/c_kategori.php?aksi=edit&id=<?php echo $kategori->id_kategori; ?>"
+                                        <a href="form_edit_kategori.php?aksi=edit&id=<?php echo $kategori->id_kategori; ?>"
                                             class="text-blue-600 hover:text-blue-800 mr-4"
                                             title="Edit">
 

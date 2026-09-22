@@ -1,5 +1,7 @@
 <?php
 require_once '../../Controllers/c_aspirasi.php';
+
+require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
 <!DOCTYPE html>
@@ -26,11 +28,11 @@ require_once '../../Controllers/c_aspirasi.php';
         <div class="h-20 px-6 border-b flex items-center gap-3">
 
             <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center">
-                <i class="fa-solid fa-bullhorn text-green-600 text-lg"></i>
+                <i class="fa-solid fa-bullhorn text-xl text-green-600"></i>
             </div>
 
             <div>
-                <h1 class="font-bold text-gray-800">
+                <h1 class="font-bold text-green-700">
                     Pengaduan
                 </h1>
 
@@ -51,7 +53,7 @@ require_once '../../Controllers/c_aspirasi.php';
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-gauge"></i>
+                <i class="fa-solid fa-gauge w-5"></i>
                 <span>Dashboard</span>
 
             </a>
@@ -62,19 +64,19 @@ require_once '../../Controllers/c_aspirasi.php';
                        rounded-lg bg-green-100 text-green-700
                        font-medium mb-2">
 
-                <i class="fa-solid fa-file-lines"></i>
+                <i class="fa-solid fa-file-lines w-5"></i>
                 <span>Aspirasi</span>
 
             </a>
 
 
-            <a href="/Projek_sapras_hilman/Controllers/c_histori.php"
+            <a href="histori.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-clock-rotate-left"></i>
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
                 <span>Histori</span>
 
             </a>
@@ -86,7 +88,7 @@ require_once '../../Controllers/c_aspirasi.php';
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-user-graduate"></i>
+                <i class="fa-solid fa-user-graduate w-5"></i>
                 <span>Siswa</span>
 
             </a>
@@ -98,19 +100,20 @@ require_once '../../Controllers/c_aspirasi.php';
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-layer-group"></i>
+                <i class="fa-solid fa-layer-group w-5"></i>
                 <span>Kategori</span>
 
             </a>
 
 
             <a href="../../Controllers/c_logout.php"
+                onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-red-50 hover:text-red-600
                        mt-8">
 
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
                 <span>Logout</span>
 
             </a>
@@ -128,7 +131,7 @@ require_once '../../Controllers/c_aspirasi.php';
 
             <div>
 
-                <h2 class="text-xl font-bold text-gray-800">
+                <h2 class="text-xl font-semibold text-gray-800">
                     Detail Aspirasi
                 </h2>
 
@@ -144,7 +147,7 @@ require_once '../../Controllers/c_aspirasi.php';
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
-                        Admin
+                        <?= htmlspecialchars($_SESSION['username']); ?>
                     </p>
 
                     <p class="text-xs text-gray-500">
@@ -501,187 +504,187 @@ require_once '../../Controllers/c_aspirasi.php';
             </div>
 
 
-                <!-- TANGGAPAN ADMIN -->
+            <!-- TANGGAPAN ADMIN -->
 
-<?php if ($form_tanggapan) : ?>
+            <?php if ($form_tanggapan) : ?>
 
-    <div class="bg-white rounded-2xl shadow-sm p-6">
+                <div class="bg-white rounded-2xl shadow-sm p-6">
 
-        <div class="flex items-center gap-3 mb-6">
+                    <div class="flex items-center gap-3 mb-6">
 
-            <div class="w-10 h-10 rounded-lg bg-green-100
+                        <div class="w-10 h-10 rounded-lg bg-green-100
                         flex items-center justify-center">
 
-                <i class="fa-solid fa-reply text-green-600"></i>
+                            <i class="fa-solid fa-reply text-green-600"></i>
 
-            </div>
+                        </div>
 
-            <div>
+                        <div>
 
-                <h2 class="text-lg font-semibold text-gray-800">
-                    Tanggapan Admin
-                </h2>
+                            <h2 class="text-lg font-semibold text-gray-800">
+                                Tanggapan Admin
+                            </h2>
 
-                <p class="text-sm text-gray-500">
-                    Berikan tanggapan terhadap aspirasi siswa
-                </p>
+                            <p class="text-sm text-gray-500">
+                                Berikan tanggapan terhadap aspirasi siswa
+                            </p>
 
-            </div>
+                        </div>
 
-        </div>
-
-
-        <form
-            action="../../Controllers/c_aspirasi.php?aksi=tanggapi"
-            method="POST"
-            enctype="multipart/form-data">
+                    </div>
 
 
-            <input
-                type="hidden"
-                name="id_aspirasi"
-                value="<?= $data_aspirasi->id_aspirasi; ?>">
+                    <form
+                        action="../../Controllers/c_aspirasi.php?aksi=tanggapi"
+                        method="POST"
+                        enctype="multipart/form-data">
+
+
+                        <input
+                            type="hidden"
+                            name="id_aspirasi"
+                            value="<?= $data_aspirasi->id_aspirasi; ?>">
 
 
 
-            <!-- Status Berikutnya -->
-            <div class="mb-5">
+                        <!-- Status Berikutnya -->
+                        <div class="mb-5">
 
-                <label class="block text-sm font-medium
+                            <label class="block text-sm font-medium
                               text-gray-700 mb-2">
 
-                    Status Berikutnya
+                                Status Berikutnya
 
-                </label>
+                            </label>
 
-                <input
-                    type="text"
-                    value="<?= htmlspecialchars($status_berikutnya); ?>"
-                    readonly
-                    class="w-full border border-gray-300
+                            <input
+                                type="text"
+                                value="<?= htmlspecialchars($status_berikutnya); ?>"
+                                readonly
+                                class="w-full border border-gray-300
                            bg-gray-100 rounded-lg px-4 py-3
                            text-gray-700">
 
-                <input
-                    type="hidden"
-                    name="status"
-                    value="<?= htmlspecialchars($status_berikutnya); ?>">
+                            <input
+                                type="hidden"
+                                name="status"
+                                value="<?= htmlspecialchars($status_berikutnya); ?>">
 
-            </div>
+                        </div>
 
 
-            <!-- Umpan Balik -->
-            <div class="mb-5">
+                        <!-- Umpan Balik -->
+                        <div class="mb-5">
 
-                <label class="block text-sm font-medium
+                            <label class="block text-sm font-medium
                               text-gray-700 mb-2">
 
-                    Tanggapan Admin
+                                Tanggapan Admin
 
-                </label>
+                            </label>
 
-                <textarea
-                    name="umpan_balik"
-                    rows="4"
-                    placeholder="Tuliskan tanggapan untuk siswa..."
-                    class="w-full border border-gray-300
+                            <textarea
+                                name="umpan_balik"
+                                rows="4"
+                                placeholder="Tuliskan tanggapan untuk siswa..."
+                                class="w-full border border-gray-300
                            rounded-lg px-4 py-3
                            resize-none
                            focus:outline-none
                            focus:ring-2 focus:ring-green-500"><?= htmlspecialchars($data_aspirasi->umpan_balik ?? ''); ?></textarea>
 
-            </div>
+                        </div>
 
 
-            <!-- Foto Bukti -->
-            <div class="mb-6">
+                        <!-- Foto Bukti -->
+                        <div class="mb-6">
 
-                <label class="block text-sm font-medium
+                            <label class="block text-sm font-medium
                               text-gray-700 mb-2">
 
-                    Foto Bukti Progres
+                                Foto Bukti Progres
 
-                </label>
+                            </label>
 
-                <input
-                    type="file"
-                    name="foto_bukti"
-                    accept="image/*"
-                    required
-                    class="w-full border border-gray-300
+                            <input
+                                type="file"
+                                name="foto_bukti"
+                                accept="image/*"
+                                required
+                                class="w-full border border-gray-300
                            rounded-lg px-4 py-3">
 
-                <p class="text-xs text-gray-500 mt-2">
-                    Foto bukti wajib diupload setiap kali status diperbarui.
-                </p>
+                            <p class="text-xs text-gray-500 mt-2">
+                                Foto bukti wajib diupload setiap kali status diperbarui.
+                            </p>
 
-            </div>
+                        </div>
 
 
-            <!-- Tombol -->
-            <div class="flex justify-end gap-3">
+                        <!-- Tombol -->
+                        <div class="flex justify-end gap-3">
 
-                <a
-                    href="daftar_aspirasi.php"
-                    class="px-5 py-3 rounded-lg
+                            <a
+                                href="daftar_aspirasi.php"
+                                class="px-5 py-3 rounded-lg
                            border border-gray-300
                            text-gray-600
                            hover:bg-gray-50">
 
-                    Kembali
+                                Kembali
 
-                </a>
+                            </a>
 
 
-                <button
-                    type="submit"
-                    class="px-5 py-3 rounded-lg
+                            <button
+                                type="submit"
+                                class="px-5 py-3 rounded-lg
                            bg-green-600
                            hover:bg-green-700
                            text-white font-medium">
 
-                    <i class="fa-solid fa-floppy-disk mr-2"></i>
+                                <i class="fa-solid fa-floppy-disk mr-2"></i>
 
-                    Simpan Tanggapan
+                                Simpan Tanggapan
 
-                </button>
+                            </button>
 
-            </div>
+                        </div>
 
-        </form>
+                    </form>
 
-    </div>
+                </div>
 
-<?php else : ?>
+            <?php else : ?>
 
-    <div class="bg-white rounded-2xl shadow-sm p-6">
+                <div class="bg-white rounded-2xl shadow-sm p-6">
 
-        <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-3">
 
-            <div class="w-10 h-10 rounded-lg bg-green-100
+                        <div class="w-10 h-10 rounded-lg bg-green-100
                         flex items-center justify-center">
 
-                <i class="fa-solid fa-circle-check text-green-600"></i>
+                            <i class="fa-solid fa-circle-check text-green-600"></i>
 
-            </div>
+                        </div>
 
-            <div>
+                        <div>
 
-                <h2 class="text-lg font-semibold text-gray-800">
-                    Aspirasi Selesai
-                </h2>
+                            <h2 class="text-lg font-semibold text-gray-800">
+                                Aspirasi Selesai
+                            </h2>
 
-                <p class="text-sm text-gray-500">
-                    Aspirasi ini telah selesai ditangani dan tidak dapat diubah lagi.
-                </p>
+                            <p class="text-sm text-gray-500">
+                                Aspirasi ini telah selesai ditangani dan tidak dapat diubah lagi.
+                            </p>
 
-            </div>
+                        </div>
 
-        </div>
+                    </div>
 
-    </div>
+                </div>
 
-<?php endif; ?>
+            <?php endif; ?>
 
         </section>
 

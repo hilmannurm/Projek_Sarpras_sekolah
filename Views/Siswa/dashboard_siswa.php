@@ -1,5 +1,7 @@
 <?php
 require_once '../../Controllers/c_dashboard_siswa.php';
+
+require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 ?>
 
 <!DOCTYPE html>
@@ -39,11 +41,11 @@ require_once '../../Controllers/c_dashboard_siswa.php';
         <div class="h-20 px-6 border-b border-gray-200 flex items-center gap-3">
 
             <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center">
-                <i class="fa-solid fa-bullhorn text-green-600 text-lg"></i>
+                <i class="fa-solid fa-bullhorn text-xl text-green-600 text-lg"></i>
             </div>
 
             <div>
-                <h1 class="font-bold text-gray-800">
+                <h1 class="font-bold text-green-700">
                     Pengaduan
                 </h1>
 
@@ -62,7 +64,7 @@ require_once '../../Controllers/c_dashboard_siswa.php';
             <a href="dashboard_siswa.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-100 text-green-700 font-medium mb-2">
 
-                <i class="fa-solid fa-gauge"></i>
+                <i class="fa-solid fa-gauge w-5"></i>
 
                 <span>
                     Dashboard
@@ -72,10 +74,10 @@ require_once '../../Controllers/c_dashboard_siswa.php';
 
 
             <!-- ASPIRASI SAYA -->
-            <a href="../../Controllers/c_aspirasi_siswa.php"
+            <a href="aspirasi_siswa.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 mb-2">
 
-                <i class="fa-solid fa-file-lines"></i>
+                <i class="fa-solid fa-file-lines w-5"></i>
 
                 <span>
                     Aspirasi Saya
@@ -84,24 +86,12 @@ require_once '../../Controllers/c_dashboard_siswa.php';
             </a>
 
 
-            <!-- BUAT ASPIRASI -->
-            <a href="../../Controllers/c_aspirasi.php?aksi=form_tambah"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-700 mb-2">
-
-                <i class="fa-solid fa-plus"></i>
-
-                <span>
-                    Buat Aspirasi
-                </span>
-
-            </a>
-
-
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
+                onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 mt-8">
 
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
 
                 <span>
                     Logout
@@ -122,11 +112,11 @@ require_once '../../Controllers/c_dashboard_siswa.php';
 
             <div>
 
-                <h2 class="text-lg font-semibold text-gray-800">
+                <h2 class="text-xl font-semibold text-gray-800">
                     Dashboard
                 </h2>
 
-                <p class="text-sm text-gray-400">
+                <p class="text-sm text-gray-500">
                     Pantau perkembangan aspirasi kamu
                 </p>
 
@@ -138,7 +128,7 @@ require_once '../../Controllers/c_dashboard_siswa.php';
 
                 <div class="text-right">
 
-                    <p class="text-sm font-medium text-gray-700">
+                    <p class="font-semibold text-gray-700">
                         <?= htmlspecialchars($_SESSION['nama_siswa']); ?>
                     </p>
 
@@ -304,7 +294,7 @@ require_once '../../Controllers/c_dashboard_siswa.php';
                     <div>
 
                         <h3 class="font-semibold text-gray-800">
-                            Aspirasi Terbaru
+                            Aspirasi
                         </h3>
 
                         <p class="text-sm text-gray-500 mt-1">
@@ -312,13 +302,6 @@ require_once '../../Controllers/c_dashboard_siswa.php';
                         </p>
 
                     </div>
-
-                    <a href="daftar_aspirasi.php"
-                        class="text-sm text-green-600 hover:text-green-700 font-medium">
-
-                        Lihat Semua
-
-                    </a>
 
                 </div>
 
@@ -349,10 +332,6 @@ require_once '../../Controllers/c_dashboard_siswa.php';
 
                                 <th class="text-left px-6 py-4 font-medium text-gray-600">
                                     Status
-                                </th>
-
-                                <th class="text-center px-6 py-4 font-medium text-gray-600">
-                                    Aksi
                                 </th>
 
                             </tr>
@@ -396,19 +375,6 @@ require_once '../../Controllers/c_dashboard_siswa.php';
                                             <?= htmlspecialchars($data->status); ?>
 
                                         </span>
-
-                                    </td>
-
-                                    <td class="px-6 py-4 text-center">
-
-                                        <a href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
-                                            class="inline-flex items-center gap-2 px-3 py-2 border border-green-600 text-green-700 hover:bg-green-50 rounded-lg text-sm font-medium transition">
-
-                                            <i class="fa-solid fa-eye"></i>
-
-                                            Detail
-
-                                        </a>
 
                                     </td>
 

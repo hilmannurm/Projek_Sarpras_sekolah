@@ -5,6 +5,6 @@ username:hilman
 password:Petugas123
 
 
--Petugas
+-Siswa
 nis:12345
 password:siswa123

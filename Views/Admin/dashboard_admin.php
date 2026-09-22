@@ -1,5 +1,7 @@
 <?php
 require_once '../../Controllers/c_dashboard_admin.php';
+
+require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +19,7 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
@@ -62,11 +64,11 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
             <!-- DASHBOARD -->
             <a href="dashboard_admin.php"
-               class="flex items-center gap-3 px-4 py-3
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg bg-green-100 text-green-700
                       font-medium mb-2">
 
-                <i class="fa-solid fa-gauge"></i>
+                <i class="fa-solid fa-gauge w-5"></i>
 
                 <span>Dashboard</span>
 
@@ -76,12 +78,12 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
             <!-- ASPIRASI -->
             <a href="daftar_aspirasi.php"
-               class="flex items-center gap-3 px-4 py-3
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-green-50 hover:text-green-700
                       mb-2">
 
-                <i class="fa-solid fa-file-lines"></i>
+                <i class="fa-solid fa-file-lines w-5"></i>
 
                 <span>Aspirasi</span>
 
@@ -90,13 +92,13 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
 
             <!-- HISTORI -->
-            <a href="/Projek_sapras_hilman/Controllers/c_histori.php"
-               class="flex items-center gap-3 px-4 py-3
+            <a href="histori.php"
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-green-50 hover:text-green-700
                       mb-2">
 
-                <i class="fa-solid fa-clock-rotate-left"></i>
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
                 <span>Histori</span>
 
@@ -106,12 +108,12 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
             <!-- SISWA -->
             <a href="daftar_siswa.php"
-               class="flex items-center gap-3 px-4 py-3
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-green-50 hover:text-green-700
                       mb-2">
 
-                <i class="fa-solid fa-user-graduate"></i>
+                <i class="fa-solid fa-user-graduate w-5"></i>
 
                 <span>Siswa</span>
 
@@ -123,12 +125,12 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
             <!-- KATEGORI -->
             <a href="kategori.php"
-               class="flex items-center gap-3 px-4 py-3
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-green-50 hover:text-green-700
                       mb-2">
 
-                <i class="fa-solid fa-layer-group"></i>
+                <i class="fa-solid fa-layer-group w-5"></i>
 
                 <span>Kategori</span>
 
@@ -138,12 +140,13 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
-               class="flex items-center gap-3 px-4 py-3
+                onclick="return confirm('Yakin ingin logout?')"
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-red-50 hover:text-red-600
                       mt-8">
 
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
 
                 <span>Logout</span>
 
@@ -169,7 +172,7 @@ require_once '../../Controllers/c_dashboard_admin.php';
             <!-- JUDUL -->
             <div>
 
-                <h2 class="text-xl font-bold text-gray-800">
+                <h2 class="text-xl font-semibold text-gray-800">
                     Dashboard
                 </h2>
 
@@ -263,7 +266,7 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
                             <h3 class="text-3xl font-bold
                                        text-gray-800 mt-2">
-                                <?=  $statistik->total ?? 0 ?>
+                                <?= $statistik->total ?? 0 ?>
                             </h3>
 
                         </div>
@@ -306,7 +309,7 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
                             <h3 class="text-3xl font-bold
                                        text-gray-800 mt-2">
-                                <?=  $statistik->diproses ?? 0 ?>
+                                <?= $statistik->diproses ?? 0 ?>
                             </h3>
 
                         </div>
@@ -349,7 +352,7 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
                             <h3 class="text-3xl font-bold
                                        text-gray-800 mt-2">
-                                <?=  $statistik->diperbaiki ?? 0 ?>
+                                <?= $statistik->diperbaiki ?? 0 ?>
                             </h3>
 
                         </div>
@@ -392,7 +395,7 @@ require_once '../../Controllers/c_dashboard_admin.php';
 
                             <h3 class="text-3xl font-bold
                                        text-gray-800 mt-2">
-                                <?=  $statistik->selesai ?? 0 ?>
+                                <?= $statistik->selesai ?? 0 ?>
                             </h3>
 
                         </div>

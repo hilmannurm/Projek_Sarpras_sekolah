@@ -1,3 +1,9 @@
+<?php
+require_once '../../Controllers/c_kategori.php';
+
+require_once __DIR__ . '/../../Controllers/auth_admin.php';
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -50,7 +56,7 @@
 
 
             <!-- ASPIRASI -->
-            <a href="../../Controllers/c_aspirasi.php"
+            <a href="daftar_aspirasi.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
 
                 <i class="fa-solid fa-file-lines w-5"></i>
@@ -61,7 +67,7 @@
 
 
             <!-- HISTORI -->
-            <a href="../../Controllers/c_histori.php"
+            <a href="histori.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
@@ -72,7 +78,7 @@
 
 
             <!-- SISWA -->
-            <a href="../../Controllers/c_siswa.php"
+            <a href="daftar_siswa.php"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
 
                 <i class="fa-solid fa-user-graduate w-5"></i>
@@ -83,8 +89,8 @@
 
 
             <!-- KATEGORI -->
-            <a href="../../Controllers/c_kategori.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 text-green-600 mb-2">
+            <a href="kategori.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 text-green-600 font-medium mb-2">
 
                 <i class="fa-solid fa-layer-group w-5"></i>
 
@@ -95,6 +101,7 @@
 
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
+            onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 mt-8">
 
                 <i class="fa-solid fa-right-from-bracket w-5"></i>
@@ -176,7 +183,7 @@
 
 
                 <!-- FORM -->
-                <form action="c_kategori.php?aksi=update"
+                <form action="../../Controllers/c_kategori.php?aksi=update"
                     method="POST">
 
                     <input type="hidden"
@@ -201,7 +208,7 @@
 
                     <div class="flex items-center gap-3">
 
-                        <a href="../Views/Admin/kategori.php"
+                        <a href="kategori.php"
                             class="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100">
 
                             <i class="fa-solid fa-arrow-left mr-2"></i>

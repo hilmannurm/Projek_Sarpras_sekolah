@@ -1,5 +1,7 @@
 <?php
 require_once '../../Controllers/c_siswa.php';
+
+require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +19,7 @@ require_once '../../Controllers/c_siswa.php';
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
@@ -61,12 +63,12 @@ require_once '../../Controllers/c_siswa.php';
 
             <!-- DASHBOARD -->
             <a href="dashboard_admin.php"
-               class="flex items-center gap-3 px-4 py-3
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-green-50 hover:text-green-700
                       mb-2">
 
-                <i class="fa-solid fa-gauge"></i>
+                <i class="fa-solid fa-gauge w-5"></i>
 
                 <span>Dashboard</span>
 
@@ -75,12 +77,12 @@ require_once '../../Controllers/c_siswa.php';
 
             <!-- ASPIRASI -->
             <a href="daftar_aspirasi.php"
-               class="flex items-center gap-3 px-4 py-3
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-green-50 hover:text-green-700
                       mb-2">
 
-                <i class="fa-solid fa-file-lines"></i>
+                <i class="fa-solid fa-file-lines w-5"></i>
 
                 <span>Aspirasi</span>
 
@@ -88,13 +90,13 @@ require_once '../../Controllers/c_siswa.php';
 
 
             <!-- HISTORI -->
-            <a href="/Projek_sapras_hilman/Controllers/c_histori.php"
-               class="flex items-center gap-3 px-4 py-3
+            <a href="histori.php"
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-green-50 hover:text-green-700
                       mb-2">
 
-                <i class="fa-solid fa-clock-rotate-left"></i>
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
                 <span>Histori</span>
 
@@ -103,11 +105,11 @@ require_once '../../Controllers/c_siswa.php';
 
             <!-- SISWA AKTIF -->
             <a href="daftar_siswa.php"
-               class="flex items-center gap-3 px-4 py-3
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg bg-green-100 text-green-700
                       font-medium mb-2">
 
-                <i class="fa-solid fa-user-graduate"></i>
+                <i class="fa-solid fa-user-graduate w-5"></i>
 
                 <span>Siswa</span>
 
@@ -116,12 +118,12 @@ require_once '../../Controllers/c_siswa.php';
 
             <!-- KATEGORI -->
             <a href="kategori.php"
-               class="flex items-center gap-3 px-4 py-3
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-green-50 hover:text-green-700
                       mb-2">
 
-                <i class="fa-solid fa-layer-group"></i>
+                <i class="fa-solid fa-layer-group w-5"></i>
 
                 <span>Kategori</span>
 
@@ -130,12 +132,13 @@ require_once '../../Controllers/c_siswa.php';
 
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
-               class="flex items-center gap-3 px-4 py-3
+                onclick="return confirm('Yakin ingin logout?')"
+                class="flex items-center gap-3 px-4 py-3
                       rounded-lg text-gray-600
                       hover:bg-red-50 hover:text-red-600
                       mt-8">
 
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
 
                 <span>Logout</span>
 
@@ -160,7 +163,7 @@ require_once '../../Controllers/c_siswa.php';
             <!-- JUDUL -->
             <div>
 
-                <h2 class="text-xl font-bold text-gray-800">
+                <h2 class="text-xl font-semibold text-gray-800">
                     Data Siswa
                 </h2>
 
@@ -178,7 +181,7 @@ require_once '../../Controllers/c_siswa.php';
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
-                        Admin
+                        <?= htmlspecialchars($_SESSION['username']); ?>
                     </p>
 
                     <p class="text-xs text-gray-500">
@@ -228,7 +231,7 @@ require_once '../../Controllers/c_siswa.php';
 
                 <!-- TAMBAH SISWA -->
                 <a href="form_tambah_siswa.php"
-                   class="bg-green-600 hover:bg-green-700
+                    class="bg-green-600 hover:bg-green-700
                           text-white px-5 py-3 rounded-xl
                           flex items-center gap-2">
 
@@ -340,9 +343,9 @@ require_once '../../Controllers/c_siswa.php';
 
 
                                             <!-- EDIT -->
-                                            <a href="../../Controllers/c_siswa.php?aksi=edit&id_siswa=<?= $data->id_siswa; ?>"
-                                               class="text-blue-600 hover:text-blue-800"
-                                               title="Edit">
+                                            <a href="form_edit_siswa.php?aksi=edit&id_siswa=<?= $data->id_siswa; ?>"
+                                                class="text-blue-600 hover:text-blue-800"
+                                                title="Edit">
 
                                                 <i class="fa-solid fa-pen-to-square"></i>
 
@@ -351,8 +354,9 @@ require_once '../../Controllers/c_siswa.php';
 
                                             <!-- HAPUS -->
                                             <a href="../../Controllers/c_siswa.php?aksi=hapus&id_siswa=<?= $data->id_siswa; ?>"
-                                               class="text-red-600 hover:text-red-800"
-                                               title="Hapus">
+                                                onclick="return confirm('Yakin ingin menghapus data siswa ini?')"
+                                                class="text-red-600 hover:text-red-800"
+                                                title="Hapus">
 
                                                 <i class="fa-solid fa-trash"></i>
 

@@ -67,8 +67,12 @@ elseif ($aksi == 'tambah') {
 
    if ($hasil) {
 
-    header("Location: c_aspirasi_siswa.php");
+    echo "<script>
+            alert('Aspirasi berhasil ditambahkan!');
+            window.location.href = '../Views/Siswa/aspirasi_siswa.php';
+          </script>";
     exit;
+
 
 } else {
 

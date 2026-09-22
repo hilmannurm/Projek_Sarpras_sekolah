@@ -20,6 +20,27 @@ class m_kategori {
         return $result;
     }
 
+
+    public function pilih_kategori() {
+        $koneksi = new m_koneksi();
+
+        $sql = "SELECT * FROM tb_kategori";
+        $query = mysqli_query($koneksi->koneksi, $sql);
+
+        $result = [];
+
+        if ($query && $query->num_rows > 0) {
+            while ($data = mysqli_fetch_object($query)) {
+                $result[] = $data;
+            }
+        }
+
+        return $result;
+    }
+
+
+
+
     public function tampil_by_id($id) {
         $koneksi = new m_koneksi();
 

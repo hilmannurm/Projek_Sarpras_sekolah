@@ -1,5 +1,7 @@
 <?php
 require_once '../../Controllers/c_aspirasi.php';
+
+require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
 <!DOCTYPE html>
@@ -28,11 +30,11 @@ require_once '../../Controllers/c_aspirasi.php';
         <div class="h-20 px-6 border-b flex items-center gap-3">
 
             <div class="w-11 h-11 bg-green-100 rounded-xl flex items-center justify-center">
-                <i class="fa-solid fa-bullhorn text-green-600 text-lg"></i>
+                <i class="fa-solid fa-bullhorn text-xl text-green-600"></i>
             </div>
 
             <div>
-                <h1 class="font-bold text-gray-800">
+                <h1 class="font-bold text-green-700">
                     Pengaduan
                 </h1>
 
@@ -54,7 +56,7 @@ require_once '../../Controllers/c_aspirasi.php';
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-gauge"></i>
+                <i class="fa-solid fa-gauge w-5"></i>
 
                 <span>
                     Dashboard
@@ -69,7 +71,7 @@ require_once '../../Controllers/c_aspirasi.php';
                        rounded-lg bg-green-100 text-green-700
                        font-medium mb-2">
 
-                <i class="fa-solid fa-file-lines"></i>
+                <i class="fa-solid fa-file-lines w-5"></i>
 
                 <span>
                     Aspirasi
@@ -79,13 +81,13 @@ require_once '../../Controllers/c_aspirasi.php';
 
 
             <!-- Histori -->
-            <a href="/Projek_sapras_hilman/Controllers/c_histori.php"
+            <a href="histori.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-clock-rotate-left"></i>
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
                 <span>
                     Histori
@@ -101,7 +103,7 @@ require_once '../../Controllers/c_aspirasi.php';
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-user-graduate"></i>
+                <i class="fa-solid fa-user-graduate w-5"></i>
 
                 <span>
                     Siswa
@@ -117,7 +119,7 @@ require_once '../../Controllers/c_aspirasi.php';
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-layer-group"></i>
+                <i class="fa-solid fa-layer-group w-5"></i>
 
                 <span>
                     Kategori
@@ -128,12 +130,13 @@ require_once '../../Controllers/c_aspirasi.php';
 
             <!-- Logout -->
             <a href="../../Controllers/c_logout.php"
+                onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-red-50 hover:text-red-600
                        mt-8">
 
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
 
                 <span>
                     Logout
@@ -155,7 +158,7 @@ require_once '../../Controllers/c_aspirasi.php';
 
             <div>
 
-                <h2 class="text-xl font-bold text-gray-800">
+                <h2 class="text-xl font-semibold text-gray-800">
                     Daftar Aspirasi
                 </h2>
 
@@ -172,7 +175,7 @@ require_once '../../Controllers/c_aspirasi.php';
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
-                        Admin
+                        <?= htmlspecialchars($_SESSION['username']); ?>
                     </p>
 
                     <p class="text-xs text-gray-500">
@@ -457,14 +460,6 @@ require_once '../../Controllers/c_aspirasi.php';
                             <p class="text-sm text-gray-500 mt-1">
                                 Kelola dan tanggapi aspirasi siswa.
                             </p>
-
-                        </div>
-
-
-                        <!-- Icon -->
-                        <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
-
-                            <i class="fa-solid fa-file-lines text-green-600"></i>
 
                         </div>
 

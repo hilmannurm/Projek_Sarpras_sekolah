@@ -18,14 +18,15 @@
 </head>
 
 
-<body class="min-h-screen bg-gray-100 flex items-center justify-center">
+<body class="min-h-screen bg-gray-100 bg-cover bg-center bg-no-repeat flex items-center justify-center" style="background-image: url('../Assets/bg_login.jpeg');">
 
 
+    <!-- CARD LOGIN -->
     <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
 
 
         <!-- LOGO & JUDUL -->
-        <div class="text-center mb-6">
+        <div class="text-center mb-8">
 
             <div class="w-20 h-20 mx-auto mb-4
                         bg-green-100 rounded-2xl
@@ -49,75 +50,29 @@
 
 
 
-        <!-- PILIHAN ROLE -->
-        <div class="flex gap-3 mb-6">
-
-
-            <!-- SISWA -->
-            <button type="button"
-                    id="btnSiswa"
-                    onclick="pilihRole('siswa')"
-                    class="w-1/2 py-2 rounded-lg bg-green-600 text-white">
-
-                <i class="fa-solid fa-user-graduate mr-2"></i>
-                Siswa
-
-            </button>
-
-
-            <!-- ADMIN -->
-            <button type="button"
-                    id="btnAdmin"
-                    onclick="pilihRole('admin')"
-                    class="w-1/2 py-2 rounded-lg bg-gray-200 text-gray-700">
-
-                <i class="fa-solid fa-user-shield mr-2"></i>
-                Admin
-
-            </button>
-
-        </div>
-
-
-
         <!-- FORM LOGIN -->
         <form action="../Controllers/c_login.php" method="POST">
 
 
-            <!-- ROLE -->
-            <input type="hidden"
-                   name="role"
-                   id="role"
-                   value="siswa">
+            <!-- USERNAME / NIS -->
+            <div class="mb-5">
 
-
-
-            <!-- NIS / USERNAME -->
-            <div class="mb-4">
-
-                <label id="labelUsername"
-                       class="block text-sm font-medium text-gray-700 mb-2">
-
-                    NIS
-
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Username / NIS
                 </label>
 
 
                 <div class="relative">
 
-                    <i id="iconUsername"
-                       class="fa-solid fa-id-card absolute left-4 top-1/2
+                    <i class="fa-solid fa-user absolute left-4 top-1/2
                               -translate-y-1/2 text-gray-400">
                     </i>
 
 
                     <input type="text"
                            name="username"
-                           id="username"
-                           placeholder="Masukkan NIS"
+                           placeholder="Masukkan Username / NIS"
                            required
-                           inputmode="numeric"
-                           pattern="[0-9]+"
                            class="w-full pl-11 pr-4 py-3
                                   border border-gray-300 rounded-lg
                                   focus:outline-none
@@ -133,9 +88,7 @@
             <div class="mb-6">
 
                 <label class="block text-sm font-medium text-gray-700 mb-2">
-
                     Password
-
                 </label>
 
 
@@ -148,8 +101,7 @@
 
                     <input type="password"
                            name="password"
-                           id="password"
-                           placeholder="Masukkan password"
+                           placeholder="Masukkan Password"
                            required
                            class="w-full pl-11 pr-4 py-3
                                   border border-gray-300 rounded-lg
@@ -171,7 +123,7 @@
 
                 <i class="fa-solid fa-right-to-bracket mr-2"></i>
 
-                Login
+                Masuk ke Sistem
 
             </button>
 
@@ -180,142 +132,6 @@
 
 
     </div>
-
-
-
-    <!-- JAVASCRIPT -->
-    <script>
-
-        function pilihRole(role) {
-
-            // Nilai role
-            document.getElementById('role').value = role;
-
-
-            // Tombol
-            const btnSiswa =
-                document.getElementById('btnSiswa');
-
-            const btnAdmin =
-                document.getElementById('btnAdmin');
-
-
-            // Input
-            const label =
-                document.getElementById('labelUsername');
-
-            const input =
-                document.getElementById('username');
-
-            const icon =
-                document.getElementById('iconUsername');
-
-
-
-            // =====================================
-            // JIKA MEMILIH SISWA
-            // =====================================
-            if (role == 'siswa') {
-
-                btnSiswa.className =
-                    "w-1/2 py-2 rounded-lg bg-green-600 text-white";
-
-                btnAdmin.className =
-                    "w-1/2 py-2 rounded-lg bg-gray-200 text-gray-700";
-
-
-                label.innerText = "NIS";
-
-                input.placeholder = "Masukkan NIS";
-
-                input.inputMode = "numeric";
-
-                input.pattern = "[0-9]+";
-
-
-                // Hanya angka yang boleh dimasukkan
-                input.onbeforeinput = function (e) {
-
-                    if (e.data && !/^[0-9]+$/.test(e.data)) {
-
-                        e.preventDefault();
-
-                    }
-
-                };
-
-
-                // Mencegah paste huruf/simbol
-                input.onpaste = function (e) {
-
-                    const text =
-                        e.clipboardData.getData('text');
-
-                    if (!/^[0-9]+$/.test(text)) {
-
-                        e.preventDefault();
-
-                    }
-
-                };
-
-
-                // Pengaman tambahan
-                input.oninput = function () {
-
-                    this.value =
-                        this.value.replace(/[^0-9]/g, '');
-
-                };
-
-
-                // Icon NIS
-                icon.className =
-                    "fa-solid fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-gray-400";
-
-            }
-
-
-
-            // =====================================
-            // JIKA MEMILIH ADMIN
-            // =====================================
-            else {
-
-                btnAdmin.className =
-                    "w-1/2 py-2 rounded-lg bg-green-600 text-white";
-
-                btnSiswa.className =
-                    "w-1/2 py-2 rounded-lg bg-gray-200 text-gray-700";
-
-
-                label.innerText = "Username";
-
-                input.placeholder = "Masukkan username";
-
-                input.inputMode = "text";
-
-                input.removeAttribute("pattern");
-
-
-                // Hapus pembatas angka
-                input.onbeforeinput = null;
-
-                input.onpaste = null;
-
-                input.oninput = null;
-
-
-                // Icon Admin
-                icon.className =
-                    "fa-solid fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-400";
-
-            }
-
-        }
-
-
-    </script>
 
 
 </body>

@@ -1,3 +1,9 @@
+<?php
+    require_once '../../Controllers/c_aspirasi_siswa.php';
+
+    require_once __DIR__ . '/../../Controllers/auth_siswa.php';
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -24,7 +30,7 @@
             </div>
 
             <div>
-                <h1 class="font-bold text-gray-800">
+                <h1 class="font-bold text-green-700">
                     Pengaduan
                 </h1>
 
@@ -48,8 +54,8 @@
             </a>
 
 
-            <a href="c_aspirasi_siswa.php"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 text-green-600 mb-2">
+            <a href="aspirasi_siswa.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg bg-green-50 text-green-700 font-medium mb-2">
 
                 <i class="fa-solid fa-file-lines w-5"></i>
 
@@ -58,17 +64,11 @@
             </a>
 
 
-            <a href="c_aspirasi.php?aksi=form_tambah"
-                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
-
-                <i class="fa-solid fa-pen-to-square w-5"></i>
-
-                Buat Aspirasi
-
             </a>
 
 
-            <a href="../Controllers/c_logout.php"
+            <a href="../../Controllers/c_logout.php"
+                onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 mt-8">
 
                 <i class="fa-solid fa-right-from-bracket w-5"></i>
@@ -107,19 +107,15 @@
                         <?= htmlspecialchars($_SESSION['nama_siswa']); ?>
                     </p>
 
-                    <p class="text-xs text-gray-500">
+                    <p class="text-xs text-gray-400">
                         Nis <?= htmlspecialchars($_SESSION['nis']); ?>
                     </p>
 
                 </div>
 
-                <div class="w-10 h-10 rounded-full
-                bg-green-100
-                flex items-center
-                justify-center">
+                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
 
-                    <i class="fa-solid fa-user-shield
-                  text-green-600">
+                    <i class="fa-solid fa-user text-green-600">
                     </i>
 
                 </div>
@@ -148,7 +144,7 @@
                     </div>
 
 
-                    <a href="c_aspirasi.php?aksi=form_tambah"
+                    <a href="tambah_pengaduan.php"
                         class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
 
                         <i class="fa-solid fa-plus mr-2"></i>
@@ -259,7 +255,7 @@
 
                                     <td class="px-4 py-4">
 
-                                        <a href="c_aspirasi_siswa.php?id_aspirasi=<?php echo $data->id_aspirasi; ?>"
+                                        <a href="../../Views/Siswa/detail_aspirasi_siswa.php?id_aspirasi=<?php echo $data->id_aspirasi; ?>"
                                             class="text-green-600 hover:text-green-800"
                                             title="Lihat detail">
 

@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+require_once __DIR__ . '/../../Controllers/auth_admin.php';
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -15,315 +20,316 @@
 
 <body class="bg-gray-100">
 
-    
 
-        <!-- SIDEBAR -->
-        <aside class="fixed left-0 top-0 h-screen w-64 bg-white shadow-md">
 
-            <!-- LOGO -->
-            <div class="h-20 flex items-center px-6 border-b">
+    <!-- SIDEBAR -->
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-white shadow-md">
 
-                <div class="w-11 h-11 bg-green-100 rounded-xl
+        <!-- LOGO -->
+        <div class="h-20 flex items-center px-6 border-b">
+
+            <div class="w-11 h-11 bg-green-100 rounded-xl
                             flex items-center justify-center mr-3">
 
-                    <i class="fa-solid fa-bullhorn text-xl text-green-600"></i>
+                <i class="fa-solid fa-bullhorn text-xl text-green-600"></i>
+
+            </div>
+
+            <div>
+
+                <h1 class="font-bold text-green-700">
+                    Pengaduan
+                </h1>
+
+                <p class="text-xs text-gray-500">
+                    Sarpras Sekolah
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- MENU SIDEBAR -->
+        <nav class="p-4">
+
+            <!-- DASHBOARD -->
+            <a href="dashboard_admin.php"
+                class="flex items-center gap-3 px-4 py-3
+                           rounded-lg text-gray-600
+                           hover:bg-green-50 hover:text-green-700
+                           mb-2">
+
+                <i class="fa-solid fa-gauge w-5"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <!-- ASPIRASI -->
+            <a href="daftar_aspirasi.php"
+                class="flex items-center gap-3 px-4 py-3
+                           rounded-lg text-gray-600
+                           hover:bg-green-50 hover:text-green-700
+                           mb-2">
+
+                <i class="fa-solid fa-file-lines w-5"></i>
+
+                <span>Aspirasi</span>
+
+            </a>
+
+
+            <!-- HISTORI -->
+            <a href="histori.php"
+                class="flex items-center gap-3 px-4 py-3
+                           rounded-lg text-gray-600
+                           hover:bg-green-50 hover:text-green-700
+                           mb-2">
+
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
+
+                <span>Histori</span>
+
+            </a>
+
+
+            <!-- SISWA -->
+            <a href="daftar_siswa.php"
+                class="flex items-center gap-3 px-4 py-3
+                           rounded-lg bg-green-100 text-green-700
+                           font-medium mb-2">
+
+                <i class="fa-solid fa-user-graduate w-5"></i>
+
+                <span>Siswa</span>
+
+            </a>
+
+
+            <!-- KATEGORI -->
+            <a href="kategori.php"
+                class="flex items-center gap-3 px-4 py-3
+                           rounded-lg text-gray-600
+                           hover:bg-green-50 hover:text-green-700
+                           mb-2">
+
+                <i class="fa-solid fa-layer-group w-5"></i>
+
+                <span>Kategori</span>
+
+            </a>
+
+
+            <!-- LOGOUT -->
+            <a href="../../Controllers/c_logout.php"
+                onclick="return confirm('Yakin ingin logout?')"
+                class="flex items-center gap-3 px-4 py-3
+                           rounded-lg text-gray-600
+                           hover:bg-red-50 hover:text-red-600
+                           mt-8">
+
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
+
+                <span>Logout</span>
+
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- CONTENT UTAMA -->
+    <main class="ml-64 min-h-screen">
+
+        <!-- TOPBAR -->
+        <header class="bg-white h-20 shadow-sm
+                           flex items-center justify-between px-8">
+
+            <!-- JUDUL -->
+            <div>
+
+                <h2 class="text-xl font-semibold text-gray-800">
+                    Tambah Siswa
+                </h2>
+
+                <p class="text-sm text-gray-500">
+                    Tambahkan data siswa baru
+                </p>
+
+            </div>
+
+
+            <!-- PROFIL ADMIN -->
+            <div class="flex items-center gap-3">
+
+                <div class="text-right">
+
+                    <p class="font-semibold text-gray-700">
+                        <?= htmlspecialchars($_SESSION['username']); ?>
+                    </p>
+
+                    <p class="text-xs text-gray-500">
+                        Administrator
+                    </p>
 
                 </div>
 
-                <div>
 
-                    <h1 class="font-bold text-green-700">
-                        Pengaduan
-                    </h1>
+                <div class="w-10 h-10 rounded-full
+                                bg-green-100
+                                flex items-center justify-center">
 
-                    <p class="text-xs text-gray-500">
-                        Sarpras Sekolah
-                    </p>
+                    <i class="fa-solid fa-user-shield
+                                  text-green-600">
+                    </i>
 
                 </div>
 
             </div>
 
-
-            <!-- MENU SIDEBAR -->
-            <nav class="p-4">
-
-                <!-- DASHBOARD -->
-                <a href="dashboard_admin.php"
-                    class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-green-50 hover:text-green-700
-                           mb-2">
-
-                    <i class="fa-solid fa-gauge"></i>
-
-                    <span>Dashboard</span>
-
-                </a>
+        </header>
 
 
-                <!-- ASPIRASI -->
-                <a href="daftar_aspirasi.php"
-                    class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-green-50 hover:text-green-700
-                           mb-2">
+        <!-- ISI FORM -->
+        <section class="p-8">
 
-                    <i class="fa-solid fa-file-lines"></i>
+            <div class="max-w-3xl">
 
-                    <span>Aspirasi</span>
+                <!-- CARD -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200">
 
-                </a>
+                    <!-- CARD HEADER -->
+                    <div class="px-6 py-5 border-b border-gray-200">
 
+                        <h3 class="text-lg font-bold text-gray-800">
+                            Data Siswa
+                        </h3>
 
-                <!-- HISTORI -->
-                <a href="/Projek_sapras_hilman/Controllers/c_histori.php"
-                    class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-green-50 hover:text-green-700
-                           mb-2">
-
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-
-                    <span>Histori</span>
-
-                </a>
-
-
-                <!-- SISWA -->
-                <a href="daftar_siswa.php"
-                    class="flex items-center gap-3 px-4 py-3
-                           rounded-lg bg-green-100 text-green-700
-                           font-medium mb-2">
-
-                    <i class="fa-solid fa-user-graduate"></i>
-
-                    <span>Siswa</span>
-
-                </a>
-
-
-                <!-- KATEGORI -->
-                <a href="kategori.php"
-                    class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-green-50 hover:text-green-700
-                           mb-2">
-
-                    <i class="fa-solid fa-layer-group"></i>
-
-                    <span>Kategori</span>
-
-                </a>
-
-
-                <!-- LOGOUT -->
-                <a href="../../Controllers/c_logout.php"
-                    class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-red-50 hover:text-red-600
-                           mt-8">
-
-                    <i class="fa-solid fa-right-from-bracket"></i>
-
-                    <span>Logout</span>
-
-                </a>
-
-            </nav>
-
-        </aside>
-
-
-        <!-- CONTENT UTAMA -->
-        <main class="ml-64 min-h-screen">
-
-            <!-- TOPBAR -->
-            <header class="bg-white h-20 shadow-sm
-                           flex items-center justify-between px-8">
-
-                <!-- JUDUL -->
-                <div>
-
-                    <h2 class="text-xl font-bold text-gray-800">
-                        Tambah Siswa
-                    </h2>
-
-                    <p class="text-sm text-gray-500">
-                        Tambahkan data siswa baru
-                    </p>
-
-                </div>
-
-
-                <!-- PROFIL ADMIN -->
-                <div class="flex items-center gap-3">
-
-                    <div class="text-right">
-
-                        <p class="font-semibold text-gray-700">
-                            Admin
-                        </p>
-
-                        <p class="text-xs text-gray-500">
-                            Administrator
+                        <p class="text-sm text-gray-500 mt-1">
+                            Isi data siswa dengan lengkap
                         </p>
 
                     </div>
 
 
-                    <div class="w-10 h-10 rounded-full
-                                bg-green-100
-                                flex items-center justify-center">
-
-                        <i class="fa-solid fa-user-shield
-                                  text-green-600">
-                        </i>
-
-                    </div>
-
-                </div>
-
-            </header>
+                    <!-- FORM -->
+                    <form action="../../Controllers/c_siswa.php?aksi=tambah"
+                        method="POST"
+                        class="p-6">
 
 
-            <!-- ISI FORM -->
-            <section class="p-8">
+                        <!-- NIS -->
+                        <div class="mb-5">
 
-                <div class="max-w-3xl">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                NIS
+                            </label>
 
-                    <!-- CARD -->
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200">
-
-                        <!-- CARD HEADER -->
-                        <div class="px-6 py-5 border-b border-gray-200">
-
-                            <h3 class="text-lg font-bold text-gray-800">
-                                Data Siswa
-                            </h3>
-
-                            <p class="text-sm text-gray-500 mt-1">
-                                Isi data siswa dengan lengkap
-                            </p>
+                            <input
+                                type="number"
+                                name="nis"
+                                placeholder="Masukkan NIS"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                                           focus:outline-none focus:ring-2 focus:ring-green-500">
 
                         </div>
 
 
-                        <!-- FORM -->
-                        <form action="../../Controllers/c_siswa.php?aksi=tambah"
-                            method="POST"
-                            class="p-6">
+                        <!-- NAMA SISWA -->
+                        <div class="mb-5">
 
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Nama Siswa
+                            </label>
 
-                            <!-- NIS -->
-                            <div class="mb-5">
-
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
-                                    NIS
-                                </label>
-
-                                <input
-                                    type="number"
-                                    name="nis"
-                                    placeholder="Masukkan NIS"
-                                    required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                            <input
+                                type="text"
+                                name="nama_siswa"
+                                placeholder="Masukkan nama siswa"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                            focus:outline-none focus:ring-2 focus:ring-green-500">
 
-                            </div>
+                        </div>
 
 
-                            <!-- NAMA SISWA -->
-                            <div class="mb-5">
+                        <!-- KELAS -->
+                        <div class="mb-5">
 
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
-                                    Nama Siswa
-                                </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Kelas
+                            </label>
 
-                                <input
-                                    type="text"
-                                    name="nama_siswa"
-                                    placeholder="Masukkan nama siswa"
-                                    required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                            <input
+                                type="text"
+                                name="kelas"
+                                placeholder="Contoh: XI RPL 1"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                            focus:outline-none focus:ring-2 focus:ring-green-500">
 
-                            </div>
+                        </div>
 
 
-                            <!-- KELAS -->
-                            <div class="mb-5">
+                        <!-- PASSWORD -->
+                        <div class="mb-6">
 
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
-                                    Kelas
-                                </label>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Password
+                            </label>
 
-                                <input
-                                    type="text"
-                                    name="kelas"
-                                    placeholder="Contoh: XI RPL 1"
-                                    required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Masukkan password siswa"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                            focus:outline-none focus:ring-2 focus:ring-green-500">
 
-                            </div>
+                        </div>
 
 
-                            <!-- PASSWORD -->
-                            <div class="mb-6">
+                        <!-- BUTTON -->
+                        <div class="flex items-center gap-3">
 
-                                <label class="block text-sm font-medium text-gray-700 mb-2">
-                                    Password
-                                </label>
-
-                                <input
-                                    type="password"
-                                    name="password"
-                                    placeholder="Masukkan password siswa"
-                                    required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg
-                                           focus:outline-none focus:ring-2 focus:ring-green-500">
-
-                            </div>
-
-
-                            <!-- BUTTON -->
-                            <div class="flex items-center gap-3">
-
-                                <a href="daftar_siswa.php"
-                                    class="px-5 py-3 rounded-lg border border-gray-300
+                            <a href="daftar_siswa.php"
+                                class="px-5 py-3 rounded-lg border border-gray-300
                                            text-gray-600 hover:bg-gray-50">
 
-                                    <i class="fa-solid fa-arrow-left mr-2"></i>
+                                <i class="fa-solid fa-arrow-left mr-2"></i>
 
-                                    Kembali
+                                Kembali
 
-                                </a>
+                            </a>
 
 
-                                <button type="submit"
-                                    class="px-5 py-3 rounded-lg bg-green-600
+                            <button type="submit"
+                                class="px-5 py-3 rounded-lg bg-green-600
                                            text-white hover:bg-green-700">
 
-                                    <i class="fa-solid fa-plus mr-2"></i>
+                                <i class="fa-solid fa-plus mr-2"></i>
 
-                                    Tambah Siswa
+                                Tambah Siswa
 
-                                </button>
+                            </button>
 
-                            </div>
+                        </div>
 
-                        </form>
-
-                    </div>
+                    </form>
 
                 </div>
 
-            </section>
+            </div>
 
-        </main>
+        </section>
 
-    
+    </main>
+
+
 
 </body>
 

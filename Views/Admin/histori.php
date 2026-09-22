@@ -1,3 +1,8 @@
+<?php
+    require_once '../../Controllers/c_histori.php';
+    
+    require_once __DIR__ . '/../../Controllers/auth_admin.php';
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -47,13 +52,13 @@
         <nav class="p-4">
 
             <!-- DASHBOARD -->
-            <a href="../Views/Admin/dashboard_admin.php"
+            <a href="dashboard_admin.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-gauge"></i>
+                <i class="fa-solid fa-gauge w-5"></i>
 
                 <span>Dashboard</span>
 
@@ -61,13 +66,13 @@
 
 
             <!-- ASPIRASI -->
-            <a href="../Views/Admin/daftar_aspirasi.php"
+            <a href="daftar_aspirasi.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-file-lines"></i>
+                <i class="fa-solid fa-file-lines w-5"></i>
 
                 <span>Aspirasi</span>
 
@@ -75,12 +80,12 @@
 
 
             <!-- HISTORI -->
-            <a href="../Views/Admin/histori.php"
+            <a href="histori.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg bg-green-100 text-green-700
                        font-medium mb-2">
 
-                <i class="fa-solid fa-clock-rotate-left"></i>
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
                 <span>Histori</span>
 
@@ -88,13 +93,13 @@
 
 
             <!-- SISWA -->
-            <a href="../Views/Admin/daftar_siswa.php"
+            <a href="daftar_siswa.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-user-graduate"></i>
+                <i class="fa-solid fa-user-graduate w-5"></i>
 
                 <span>Siswa</span>
 
@@ -102,13 +107,13 @@
 
 
             <!-- KATEGORI -->
-            <a href="../Views/Admin/kategori.php"
+            <a href="kategori.php"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-green-50 hover:text-green-700
                        mb-2">
 
-                <i class="fa-solid fa-layer-group"></i>
+                <i class="fa-solid fa-layer-group w-5"></i>
 
                 <span>Kategori</span>
 
@@ -117,12 +122,13 @@
 
             <!-- LOGOUT -->
             <a href="../Controllers/c_logout.php"
+                onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
                        hover:bg-red-50 hover:text-red-600
                        mt-8">
 
-                <i class="fa-solid fa-right-from-bracket"></i>
+                <i class="fa-solid fa-right-from-bracket w-5"></i>
 
                 <span>Logout</span>
 
@@ -159,7 +165,7 @@
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
-                        Admin
+                        <?= htmlspecialchars($_SESSION['username']); ?>
                     </p>
 
                     <p class="text-xs text-gray-500">
@@ -191,7 +197,7 @@
                 <!-- HEADER -->
                 <div class="px-6 py-5 border-b border-gray-200">
 
-                    <h3 class="text-lg font-bold text-gray-800">
+                    <h3 class="text-lg font-semibold text-gray-800">
                         Aspirasi Selesai
                     </h3>
 
