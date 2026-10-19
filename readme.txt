@@ -11,3 +11,9 @@ password:siswa123
 
 nis:1234567890
 password:siswa123
+
+nis:0012345678
+password:siswa123
+
+link hosting:
+pengaduansarana6.freedev.app
