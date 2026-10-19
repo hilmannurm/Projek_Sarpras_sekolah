@@ -6,5 +6,8 @@ password:Petugas123
 
 
 -Siswa
-nis:12345
+nis:0123456789
+password:siswa123
+
+nis:1234567890
 password:siswa123

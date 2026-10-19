@@ -65,19 +65,31 @@ elseif ($aksi == 'tambah') {
         $bukti_foto
     );
 
-   if ($hasil) {
+    if ($hasil) {
 
-    echo "<script>
-            alert('Aspirasi berhasil ditambahkan!');
-            window.location.href = '../Views/Siswa/aspirasi_siswa.php';
-          </script>";
-    exit;
+        echo "<script>
+                alert('Aspirasi berhasil ditambahkan!');
+                window.location.href = '../Views/Siswa/aspirasi_siswa.php';
+              </script>";
+        exit;
+    } else {
 
-
-} else {
-
-    echo "Gagal menambahkan aspirasi.";
+        echo "Gagal menambahkan aspirasi.";
+    }
 }
+
+
+// ==================================================
+// SISWA - RIWAYAT ASPIRASI
+// ==================================================
+
+elseif ($aksi == 'riwayat') {
+
+    $id_siswa = $_SESSION['id_siswa'];
+
+    $riwayat = $aspirasi->riwayat_by_siswa($id_siswa);
+
+    include_once __DIR__ . '/../Views/Siswa/riwayat_aspirasi.php';
 }
 
 
@@ -109,28 +121,44 @@ elseif ($aksi == 'tanggapi') {
     // Cek urutan status
     // ==============================================
 
-    if ($status_lama == 'diproses' && $status_baru != 'diperbaiki') {
+    // Menunggu hanya boleh menjadi diproses
+    if ($status_lama == 'menunggu' && $status_baru != 'diproses') {
 
         echo "<script>
-                alert('Status harus diubah ke diperbaiki terlebih dahulu.');
+                alert('Aspirasi dari status menunggu hanya dapat diproses.');
                 window.history.back();
               </script>";
         exit;
     }
 
-    if ($status_lama == 'diperbaiki' && $status_baru != 'selesai') {
+
+    // Diproses hanya boleh menjadi selesai
+    if ($status_lama == 'diproses' && $status_baru != 'selesai') {
 
         echo "<script>
-                alert('Status harus diubah ke selesai terlebih dahulu.');
+                alert('Aspirasi yang sedang diproses hanya dapat diselesaikan.');
                 window.history.back();
               </script>";
         exit;
     }
 
+
+    // Selesai tidak dapat diubah
     if ($status_lama == 'selesai') {
 
         echo "<script>
                 alert('Aspirasi sudah selesai dan tidak dapat diubah lagi.');
+                window.history.back();
+              </script>";
+        exit;
+    }
+
+
+    // Ditolak tidak dapat diubah
+    if ($status_lama == 'ditolak') {
+
+        echo "<script>
+                alert('Aspirasi sudah ditolak dan tidak dapat diubah lagi.');
                 window.history.back();
               </script>";
         exit;
@@ -240,10 +268,66 @@ elseif ($aksi == 'tanggapi') {
         );
 
         exit;
-
     } else {
 
         echo "Gagal menyimpan tanggapan.";
+    }
+}
+
+
+// ==================================================
+// ADMIN - TOLAK ASPIRASI
+// ==================================================
+
+elseif ($aksi == 'tolak') {
+
+    $id_aspirasi = $_POST['id_aspirasi'];
+    $id_admin = $_SESSION['id_admin'];
+
+    // Ambil data aspirasi
+    $data = $aspirasi->tampil_by_id($id_aspirasi);
+    $asp = mysqli_fetch_assoc($data);
+
+    $status_lama = $asp['status'];
+
+
+    // Aspirasi hanya boleh ditolak jika masih menunggu
+    if ($status_lama != 'menunggu') {
+
+        echo "<script>
+                alert('Aspirasi hanya dapat ditolak saat status masih menunggu.');
+                window.history.back();
+              </script>";
+        exit;
+    }
+
+
+    // Ubah status menjadi ditolak
+    $update_status = $aspirasi->update_status(
+        $id_aspirasi,
+        'ditolak'
+    );
+
+
+    // Simpan ke histori
+    $tambah_histori = $histori->tambah_histori(
+        $id_aspirasi,
+        $id_admin,
+        $status_lama,
+        'ditolak'
+    );
+
+
+    if ($update_status && $tambah_histori) {
+
+        echo "<script>
+                alert('Aspirasi berhasil ditolak.');
+                window.location.href = '../Views/Admin/daftar_aspirasi.php';
+              </script>";
+        exit;
+    } else {
+
+        echo "Gagal menolak aspirasi.";
     }
 }
 
@@ -261,19 +345,18 @@ elseif (isset($_GET['id_aspirasi'])) {
     $data_aspirasi = mysqli_fetch_object($query_aspirasi);
 
 
+    // ==============================================
     // Menentukan status berikutnya
-    // Diproses → Diperbaiki → Selesai
+    // ==============================================
 
-    if ($data_aspirasi->status == 'diproses') {
+    if ($data_aspirasi->status == 'menunggu') {
 
-        $status_berikutnya = 'diperbaiki';
+        $status_berikutnya = 'diproses';
         $form_tanggapan = true;
-
-    } elseif ($data_aspirasi->status == 'diperbaiki') {
+    } elseif ($data_aspirasi->status == 'diproses') {
 
         $status_berikutnya = 'selesai';
         $form_tanggapan = true;
-
     } else {
 
         $status_berikutnya = '';
@@ -281,9 +364,23 @@ elseif (isset($_GET['id_aspirasi'])) {
     }
 
 
+    // ==============================================
+    // Ambil data progres
+    // ==============================================
+
     $data_progres = $progres->tampil_by_aspirasi($id_aspirasi);
 
+
+    // ==============================================
+    // Ambil data histori
+    // ==============================================
+
     $data_histori = $histori->tampil_by_aspirasi($id_aspirasi);
+
+
+    // ==============================================
+    // Tampilkan detail
+    // ==============================================
 
     include_once __DIR__ . '/../Views/Admin/detail_aspirasi.php';
 }
@@ -293,43 +390,87 @@ elseif (isset($_GET['id_aspirasi'])) {
 // ADMIN - DAFTAR ASPIRASI
 // ==================================================
 
+// ADMIN - DAFTAR ASPIRASI
 else {
-
     $tanggal = $_GET['tanggal'] ?? '';
     $bulan = $_GET['bulan'] ?? '';
     $id_siswa = $_GET['id_siswa'] ?? '';
     $id_kategori = $_GET['id_kategori'] ?? '';
 
-
     // Data siswa untuk filter
     $data_siswa = $siswa->tampil_siswa();
-
 
     // Data kategori untuk filter
     $data_kategori = $kategori->tampil_kategori();
 
+    // Pagination
+    $limit = 10;
 
-    // Filter aspirasi
-    if (
+    $halaman = isset($_GET['halaman']) ? (int)$_GET['halaman'] : 1;
+
+    if ($halaman < 1) {
+        $halaman = 1;
+    }
+
+    $offset = ($halaman - 1) * $limit;
+
+    // Cek apakah ada filter
+    $ada_filter = (
         $tanggal != '' ||
         $bulan != '' ||
         $id_siswa != '' ||
         $id_kategori != ''
-    ) {
+    );
 
-        $aspirasis = $aspirasi->filter_aspirasi(
+    if ($ada_filter) {
+
+        // Ambil seluruh data sesuai filter untuk menghitung jumlah data
+        $semua_aspirasi = $aspirasi->filter_aspirasi(
             $tanggal,
             $bulan,
             $id_siswa,
             $id_kategori
         );
 
+        $total_data = mysqli_num_rows($semua_aspirasi);
+
+        // Hitung total halaman
+        $total_halaman = ceil($total_data / $limit);
+
+        // Jika halaman melebihi jumlah halaman
+        if ($total_halaman > 0 && $halaman > $total_halaman) {
+            $halaman = $total_halaman;
+            $offset = ($halaman - 1) * $limit;
+        }
+
+        // Ambil data sesuai halaman
+        $aspirasis = $aspirasi->filter_aspirasi(
+            $tanggal,
+            $bulan,
+            $id_siswa,
+            $id_kategori,
+            $limit,
+            $offset
+        );
+
     } else {
 
-        $aspirasis = $aspirasi->tampil_aspirasi();
-    }
+        // Ambil data sesuai halaman
+        $aspirasis = $aspirasi->tampil_aspirasi(
+            $limit,
+            $offset
+        );
 
+        // Ambil seluruh data untuk menghitung jumlah halaman
+        $semua_aspirasi = $aspirasi->tampil_aspirasi();
+
+        $total_data = mysqli_num_rows($semua_aspirasi);
+
+        // Hitung total halaman
+        $total_halaman = ceil($total_data / $limit);
+    }
 
     include_once __DIR__ . '/../Views/Admin/daftar_aspirasi.php';
 }
+
 ?>

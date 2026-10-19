@@ -1,7 +1,7 @@
 <?php
-    require_once '../../Controllers/c_histori.php';
-    
-    require_once __DIR__ . '/../../Controllers/auth_admin.php';
+require_once '../../Controllers/c_histori.php';
+
+require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -87,7 +87,7 @@
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
-                <span>Histori</span>
+                <span>Histori Aspirasi</span>
 
             </a>
 
@@ -121,7 +121,7 @@
 
 
             <!-- LOGOUT -->
-            <a href="../Controllers/c_logout.php"
+            <a href="../../Controllers/c_logout.php"
                 onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3
                        rounded-lg text-gray-600
@@ -148,12 +148,12 @@
 
             <div>
 
-                <h2 class="text-xl font-bold text-gray-800">
-                    Histori
+                <h2 class="text-xl font-medium text-gray-800">
+                    Histori Aspirasi
                 </h2>
 
                 <p class="text-sm text-gray-500">
-                    Daftar aspirasi yang telah selesai
+                    Daftar aspirasi yang telah selesai atau ditolak
                 </p>
 
             </div>
@@ -198,11 +198,11 @@
                 <div class="px-6 py-5 border-b border-gray-200">
 
                     <h3 class="text-lg font-semibold text-gray-800">
-                        Aspirasi Selesai
+                        Histori Aspirasi
                     </h3>
 
                     <p class="text-sm text-gray-500 mt-1">
-                        Daftar aspirasi yang telah diselesaikan
+                        Daftar aspirasi yang telah selesai atau ditolak
                     </p>
 
                 </div>
@@ -252,6 +252,11 @@
                                     Status
                                 </th>
 
+                                <th class="px-6 py-4 text-left text-sm
+                                           font-semibold text-gray-600">
+                                    Detail
+                                </th>
+
 
                             </tr>
 
@@ -261,7 +266,7 @@
                         <tbody class="divide-y divide-gray-200">
 
                             <?php
-                            $no = 1;
+                            $no = (($halaman - 1) * 10) + 1;
 
                             while ($data = mysqli_fetch_object($historis)) {
                             ?>
@@ -313,16 +318,47 @@
 
                                     <td class="px-6 py-4">
 
-                                        <span class="inline-flex px-3 py-1
-                                                     rounded-full text-xs
-                                                     font-medium bg-green-100
-                                                     text-green-700">
+                                        <?php if ($data->status == 'selesai') : ?>
 
-                                            <?php echo $data->status; ?>
+                                            <span class="inline-flex px-3 py-1
+                                                rounded-full text-xs
+                                                font-medium
+                                                bg-green-100 text-green-700">
 
-                                        </span>
+                                                Selesai
+
+                                            </span>
+
+                                        <?php elseif ($data->status == 'ditolak') : ?>
+
+                                            <span class="inline-flex px-3 py-1
+                                                rounded-full text-xs
+                                                font-medium
+                                                bg-red-100 text-red-700">
+
+                                                Ditolak
+
+                                            </span>
+
+                                        <?php endif; ?>
+                                    </td>
+
+
+                                    <td class="px-6 py-4">
+
+                                        <a href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
+                                            class="inline-flex items-center justify-center
+                                                w-9 h-9 rounded-lg
+                                                bg-gray-100 text-gray-600
+                                                hover:bg-green-100 hover:text-green-600"
+                                            title="Lihat Detail">
+
+                                            <i class="fa-solid fa-eye"></i>
+
+                                        </a>
 
                                     </td>
+
 
                                 </tr>
 
@@ -335,6 +371,69 @@
                     </table>
 
                 </div>
+
+
+                <!-- ================= PAGINATION ================= -->
+                <?php if (isset($total_halaman) && $total_halaman > 1) : ?>
+
+                    <div class="px-6 py-5 border-t flex items-center justify-between">
+
+                        <!-- Informasi halaman -->
+                        <p class="text-sm text-gray-500">
+                            Halaman <?= $halaman; ?> dari <?= $total_halaman; ?>
+                        </p>
+
+                        <!-- Tombol pagination -->
+                        <div class="flex items-center gap-2">
+
+                            <!-- Sebelumnya -->
+                            <?php if ($halaman > 1) : ?>
+
+                                <a
+                                    href="?halaman=<?= $halaman - 1; ?>"
+                                    class="px-3 py-2 rounded-lg border border-gray-300
+                           text-gray-600 hover:bg-gray-100 transition">
+
+                                    <i class="fa-solid fa-chevron-left"></i>
+
+                                </a>
+
+                            <?php endif; ?>
+
+                            <!-- Nomor halaman -->
+                            <?php for ($i = 1; $i <= $total_halaman; $i++) : ?>
+
+                                <a
+                                    href="?halaman=<?= $i; ?>"
+                                    class="px-3 py-2 rounded-lg border transition
+                                   <?= $i == $halaman
+                                    ? 'bg-green-600 text-white border-green-600'
+                                    : 'border-gray-300 text-gray-600 hover:bg-gray-100'; ?>">
+
+                                    <?= $i; ?>
+
+                                </a>
+
+                            <?php endfor; ?>
+
+                            <!-- Berikutnya -->
+                            <?php if ($halaman < $total_halaman) : ?>
+
+                                <a
+                                    href="?halaman=<?= $halaman + 1; ?>"
+                                    class="px-3 py-2 rounded-lg border border-gray-300
+                           text-gray-600 hover:bg-gray-100 transition">
+
+                                    <i class="fa-solid fa-chevron-right"></i>
+
+                                </a>
+
+                            <?php endif; ?>
+
+                        </div>
+                    </div>
+
+                <?php endif; ?>
 
             </div>
 

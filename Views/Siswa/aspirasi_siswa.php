@@ -1,7 +1,7 @@
 <?php
-    require_once '../../Controllers/c_aspirasi_siswa.php';
+require_once '../../Controllers/c_aspirasi_siswa.php';
 
-    require_once __DIR__ . '/../../Controllers/auth_siswa.php';
+require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +63,13 @@
 
             </a>
 
+
+            <a href="riwayat_aspirasi.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
+
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
+
+                Histori Aspirasi
 
             </a>
 
@@ -200,7 +207,7 @@
                         <tbody>
 
                             <?php
-                            $no = 1;
+                            $no = (($halaman - 1) * 10) + 1;
 
                             while ($data = mysqli_fetch_object($aspirasis)) {
                             ?>
@@ -244,11 +251,31 @@
 
                                     <td class="px-4 py-4">
 
-                                        <span class="px-3 py-1 text-xs rounded-full bg-gray-100 text-gray-700">
+                                        <?php if ($data->status == 'menunggu') : ?>
 
-                                            <?php echo htmlspecialchars($data->status); ?>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                                                Menunggu
+                                            </span>
 
-                                        </span>
+                                        <?php elseif ($data->status == 'diproses') : ?>
+
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+                                                Diproses
+                                            </span>
+
+                                        <?php elseif ($data->status == 'selesai') : ?>
+
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                                Selesai
+                                            </span>
+
+                                        <?php elseif ($data->status == 'ditolak') : ?>
+
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+                                                Ditolak
+                                            </span>
+
+                                        <?php endif; ?>
 
                                     </td>
 
@@ -276,6 +303,69 @@
                     </table>
 
                 </div>
+
+
+                <!-- ================= PAGINATION ================= -->
+                <?php if (isset($total_halaman) && $total_halaman > 1) : ?>
+
+                    <div class="px-6 py-5 border-t flex items-center justify-between">
+
+                        <!-- Informasi halaman -->
+                        <p class="text-sm text-gray-500">
+                            Halaman <?= $halaman; ?> dari <?= $total_halaman; ?>
+                        </p>
+
+                        <!-- Tombol pagination -->
+                        <div class="flex items-center gap-2">
+
+                            <!-- Sebelumnya -->
+                            <?php if ($halaman > 1) : ?>
+
+                                <a
+                                    href="?halaman=<?= $halaman - 1; ?>"
+                                    class="px-3 py-2 rounded-lg border border-gray-300
+                           text-gray-600 hover:bg-gray-100 transition">
+
+                                    <i class="fa-solid fa-chevron-left"></i>
+
+                                </a>
+
+                            <?php endif; ?>
+
+                            <!-- Nomor halaman -->
+                            <?php for ($i = 1; $i <= $total_halaman; $i++) : ?>
+
+                                <a
+                                    href="?halaman=<?= $i; ?>"
+                                    class="px-3 py-2 rounded-lg border transition
+                    <?= $i == $halaman
+                                    ? 'bg-green-600 text-white border-green-600'
+                                    : 'border-gray-300 text-gray-600 hover:bg-gray-100'; ?>">
+
+                                    <?= $i; ?>
+
+                                </a>
+
+                            <?php endfor; ?>
+
+                            <!-- Berikutnya -->
+                            <?php if ($halaman < $total_halaman) : ?>
+
+                                <a
+                                    href="?halaman=<?= $halaman + 1; ?>"
+                                    class="px-3 py-2 rounded-lg border border-gray-300
+                           text-gray-600 hover:bg-gray-100 transition">
+
+                                    <i class="fa-solid fa-chevron-right"></i>
+
+                                </a>
+
+                            <?php endif; ?>
+
+                        </div>
+                    </div>
+
+                <?php endif; ?>
 
             </div>
 

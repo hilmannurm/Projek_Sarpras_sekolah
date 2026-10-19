@@ -1,0 +1,31 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+    RewriteBase /Projek_Sapras_hilman/
+
+
+    # Login
+    RewriteRule ^login$ Views/login.php [L]
+
+
+    # ==========================================
+    # .PHP → TANPA .PHP
+    # Hanya untuk request GET
+    # ==========================================
+
+    RewriteCond %{REQUEST_METHOD} =GET
+    RewriteCond %{THE_REQUEST} \s/+Projek_Sapras_hilman/(.+?)\.php(?:[\s?]) [NC]
+    RewriteRule ^(.+)\.php$ /Projek_Sapras_hilman/$1 [R=302,L]
+
+
+    # ==========================================
+    # TANPA .PHP → FILE .PHP
+    # ==========================================
+
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.php -f
+    RewriteRule ^(.+)$ $1.php [L]
+
+</IfModule>

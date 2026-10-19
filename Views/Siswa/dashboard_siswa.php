@@ -86,6 +86,16 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
             </a>
 
 
+            <a href="riwayat_aspirasi.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
+
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
+
+                Histori Aspirasi
+
+            </a>
+
+
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
                 onclick="return confirm('Yakin ingin logout?')"
@@ -170,7 +180,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
 
             <!-- STATISTIK -->
-            <div class="grid grid-cols-4 gap-5 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-6">
 
                 <!-- TOTAL -->
                 <div class="bg-white rounded-xl border border-gray-200 p-5">
@@ -184,7 +194,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                             </p>
 
                             <h3 class="text-2xl font-bold text-gray-800 mt-2">
-                                <?= $statistik->total; ?>
+                                <?= $statistik->total ?? 0; ?>
                             </h3>
 
                         </div>
@@ -200,6 +210,34 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                 </div>
 
 
+                <!-- MENUNGGU -->
+<div class="bg-white rounded-xl border border-gray-200 p-5">
+
+    <div class="flex items-center justify-between">
+
+        <div>
+
+            <p class="text-sm text-gray-500">
+                Menunggu
+            </p>
+
+            <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                <?= $statistik->menunggu ?? 0; ?>
+            </h3>
+
+        </div>
+
+        <div class="w-11 h-11 bg-gray-100 rounded-lg flex items-center justify-center">
+
+            <i class="fa-solid fa-clock text-gray-600"></i>
+
+        </div>
+
+    </div>
+
+</div>
+
+
                 <!-- DIPROSES -->
                 <div class="bg-white rounded-xl border border-gray-200 p-5">
 
@@ -212,7 +250,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                             </p>
 
                             <h3 class="text-2xl font-bold text-gray-800 mt-2">
-                                <?= $statistik->diproses; ?>
+                                <?= $statistik->diproses ?? 0; ?>
                             </h3>
 
                         </div>
@@ -228,33 +266,6 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                 </div>
 
 
-                <!-- DIPERBAIKI -->
-                <div class="bg-white rounded-xl border border-gray-200 p-5">
-
-                    <div class="flex items-center justify-between">
-
-                        <div>
-
-                            <p class="text-sm text-gray-500">
-                                Diperbaiki
-                            </p>
-
-                            <h3 class="text-2xl font-bold text-gray-800 mt-2">
-                                <?= $statistik->diperbaiki; ?>
-                            </h3>
-
-                        </div>
-
-                        <div class="w-11 h-11 bg-yellow-100 rounded-lg flex items-center justify-center">
-
-                            <i class="fa-solid fa-screwdriver-wrench text-yellow-600"></i>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
 
                 <!-- SELESAI -->
                 <div class="bg-white rounded-xl border border-gray-200 p-5">
@@ -268,7 +279,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                             </p>
 
                             <h3 class="text-2xl font-bold text-gray-800 mt-2">
-                                <?= $statistik->selesai; ?>
+                                <?= $statistik->selesai ?? 0; ?>
                             </h3>
 
                         </div>
@@ -282,6 +293,34 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                     </div>
 
                 </div>
+
+
+                <!-- DITOLAK -->
+<div class="bg-white rounded-xl border border-gray-200 p-5">
+
+    <div class="flex items-center justify-between">
+
+        <div>
+
+            <p class="text-sm text-gray-500">
+                Ditolak
+            </p>
+
+            <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                <?= $statistik->ditolak ?? 0; ?>
+            </h3>
+
+        </div>
+
+        <div class="w-11 h-11 bg-red-100 rounded-lg flex items-center justify-center">
+
+            <i class="fa-solid fa-circle-xmark text-red-600"></i>
+
+        </div>
+
+    </div>
+
+</div>
 
             </div>
 
@@ -370,9 +409,37 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
                                     <td class="px-6 py-4">
 
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                        <?php if ($data->status == 'menunggu') : ?>
 
-                                            <?= htmlspecialchars($data->status); ?>
+    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+        Menunggu
+    </span>
+
+<?php elseif ($data->status == 'diproses') : ?>
+
+    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
+        Diproses
+    </span>
+
+<?php elseif ($data->status == 'diperbaiki') : ?>
+
+    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
+        Diperbaiki
+    </span>
+
+<?php elseif ($data->status == 'selesai') : ?>
+
+    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+        Selesai
+    </span>
+
+<?php elseif ($data->status == 'ditolak') : ?>
+
+    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+        Ditolak
+    </span>
+
+<?php endif; ?>
 
                                         </span>
 

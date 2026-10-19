@@ -9,11 +9,12 @@ class m_aspirasi
     // =========================
 
     // Menampilkan semua aspirasi
-    public function tampil_aspirasi()
+    public function tampil_aspirasi($limit = null, $offset = null)
     {
         $koneksi = new m_koneksi();
 
-        $query = "SELECT 
+        if ($limit !== null && $offset !== null) {
+            $query = "SELECT 
                     a.*,
                     s.nis,
                     s.nama_siswa,
@@ -22,8 +23,22 @@ class m_aspirasi
                   FROM tb_aspirasi a
                   JOIN tb_siswa s ON a.id_siswa = s.id_siswa
                   JOIN tb_kategori k ON a.id_kategori = k.id_kategori
-                  WHERE a.status != 'selesai'
-                  ORDER BY a.tanggal_dikirim DESC";
+                  WHERE a.status NOT IN ('selesai', 'ditolak')
+                  ORDER BY a.tanggal_dikirim ASC
+                  LIMIT $limit OFFSET $offset";
+        } else {
+            $query = "SELECT 
+                    a.*,
+                    s.nis,
+                    s.nama_siswa,
+                    s.kelas,
+                    k.nama_kategori
+                  FROM tb_aspirasi a
+                  JOIN tb_siswa s ON a.id_siswa = s.id_siswa
+                  JOIN tb_kategori k ON a.id_kategori = k.id_kategori
+                  WHERE a.status NOT IN ('selesai', 'ditolak')
+                  ORDER BY a.tanggal_dikirim ASC";
+        }
 
         return mysqli_query($koneksi->koneksi, $query);
     }
@@ -65,17 +80,17 @@ class m_aspirasi
         $query = "INSERT INTO tb_aspirasi
                     (id_siswa, id_kategori, judul_laporan, keterangan, lokasi, bukti_foto, tanggal_dikirim, status)
                   VALUES
-                    ('$id_siswa', '$id_kategori', '$judul_laporan', '$keterangan', '$lokasi', '$bukti_foto', NOW(), 'Diproses')";
+                    ('$id_siswa', '$id_kategori', '$judul_laporan', '$keterangan', '$lokasi', '$bukti_foto', NOW(), 'menunggu')";
 
         return mysqli_query($koneksi->koneksi, $query);
     }
 
 
-    public function filter_aspirasi($tanggal, $bulan, $id_siswa, $id_kategori)
-{
-    $koneksi = new m_koneksi();
+    public function filter_aspirasi($tanggal, $bulan, $id_siswa, $id_kategori, $limit = null, $offset = null)
+    {
+        $koneksi = new m_koneksi();
 
-    $query = "SELECT 
+        $query = "SELECT 
                 a.*,
                 s.nis,
                 s.nama_siswa,
@@ -86,39 +101,88 @@ class m_aspirasi
               JOIN tb_kategori k ON a.id_kategori = k.id_kategori
               WHERE 1=1";
 
-    if ($tanggal != '') {
-        $query .= " AND DATE(a.tanggal_dikirim) = '$tanggal'";
+        if ($tanggal != '') {
+            $query .= " AND DATE(a.tanggal_dikirim) = '$tanggal'";
+        }
+
+        if ($bulan != '') {
+            $query .= " AND MONTH(a.tanggal_dikirim) = '$bulan'";
+        }
+
+        if ($id_siswa != '') {
+            $query .= " AND a.id_siswa = '$id_siswa'";
+        }
+
+        if ($id_kategori != '') {
+            $query .= " AND a.id_kategori = '$id_kategori'";
+        }
+
+        // Urutan data dari yang paling lama
+        $query .= " ORDER BY a.tanggal_dikirim ASC";
+
+        // Pagination
+        if ($limit !== null && $offset !== null) {
+            $query .= " LIMIT $limit OFFSET $offset";
+        }
+
+        return mysqli_query($koneksi->koneksi, $query);
     }
-
-    if ($bulan != '') {
-        $query .= " AND MONTH(a.tanggal_dikirim) = '$bulan'";
-    }
-
-    if ($id_siswa != '') {
-        $query .= " AND a.id_siswa = '$id_siswa'";
-    }
-
-    if ($id_kategori != '') {
-        $query .= " AND a.id_kategori = '$id_kategori'";
-    }
-
-    $query .= " ORDER BY a.tanggal_dikirim DESC";
-
-    return mysqli_query($koneksi->koneksi, $query);
-}
 
     // Menampilkan aspirasi milik siswa
-    public function tampil_by_siswa($id_siswa)
+    public function tampil_by_siswa($id_siswa, $limit = null, $offset = null)
     {
         $koneksi = new m_koneksi();
 
-        $query = "SELECT 
+        if ($limit !== null && $offset !== null) {
+            $query = "SELECT 
                     a.*,
                     k.nama_kategori
                   FROM tb_aspirasi a
                   JOIN tb_kategori k ON a.id_kategori = k.id_kategori
                   WHERE a.id_siswa = '$id_siswa'
-                  ORDER BY a.tanggal_dikirim DESC";
+                  AND a.status IN ('menunggu', 'diproses')
+                  ORDER BY a.tanggal_dikirim ASC
+                  LIMIT $limit OFFSET $offset";
+        } else {
+            $query = "SELECT 
+                    a.*,
+                    k.nama_kategori
+                  FROM tb_aspirasi a
+                  JOIN tb_kategori k ON a.id_kategori = k.id_kategori
+                  WHERE a.id_siswa = '$id_siswa'
+                  AND a.status IN ('menunggu', 'diproses')
+                  ORDER BY a.tanggal_dikirim ASC";
+        }
+
+        return mysqli_query($koneksi->koneksi, $query);
+    }
+
+
+    // Menampilkan riwayat aspirasi milik siswa
+    public function riwayat_by_siswa($id_siswa, $limit = null, $offset = null)
+    {
+        $koneksi = new m_koneksi();
+
+        if ($limit !== null && $offset !== null) {
+            $query = "SELECT 
+                    a.*,
+                    k.nama_kategori
+                  FROM tb_aspirasi a
+                  JOIN tb_kategori k ON a.id_kategori = k.id_kategori
+                  WHERE a.id_siswa = '$id_siswa'
+                  AND a.status IN ('selesai', 'ditolak')
+                  ORDER BY a.tanggal_dikirim ASC
+                  LIMIT $limit OFFSET $offset";
+        } else {
+            $query = "SELECT 
+                    a.*,
+                    k.nama_kategori
+                  FROM tb_aspirasi a
+                  JOIN tb_kategori k ON a.id_kategori = k.id_kategori
+                  WHERE a.id_siswa = '$id_siswa'
+                  AND a.status IN ('selesai', 'ditolak')
+                  ORDER BY a.tanggal_dikirim ASC";
+        }
 
         return mysqli_query($koneksi->koneksi, $query);
     }
@@ -153,39 +217,39 @@ class m_aspirasi
 
 
     // STATISTIK DASHBOARD ADMIN
-public function statistik_aspirasi()
-{
-    $koneksi = new m_koneksi();
+    public function statistik_aspirasi()
+    {
+        $koneksi = new m_koneksi();
 
-    $query = "SELECT
+        $query = "SELECT
                 COUNT(*) AS total,
-                SUM(status = 'Diproses') AS diproses,
-                SUM(status = 'Diperbaiki') AS diperbaiki,
-                SUM(status = 'Selesai') AS selesai
+                SUM(status = 'menunggu') AS menunggu,
+                SUM(status = 'diproses') AS diproses,
+                SUM(status = 'selesai') AS selesai,
+                SUM(status = 'ditolak') AS ditolak
               FROM tb_aspirasi";
 
-    $hasil = mysqli_query($koneksi->koneksi, $query);
+        $hasil = mysqli_query($koneksi->koneksi, $query);
 
-    return mysqli_fetch_object($hasil);
-}
+        return mysqli_fetch_object($hasil);
+    }
 
 
-public function statistik_by_siswa($id_siswa)
-{
-    $koneksi = new m_koneksi();
+    public function statistik_by_siswa($id_siswa)
+    {
+        $koneksi = new m_koneksi();
 
-    $query = "SELECT
+        $query = "SELECT
                 COUNT(*) AS total,
+                SUM(status = 'menunggu') AS menunggu,
                 SUM(status = 'diproses') AS diproses,
-                SUM(status = 'diperbaiki') AS diperbaiki,
-                SUM(status = 'selesai') AS selesai
+                SUM(status = 'selesai') AS selesai,
+                SUM(status = 'ditolak') AS ditolak
               FROM tb_aspirasi
               WHERE id_siswa = '$id_siswa'";
 
-    $hasil = mysqli_query($koneksi->koneksi, $query);
+        $hasil = mysqli_query($koneksi->koneksi, $query);
 
-    return mysqli_fetch_object($hasil);
+        return mysqli_fetch_object($hasil);
+    }
 }
-
-}
-?>

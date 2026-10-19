@@ -1,7 +1,9 @@
 <?php
-require_once '../../Controllers/c_siswa.php';
-
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
+
+if (!isset($siswas)) {
+    require_once __DIR__ . '/../../Controllers/c_siswa.php';
+}
 ?>
 
 <!DOCTYPE html>
@@ -98,7 +100,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
-                <span>Histori</span>
+                <span>Histori Aspirasi</span>
 
             </a>
 
@@ -245,6 +247,80 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
 
+            <!-- SEARCH -->
+            <div class="mb-6">
+
+                <form action="daftar_siswa.php"
+                    method="GET"
+                    class="flex items-center gap-2">
+
+                    <div class="relative w-full max-w-md">
+
+                        <i class="fa-solid fa-magnifying-glass
+                                  absolute left-3 top-1/2
+                                  -translate-y-1/2
+                                  text-gray-400">
+                        </i>
+
+                        <input
+                            type="text"
+                            name="search"
+                            value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                            placeholder="Cari NIS atau nama siswa..."
+                            class="w-full pl-10 pr-4 py-3
+                                   border border-gray-300
+                                   rounded-xl
+                                   focus:outline-none
+                                   focus:ring-2
+                                   focus:ring-green-500
+                                   focus:border-green-500">
+
+                    </div>
+
+
+                    <!-- TOMBOL CARI -->
+                    <button
+                        type="submit"
+                        class="px-5 py-3
+                               bg-green-600
+                               hover:bg-green-700
+                               text-white
+                               rounded-xl
+                               flex items-center gap-2">
+
+                        <i class="fa-solid fa-magnifying-glass"></i>
+
+                        <span>Cari</span>
+
+                    </button>
+
+
+                    <!-- RESET -->
+                    <?php if (!empty($_GET['search'])): ?>
+
+                        <a href="daftar_siswa.php"
+                            class="px-5 py-3
+                                  bg-gray-100
+                                  hover:bg-gray-200
+                                  text-gray-600
+                                  rounded-xl
+                                  flex items-center gap-2">
+
+                            <i class="fa-solid fa-rotate-left"></i>
+
+                            <span>Reset</span>
+
+                        </a>
+
+                    <?php endif; ?>
+
+
+                </form>
+
+            </div>
+
+
+
             <!-- TABLE -->
             <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
 
@@ -292,10 +368,15 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                         <!-- TABLE BODY -->
                         <tbody class="divide-y">
 
-
                             <?php
 
-                            $no = 1;
+                            /*
+                             * Nomor siswa disesuaikan dengan halaman.
+                             * Contoh:
+                             * Halaman 1 = 1, 2, 3, ...
+                             * Halaman 2 = 11, 12, 13, ...
+                             */
+                            $no = isset($halaman) ? (($halaman - 1) * 10) + 1 : 1;
 
                             foreach ($siswas as $data) {
 
@@ -306,7 +387,9 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                     <!-- NO -->
                                     <td class="px-6 py-4 text-sm text-gray-600">
+
                                         <?= $no++; ?>
+
                                     </td>
 
 
@@ -376,12 +459,64 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             ?>
 
-
                         </tbody>
+
 
                     </table>
 
                 </div>
+
+
+                <!-- PAGINATION -->
+                <?php if (isset($total_halaman) && $total_halaman > 1): ?>
+
+                    <div class="flex items-center justify-center gap-2 px-6 py-5 border-t border-gray-200">
+
+                        <!-- SEBELUMNYA -->
+                        <?php if ($halaman > 1): ?>
+
+                            <a href="?halaman=<?= $halaman - 1; ?><?= !empty($_GET['search']) ? '&search=' . urlencode($_GET['search']) : ''; ?>"
+                                class="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-100">
+
+                                Sebelumnya
+
+                            </a>
+
+                        <?php endif; ?>
+
+
+                        <!-- NOMOR HALAMAN -->
+                        <?php for ($i = 1; $i <= $total_halaman; $i++): ?>
+
+                            <a href="?halaman=<?= $i; ?><?= !empty($_GET['search']) ? '&search=' . urlencode($_GET['search']) : ''; ?>"
+                                class="px-4 py-2 text-sm rounded-lg
+                                <?= $i == $halaman
+                                    ? 'bg-green-600 text-white'
+                                    : 'border border-gray-300 hover:bg-gray-100'; ?>">
+
+                                <?= $i; ?>
+
+                            </a>
+
+                        <?php endfor; ?>
+
+
+                        <!-- SELANJUTNYA -->
+                        <?php if ($halaman < $total_halaman): ?>
+
+                            <a href="?halaman=<?= $halaman + 1; ?><?= !empty($_GET['search']) ? '&search=' . urlencode($_GET['search']) : ''; ?>"
+                                class="px-4 py-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-100">
+
+                                Selanjutnya
+
+                            </a>
+
+                        <?php endif; ?>
+
+                    </div>
+
+                <?php endif; ?>
+
 
             </div>
 

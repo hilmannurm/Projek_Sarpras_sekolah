@@ -68,6 +68,16 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
             </a>
 
+
+            <a href="riwayat_aspirasi.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
+
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
+
+                Histori Aspirasi
+
+            </a>
+
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
                 onclick="return confirm('Yakin ingin logout?')"
@@ -152,7 +162,8 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
                 <form action="../../Controllers/c_aspirasi.php?aksi=tambah"
                     method="POST"
-                    enctype="multipart/form-data">
+                    enctype="multipart/form-data"
+                    onsubmit="kunciTombol(this)">
 
 
                     <!-- JUDUL LAPORAN -->
@@ -254,7 +265,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                     <!-- TOMBOL -->
                     <div class="flex items-center gap-3">
 
-                        <a href ="aspirasi_siswa.php"
+                        <a href="aspirasi_siswa.php"
                             class="px-5 py-3 border border-gray-300 rounded-lg text-gray-600 hover:bg-gray-100">
 
                             Batal
@@ -281,6 +292,21 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
         </div>
 
     </main>
+
+
+    <script>
+        function kunciTombol(form) {
+
+            const tombol = form.querySelector('button[type="submit"]');
+
+            tombol.disabled = true;
+
+            tombol.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+                    Mengirim...
+                `;
+            }
+    </script>
 
 </body>
 

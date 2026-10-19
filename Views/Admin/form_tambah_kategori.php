@@ -67,7 +67,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
-                Histori
+                Histori Aspirasi
 
             </a>
 
@@ -173,7 +173,8 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <!-- FORM -->
                 <form action="../../Controllers/c_kategori.php?aksi=tambah"
-                    method="POST">
+                    method="POST"
+                    onsubmit="kunciTombol(this)">
 
                     <div class="mb-6">
 
@@ -220,6 +221,20 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
         </div>
 
     </main>
+
+    <script>
+        function kunciTombol(form) {
+
+            const tombol = form.querySelector('button[type="submit"]');
+
+            tombol.disabled = true;
+
+            tombol.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+        Menyimpan...
+    `;
+        }
+    </script>
 
 </body>
 

@@ -19,10 +19,11 @@ class m_histori
     }
 
 
-    public function tampil_histori()
-    {
-        $koneksi = new m_koneksi();
+   public function tampil_histori($limit = null, $offset = null)
+{
+    $koneksi = new m_koneksi();
 
+    if ($limit !== null && $offset !== null) {
         $query = "SELECT
                     a.id_aspirasi,
                     a.judul_laporan,
@@ -38,11 +39,31 @@ class m_histori
                   FROM tb_aspirasi a
                   JOIN tb_siswa s ON a.id_siswa = s.id_siswa
                   JOIN tb_kategori k ON a.id_kategori = k.id_kategori
-                  WHERE a.status = 'selesai'
-                  ORDER BY a.tanggal_dikirim DESC";
-
-        return mysqli_query($koneksi->koneksi, $query);
+                  WHERE a.status IN ('selesai', 'ditolak')
+                  ORDER BY a.tanggal_dikirim ASC
+                  LIMIT $limit OFFSET $offset";
+    } else {
+        $query = "SELECT
+                    a.id_aspirasi,
+                    a.judul_laporan,
+                    a.keterangan,
+                    a.lokasi,
+                    a.bukti_foto,
+                    a.tanggal_dikirim,
+                    a.status,
+                    s.nis,
+                    s.nama_siswa,
+                    s.kelas,
+                    k.nama_kategori
+                  FROM tb_aspirasi a
+                  JOIN tb_siswa s ON a.id_siswa = s.id_siswa
+                  JOIN tb_kategori k ON a.id_kategori = k.id_kategori
+                  WHERE a.status IN ('selesai', 'ditolak')
+                  ORDER BY a.tanggal_dikirim ASC";
     }
+
+    return mysqli_query($koneksi->koneksi, $query);
+}
 
     public function tambah_histori(
         $id_aspirasi,

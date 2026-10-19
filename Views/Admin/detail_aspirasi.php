@@ -77,7 +77,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                        mb-2">
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
-                <span>Histori</span>
+                <span>Histori Aspirasi</span>
 
             </a>
 
@@ -335,9 +335,32 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                     <div class="w-3 h-3 rounded-full bg-green-500"></div>
 
-                    <p class="font-medium text-gray-800">
-                        <?= htmlspecialchars($data_aspirasi->status); ?>
-                    </p>
+                    <?php if ($data_aspirasi->status == 'menunggu') : ?>
+
+                        <p class="font-medium text-gray-600 mt-1">
+                            Menunggu
+                        </p>
+
+                    <?php elseif ($data_aspirasi->status == 'diproses') : ?>
+
+                        <p class="font-medium text-yellow-600 mt-1">
+                            Diproses
+                        </p>
+
+
+                    <?php elseif ($data_aspirasi->status == 'selesai') : ?>
+
+                        <p class="font-medium text-green-600 mt-1">
+                            Selesai
+                        </p>
+
+                    <?php elseif ($data_aspirasi->status == 'ditolak') : ?>
+
+                        <p class="font-medium text-red-600 mt-1">
+                            Ditolak
+                        </p>
+
+                    <?php endif; ?>
 
                 </div>
 
@@ -537,7 +560,8 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                     <form
                         action="../../Controllers/c_aspirasi.php?aksi=tanggapi"
                         method="POST"
-                        enctype="multipart/form-data">
+                        enctype="multipart/form-data"
+                        onsubmit="kunciTombol(this)">
 
 
                         <input
@@ -587,6 +611,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                 name="umpan_balik"
                                 rows="4"
                                 placeholder="Tuliskan tanggapan untuk siswa..."
+                                required
                                 class="w-full border border-gray-300
                            rounded-lg px-4 py-3
                            resize-none
@@ -645,7 +670,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                 <i class="fa-solid fa-floppy-disk mr-2"></i>
 
-                                Simpan Tanggapan
+                                Proses Aspirasi
 
                             </button>
 
@@ -689,6 +714,19 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
         </section>
 
     </main>
+
+
+    <script>
+        function kunciTombol(form) {
+            const tombol = form.querySelector('button[type="submit"]');
+
+            tombol.disabled = true;
+            tombol.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+                    Menyimpan...
+            `;
+        }
+    </script>
 
 </body>
 

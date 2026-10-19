@@ -63,7 +63,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
             <!-- DASHBOARD -->
-            <a href="dashboard_admin.php"
+            <a href="/Projek_Sapras_hilman/dashboard_admin"
                 class="flex items-center gap-3 px-4 py-3
                       rounded-lg bg-green-100 text-green-700
                       font-medium mb-2">
@@ -100,7 +100,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
-                <span>Histori</span>
+                <span>Histori Aspirasi</span>
 
             </a>
 
@@ -245,7 +245,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
             <!-- STATISTIK -->
             <div class="grid grid-cols-1 md:grid-cols-2
-                        xl:grid-cols-4 gap-6">
+                        xl:grid-cols-3 gap-6">
 
 
                 <!-- TOTAL ASPIRASI -->
@@ -287,6 +287,42 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                     </div>
 
                 </div>
+
+
+                <!-- MENUNGGU -->
+<div class="bg-white rounded-2xl
+            shadow-sm p-6">
+
+    <div class="flex items-center
+                justify-between">
+
+        <div>
+
+            <p class="text-gray-500 text-sm">
+                Menunggu
+            </p>
+
+            <h3 class="text-3xl font-bold
+                       text-gray-800 mt-2">
+                <?= $statistik->menunggu ?? 0 ?>
+            </h3>
+
+        </div>
+
+        <div class="w-12 h-12 rounded-xl
+                    bg-gray-100
+                    flex items-center
+                    justify-center">
+
+            <i class="fa-solid fa-clock
+                      text-gray-600 text-xl">
+            </i>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 
@@ -333,50 +369,6 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
 
-
-                <!-- DIPERBAIKI -->
-                <div class="bg-white rounded-2xl
-                            shadow-sm p-6">
-
-
-                    <div class="flex items-center
-                                justify-between">
-
-
-                        <div>
-
-                            <p class="text-gray-500 text-sm">
-                                Diperbaiki
-                            </p>
-
-
-                            <h3 class="text-3xl font-bold
-                                       text-gray-800 mt-2">
-                                <?= $statistik->diperbaiki ?? 0 ?>
-                            </h3>
-
-                        </div>
-
-
-                        <div class="w-12 h-12 rounded-xl
-                                    bg-orange-100
-                                    flex items-center
-                                    justify-center">
-
-                            <i class="fa-solid fa-screwdriver-wrench
-                                      text-orange-600 text-xl">
-                            </i>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-
-
                 <!-- SELESAI -->
                 <div class="bg-white rounded-2xl
                             shadow-sm p-6">
@@ -416,6 +408,42 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                     </div>
 
                 </div>
+
+
+                <!-- DITOLAK -->
+<div class="bg-white rounded-2xl
+            shadow-sm p-6">
+
+    <div class="flex items-center
+                justify-between">
+
+        <div>
+
+            <p class="text-gray-500 text-sm">
+                Ditolak
+            </p>
+
+            <h3 class="text-3xl font-bold
+                       text-gray-800 mt-2">
+                <?= $statistik->ditolak ?? 0 ?>
+            </h3>
+
+        </div>
+
+        <div class="w-12 h-12 rounded-xl
+                    bg-red-100
+                    flex items-center
+                    justify-center">
+
+            <i class="fa-solid fa-circle-xmark
+                      text-red-600 text-xl">
+            </i>
+
+        </div>
+
+    </div>
+
+</div>
 
 
             </div>

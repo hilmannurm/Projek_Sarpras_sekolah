@@ -72,7 +72,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
-                Histori
+                Histori Aspirasi
 
             </a>
 
@@ -101,7 +101,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
-            onclick="return confirm('Yakin ingin logout?')"
+                onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 mt-8">
 
                 <i class="fa-solid fa-right-from-bracket w-5"></i>
@@ -184,7 +184,8 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <!-- FORM -->
                 <form action="../../Controllers/c_kategori.php?aksi=update"
-                    method="POST">
+                    method="POST"
+                    onsubmit="kunciTombol(this)">
 
                     <input type="hidden"
                         name="id_kategori"
@@ -236,6 +237,21 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
         </div>
 
     </main>
+
+
+    <script>
+        function kunciTombol(form) {
+
+            const tombol = form.querySelector('button[type="submit"]');
+
+            tombol.disabled = true;
+
+            tombol.innerHTML = `
+        <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+        Menyimpan...
+    `;
+        }
+    </script>
 
 </body>
 

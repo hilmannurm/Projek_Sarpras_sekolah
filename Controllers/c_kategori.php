@@ -86,6 +86,14 @@ try {
     }
 
 } catch (Exception $e) {
-    echo $e->getMessage();
+
+    if (isset($_GET['aksi']) && $_GET['aksi'] == 'hapus') {
+        echo "<script>
+                alert('Kategori tidak dapat dihapus karena masih digunakan oleh aspirasi!');
+                window.location='../Views/Admin/kategori.php';
+              </script>";
+    } else {
+        echo $e->getMessage();
+    }
 }
 ?>

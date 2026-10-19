@@ -3,6 +3,7 @@ session_start();
 
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -21,7 +22,6 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 <body class="bg-gray-100">
 
 
-
     <!-- SIDEBAR -->
     <aside class="fixed left-0 top-0 h-screen w-64 bg-white shadow-md">
 
@@ -29,7 +29,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
         <div class="h-20 flex items-center px-6 border-b">
 
             <div class="w-11 h-11 bg-green-100 rounded-xl
-                            flex items-center justify-center mr-3">
+                        flex items-center justify-center mr-3">
 
                 <i class="fa-solid fa-bullhorn text-xl text-green-600"></i>
 
@@ -56,9 +56,9 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
             <!-- DASHBOARD -->
             <a href="dashboard_admin.php"
                 class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-green-50 hover:text-green-700
-                           mb-2">
+                       rounded-lg text-gray-600
+                       hover:bg-green-50 hover:text-green-700
+                       mb-2">
 
                 <i class="fa-solid fa-gauge w-5"></i>
 
@@ -70,9 +70,9 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
             <!-- ASPIRASI -->
             <a href="daftar_aspirasi.php"
                 class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-green-50 hover:text-green-700
-                           mb-2">
+                       rounded-lg text-gray-600
+                       hover:bg-green-50 hover:text-green-700
+                       mb-2">
 
                 <i class="fa-solid fa-file-lines w-5"></i>
 
@@ -84,13 +84,13 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
             <!-- HISTORI -->
             <a href="histori.php"
                 class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-green-50 hover:text-green-700
-                           mb-2">
+                       rounded-lg text-gray-600
+                       hover:bg-green-50 hover:text-green-700
+                       mb-2">
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
-                <span>Histori</span>
+                <span>Histori Aspirasi</span>
 
             </a>
 
@@ -98,8 +98,8 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
             <!-- SISWA -->
             <a href="daftar_siswa.php"
                 class="flex items-center gap-3 px-4 py-3
-                           rounded-lg bg-green-100 text-green-700
-                           font-medium mb-2">
+                       rounded-lg bg-green-100 text-green-700
+                       font-medium mb-2">
 
                 <i class="fa-solid fa-user-graduate w-5"></i>
 
@@ -111,9 +111,9 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
             <!-- KATEGORI -->
             <a href="kategori.php"
                 class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-green-50 hover:text-green-700
-                           mb-2">
+                       rounded-lg text-gray-600
+                       hover:bg-green-50 hover:text-green-700
+                       mb-2">
 
                 <i class="fa-solid fa-layer-group w-5"></i>
 
@@ -126,9 +126,9 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
             <a href="../../Controllers/c_logout.php"
                 onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3
-                           rounded-lg text-gray-600
-                           hover:bg-red-50 hover:text-red-600
-                           mt-8">
+                       rounded-lg text-gray-600
+                       hover:bg-red-50 hover:text-red-600
+                       mt-8">
 
                 <i class="fa-solid fa-right-from-bracket w-5"></i>
 
@@ -146,7 +146,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
         <!-- TOPBAR -->
         <header class="bg-white h-20 shadow-sm
-                           flex items-center justify-between px-8">
+                       flex items-center justify-between px-8">
 
             <!-- JUDUL -->
             <div>
@@ -179,11 +179,11 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
                 <div class="w-10 h-10 rounded-full
-                                bg-green-100
-                                flex items-center justify-center">
+                            bg-green-100
+                            flex items-center justify-center">
 
                     <i class="fa-solid fa-user-shield
-                                  text-green-600">
+                              text-green-600">
                     </i>
 
                 </div>
@@ -218,7 +218,8 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                     <!-- FORM -->
                     <form action="../../Controllers/c_siswa.php?aksi=tambah"
                         method="POST"
-                        class="p-6">
+                        class="p-6"
+                        onsubmit="return validasiForm(this)">
 
 
                         <!-- NIS -->
@@ -229,12 +230,18 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                             </label>
 
                             <input
-                                type="number"
+                                type="text"
+                                id="nis"
                                 name="nis"
                                 placeholder="Masukkan NIS"
+                                inputmode="numeric"
                                 required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg
-                                           focus:outline-none focus:ring-2 focus:ring-green-500">
+                                       focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                            <p id="error_nis"
+                                class="text-red-500 text-sm mt-1">
+                            </p>
 
                         </div>
 
@@ -248,11 +255,16 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             <input
                                 type="text"
+                                id="nama_siswa"
                                 name="nama_siswa"
                                 placeholder="Masukkan nama siswa"
                                 required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg
-                                           focus:outline-none focus:ring-2 focus:ring-green-500">
+                                       focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                            <p id="error_nama"
+                                class="text-red-500 text-sm mt-1">
+                            </p>
 
                         </div>
 
@@ -270,7 +282,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                 placeholder="Contoh: XI RPL 1"
                                 required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg
-                                           focus:outline-none focus:ring-2 focus:ring-green-500">
+                                       focus:outline-none focus:ring-2 focus:ring-green-500">
 
                         </div>
 
@@ -288,7 +300,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                 placeholder="Masukkan password siswa"
                                 required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg
-                                           focus:outline-none focus:ring-2 focus:ring-green-500">
+                                       focus:outline-none focus:ring-2 focus:ring-green-500">
 
                         </div>
 
@@ -298,7 +310,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             <a href="daftar_siswa.php"
                                 class="px-5 py-3 rounded-lg border border-gray-300
-                                           text-gray-600 hover:bg-gray-50">
+                                       text-gray-600 hover:bg-gray-50">
 
                                 <i class="fa-solid fa-arrow-left mr-2"></i>
 
@@ -309,7 +321,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             <button type="submit"
                                 class="px-5 py-3 rounded-lg bg-green-600
-                                           text-white hover:bg-green-700">
+                                       text-white hover:bg-green-700">
 
                                 <i class="fa-solid fa-plus mr-2"></i>
 
@@ -330,6 +342,54 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
     </main>
 
 
+    <!-- VALIDASI REGEX -->
+    <script>
+        function validasiForm(form) {
+
+            const nis = document.getElementById('nis').value;
+            const nama = document.getElementById('nama_siswa').value;
+
+            const errorNis = document.getElementById('error_nis');
+            const errorNama = document.getElementById('error_nama');
+
+            errorNis.innerHTML = "";
+            errorNama.innerHTML = "";
+
+            let valid = true;
+
+
+            // VALIDASI NIS
+            if (!/^[0-9]{5,10}$/.test(nis)) {
+
+                errorNis.innerHTML =
+                    "NIS harus berupa angka dan terdiri dari 10 digit.";
+
+                valid = false;
+            }
+
+
+            // VALIDASI NAMA
+            if (!/^[A-Za-z\s]+$/.test(nama)) {
+
+                errorNama.innerHTML =
+                    "Nama siswa hanya boleh berisi huruf dan spasi.";
+
+                valid = false;
+            }
+            if (valid) {
+                const tombol = form.querySelector('button[type="submit"]');
+
+                tombol.disabled = true;
+                tombol.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+                    Menyimpan...
+                `;
+        }
+
+
+            return valid;
+        }
+    </script>
 
 </body>
 

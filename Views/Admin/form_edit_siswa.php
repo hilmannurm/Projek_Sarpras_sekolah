@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 <html lang="id">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -17,9 +18,12 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
+
 <body class="bg-gray-100">
+
 
     <!-- SIDEBAR -->
     <aside class="fixed left-0 top-0 h-screen w-64 bg-white shadow-md">
@@ -89,7 +93,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
-                <span>Histori</span>
+                <span>Histori Aspirasi</span>
 
             </a>
 
@@ -214,7 +218,8 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                     <!-- FORM -->
                     <form action="/Projek_Sapras_hilman/Controllers/c_siswa.php?aksi=update"
                         method="POST"
-                        class="p-6">
+                        class="p-6"
+                        onsubmit="return validasiForm()">
 
 
                         <input
@@ -231,12 +236,18 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                             </label>
 
                             <input
-                                type="number"
+                                type="text"
+                                id="nis"
                                 name="nis"
                                 value="<?php echo $siswas->nis; ?>"
+                                inputmode="numeric"
                                 required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                        focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                            <p id="error_nis"
+                                class="text-red-500 text-sm mt-1">
+                            </p>
 
                         </div>
 
@@ -250,11 +261,16 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             <input
                                 type="text"
+                                id="nama_siswa"
                                 name="nama_siswa"
                                 value="<?php echo $siswas->nama_siswa; ?>"
                                 required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg
                                        focus:outline-none focus:ring-2 focus:ring-green-500">
+
+                            <p id="error_nama"
+                                class="text-red-500 text-sm mt-1">
+                            </p>
 
                         </div>
 
@@ -332,6 +348,49 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
         </section>
 
     </main>
+
+
+    <!-- VALIDASI REGEX -->
+    <script>
+
+        function validasiForm() {
+
+            const nis = document.getElementById('nis').value;
+            const nama = document.getElementById('nama_siswa').value;
+
+            const errorNis = document.getElementById('error_nis');
+            const errorNama = document.getElementById('error_nama');
+
+            errorNis.innerHTML = "";
+            errorNama.innerHTML = "";
+
+            let valid = true;
+
+
+            // VALIDASI NIS
+            if (!/^[0-9]{5,10}$/.test(nis)) {
+
+                errorNis.innerHTML =
+                    "NIS harus berupa angka dan terdiri dari 10 digit.";
+
+                valid = false;
+            }
+
+
+            // VALIDASI NAMA
+            if (!/^[A-Za-z\s]+$/.test(nama)) {
+
+                errorNama.innerHTML =
+                    "Nama siswa hanya boleh berisi huruf dan spasi.";
+
+                valid = false;
+            }
+
+
+            return valid;
+        }
+
+    </script>
 
 </body>
 

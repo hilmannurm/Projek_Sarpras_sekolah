@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 09, 2026 at 03:43 PM
+-- Generation Time: Oct 19, 2026 at 04:09 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.4.12
 
@@ -65,7 +65,7 @@ CREATE TABLE `tb_aspirasi` (
   `lokasi` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `bukti_foto` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `tanggal_dikirim` timestamp NOT NULL,
-  `status` enum('diproses','diperbaiki','selesai') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `status` enum('menunggu','diproses','selesai','ditolak') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT 'menunggu',
   `umpan_balik` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -74,9 +74,9 @@ CREATE TABLE `tb_aspirasi` (
 --
 
 INSERT INTO `tb_aspirasi` (`id_aspirasi`, `id_siswa`, `id_kategori`, `judul_laporan`, `keterangan`, `lokasi`, `bukti_foto`, `tanggal_dikirim`, `status`, `umpan_balik`) VALUES
-(11, 1, 12, 'keran air rusak', 'tutup keran airnya rusak, jadi air keluar trus menerus', 'toilet dekat mushola', '1788916154_IMG-20240321-WA0038.jpg', '2026-09-09 01:09:14', 'selesai', 'sudah beres'),
-(12, 1, 11, 'papan tulis rusak', 'papan tulis tidak layak digunakan', 'ruang kelas XII RPL 2', '1788916819_IMG-20240321-WA0038.jpg', '2026-09-09 01:20:19', 'selesai', 'papan tulis sudah diganti dengan yang baru'),
-(13, 2, 11, 'meja kelas rusak', 'meja kelas rusak saat dipakai goyang mejanya', 'ruang kelas XII RPL 2', '1788967987_Porsche.jpeg', '2026-09-09 15:33:07', 'diperbaiki', 'meja akan segera diganti');
+(21, 1, 12, 'kipas rusak', 'kipas rusak sehingga tidak bisa digunakan', 'ruang kelas XII RPL 2', '1792381817_download (1).jpeg', '2026-10-19 03:50:17', 'selesai', 'sudah bisa digunakan kembali'),
+(22, 2, 11, 'papan tulis sudah kusam dan kotor menempel', 'papan tulis sudah usang sehingga sulit membaca tulisan yang ada di papan tulis', 'ruang kelas XII RPL 2', '1792382157_669769775855985080.jpeg', '2026-10-19 03:55:57', 'menunggu', NULL),
+(23, 3, 12, 'kaca pecah', 'kaca ruangan uks pecah', 'UKS', '1792382522_broken window_.jpeg', '2026-10-19 04:02:02', 'ditolak', NULL);
 
 -- --------------------------------------------------------
 
@@ -98,11 +98,9 @@ CREATE TABLE `tb_histori` (
 --
 
 INSERT INTO `tb_histori` (`id_histori`, `id_aspirasi`, `id_admin`, `status_lama`, `status_baru`, `tanggal_perubahan`) VALUES
-(17, 12, 1, 'diproses', 'diperbaiki', '2026-09-09 01:49:23'),
-(18, 12, 1, 'diperbaiki', 'selesai', '2026-09-09 13:51:28'),
-(19, 11, 1, 'diproses', 'diperbaiki', '2026-09-09 15:36:08'),
-(20, 11, 1, 'diperbaiki', 'selesai', '2026-09-09 15:36:28'),
-(21, 13, 1, 'diproses', 'diperbaiki', '2026-09-09 15:39:16');
+(23, 21, 1, 'menunggu', 'diproses', '2026-10-19 03:51:13'),
+(24, 21, 1, 'diproses', 'selesai', '2026-10-19 03:51:48'),
+(25, 23, 1, 'menunggu', 'ditolak', '2026-10-19 04:02:40');
 
 -- --------------------------------------------------------
 
@@ -121,7 +119,8 @@ CREATE TABLE `tb_kategori` (
 
 INSERT INTO `tb_kategori` (`id_kategori`, `nama_kategori`) VALUES
 (11, 'Fasilitas pembelajaran'),
-(12, 'Fasilitas Umum');
+(12, 'Fasilitas Umum'),
+(19, 'Keluhan');
 
 -- --------------------------------------------------------
 
@@ -143,11 +142,8 @@ CREATE TABLE `tb_progres` (
 --
 
 INSERT INTO `tb_progres` (`id_progres`, `id_aspirasi`, `id_admin`, `tahap_progres`, `foto_bukti`, `tanggal_progres`) VALUES
-(17, 12, 1, 'diperbaiki', '1788918563_IMG-20240321-WA0040.jpg', '2026-09-09 01:49:23'),
-(18, 12, 1, 'selesai', '1788961888_upscalemedia-transformed.jpeg', '2026-09-09 13:51:28'),
-(19, 11, 1, 'diperbaiki', '1788968168_pesawat.jpeg', '2026-09-09 15:36:08'),
-(20, 11, 1, 'selesai', '1788968188_WIN_20260506_11_55_14_Pro.jpg', '2026-09-09 15:36:28'),
-(21, 13, 1, 'diperbaiki', '1788968356_upscalemedia-transformed.jpeg', '2026-09-09 15:39:16');
+(5, 21, 1, 'diproses', '1792381873_698620960982535179.jpeg', '2026-10-19 03:51:13'),
+(6, 21, 1, 'selesai', '1792381908_260434790940533455.jpeg', '2026-10-19 03:51:48');
 
 -- --------------------------------------------------------
 
@@ -157,7 +153,7 @@ INSERT INTO `tb_progres` (`id_progres`, `id_aspirasi`, `id_admin`, `tahap_progre
 
 CREATE TABLE `tb_siswa` (
   `id_siswa` int NOT NULL,
-  `nis` int NOT NULL,
+  `nis` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `nama_siswa` varchar(35) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `kelas` varchar(10) NOT NULL,
   `password` varchar(255) NOT NULL
@@ -168,16 +164,18 @@ CREATE TABLE `tb_siswa` (
 --
 
 INSERT INTO `tb_siswa` (`id_siswa`, `nis`, `nama_siswa`, `kelas`, `password`) VALUES
-(1, 12345, 'M Malvien Ramadhan S', 'XII RPL 2', '$2a$12$0D1JKIxd6CD1xQ2CghW1g.SZCLyN29VN7uuJNiv78t/jI/e/Ri9Dm'),
-(2, 1234, 'Rezka Parsha A', 'XII RPL 2', '$2y$12$xmgVdymu7938CjY9sXV2DePb5xEv65BBepdRxIjuoXugZi8oO.S.a'),
-(3, 1003, 'Budi Santoso', 'XI RPL 2', '123456'),
-(4, 1004, 'Citra Lestari', 'XI RPL 2', '123456'),
-(5, 1005, 'Dimas Pratama', 'X RPL 1', '123456'),
-(6, 1006, 'Fajar Ramadhan', 'X RPL 1', '123456'),
-(7, 1007, 'Nabila Putri', 'X RPL 2', '123456'),
-(8, 1008, 'Rizky Maulana', 'X RPL 2', '123456'),
-(9, 1009, 'Aulia Rahma', 'XII RPL 1', '123456'),
-(10, 1010, 'Galih Saputra', 'XII RPL 1', '123456');
+(1, '0123456789', 'M Malvien Ramadhan S', 'XII RPL 2', '$2y$12$86GpWeXYXeDxwpvCetfVxempaJHYlu08eMWejRVYA/p3fQrGSaQJS'),
+(2, '1234567890', 'Rezka Parsha A', 'XII RPL 2', '$2y$12$WOJM.PGEWJVXbpgmahUs7.RjESKu2D454vmVLDlkIWq8qVmSDSXRK'),
+(3, '0012345678', 'Razaqa Artha P', 'XII RPL 2', '$2y$12$Fn20G3qM0mgCb6EFbRkN6.E7bPQBT4ntx51J9xurhR3l.ymDMoeZm'),
+(4, '10002', 'Alfian Rizki N', 'XII RPL 2', 'siswa123'),
+(5, '10003', 'Eka Santika', 'XII RPL 2', 'siswa123'),
+(6, '10004', 'Fajar Rizki R', 'XII RPL 2', 'siswa123'),
+(44, '10005', 'gilang Putra Pratama', 'XII RPL 2', '$2y$12$YqCDmadcW0bZMBn1OThLCOG9yugQ1PvHG9KkxLgX8mkGsGywiJoWe'),
+(45, '10006', 'Shintia Maharani', 'XII RPL 2', '$2y$12$vh.gYsVo8W34TWP2pQagsennb1tXt8bQGJjMDqZSi8VUmZ4KoD3em'),
+(46, '10007', 'Budi Santoso', 'XII RPL 2', '$2y$12$wHpQ0fc73v5u4o9W5e8Hte4V4G9F9LuSiNnHDjxncrmr/JRLTYJwu'),
+(47, '10008', 'vell u', 'XII RPL 2', '$2y$12$fj8E99dQZCbFsrUpjmDcpO2YZhzpNlD1prpyxCTo/SYEtRy7TgKjm'),
+(48, '10009', 'mauru', 'XII RPL 2', '$2y$12$4clV9jfGXhrE0YuLMHP3feusomZr2uNVaCUBlJU7XLHDJUfz4Zrue'),
+(49, '10010', 'tralelo', 'XII RPL 2', '$2y$12$0AwviaGOsRA5uBBiUsjCVe2WuQklTQYpOVUcc59G/z6Ng788nO.q2');
 
 --
 -- Indexes for dumped tables
@@ -239,31 +237,31 @@ ALTER TABLE `tb_admin`
 -- AUTO_INCREMENT for table `tb_aspirasi`
 --
 ALTER TABLE `tb_aspirasi`
-  MODIFY `id_aspirasi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_aspirasi` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tb_histori`
 --
 ALTER TABLE `tb_histori`
-  MODIFY `id_histori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_histori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `tb_kategori`
 --
 ALTER TABLE `tb_kategori`
-  MODIFY `id_kategori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_kategori` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `tb_progres`
 --
 ALTER TABLE `tb_progres`
-  MODIFY `id_progres` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id_progres` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id_siswa` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_siswa` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables

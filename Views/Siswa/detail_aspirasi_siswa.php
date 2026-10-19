@@ -86,6 +86,16 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
             </a>
 
 
+            <a href="riwayat_aspirasi.php"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-green-50 hover:text-green-600 mb-2">
+
+                <i class="fa-solid fa-clock-rotate-left w-5"></i>
+
+                Histori Aspirasi
+
+            </a>
+
+
             <!-- LOGOUT -->
             <a href="../../Controllers/c_logout.php"
                 onclick="return confirm('Yakin ingin logout?')"
@@ -261,11 +271,31 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                             Status
                         </p>
 
-                        <p class="font-medium text-green-600 mt-1">
+                        <?php if ($data_aspirasi->status == 'menunggu') : ?>
 
-                            <?= htmlspecialchars($data_aspirasi->status); ?>
+    <p class="font-medium text-gray-600 mt-1">
+        Menunggu
+    </p>
 
-                        </p>
+<?php elseif ($data_aspirasi->status == 'diproses') : ?>
+
+    <p class="font-medium text-yellow-600 mt-1">
+        Diproses
+    </p>
+
+<?php elseif ($data_aspirasi->status == 'selesai') : ?>
+
+    <p class="font-medium text-green-600 mt-1">
+        Selesai
+    </p>
+
+<?php elseif ($data_aspirasi->status == 'ditolak') : ?>
+
+    <p class="font-medium text-red-600 mt-1">
+        Ditolak
+    </p>
+
+<?php endif; ?>
 
                     </div>
 

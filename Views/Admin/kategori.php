@@ -73,7 +73,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
-                Histori
+                Histori Aspirasi
 
             </a>
 

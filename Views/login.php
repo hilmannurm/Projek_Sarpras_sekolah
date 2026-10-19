@@ -13,7 +13,7 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 
@@ -51,7 +51,9 @@
 
 
         <!-- FORM LOGIN -->
-        <form action="../Controllers/c_login.php" method="POST">
+        <form action="../Controllers/c_login.php"
+            method="POST"
+            onsubmit="kunciTombol(this)">
 
 
             <!-- USERNAME / NIS -->
@@ -70,10 +72,10 @@
 
 
                     <input type="text"
-                           name="username"
-                           placeholder="Masukkan Username / NIS"
-                           required
-                           class="w-full pl-11 pr-4 py-3
+                        name="username"
+                        placeholder="Masukkan Username / NIS"
+                        required
+                        class="w-full pl-11 pr-4 py-3
                                   border border-gray-300 rounded-lg
                                   focus:outline-none
                                   focus:ring-2 focus:ring-green-500">
@@ -100,10 +102,10 @@
 
 
                     <input type="password"
-                           name="password"
-                           placeholder="Masukkan Password"
-                           required
-                           class="w-full pl-11 pr-4 py-3
+                        name="password"
+                        placeholder="Masukkan Password"
+                        required
+                        class="w-full pl-11 pr-4 py-3
                                   border border-gray-300 rounded-lg
                                   focus:outline-none
                                   focus:ring-2 focus:ring-green-500">
@@ -116,7 +118,7 @@
 
             <!-- BUTTON LOGIN -->
             <button type="submit"
-                    class="w-full py-3
+                class="w-full py-3
                            bg-green-600 hover:bg-green-700
                            text-white font-semibold
                            rounded-lg transition">
@@ -133,6 +135,18 @@
 
     </div>
 
+
+    <script>
+        function kunciTombol(form) {
+            const tombol = form.querySelector('button[type="submit"]');
+
+            tombol.disabled = true;
+            tombol.innerHTML = `
+                    <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+                    Memproses...
+            `;
+        }
+    </script>
 
 </body>
 

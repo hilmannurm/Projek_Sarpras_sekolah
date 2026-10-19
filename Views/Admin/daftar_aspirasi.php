@@ -90,7 +90,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                 <i class="fa-solid fa-clock-rotate-left w-5"></i>
 
                 <span>
-                    Histori
+                    Histori Aspirasi
                 </span>
 
             </a>
@@ -295,57 +295,20 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                        focus:outline-none focus:ring-2
                                        focus:ring-green-500">
 
-                                <option value="">
-                                    Semua Bulan
-                                </option>
+                                <option value="">Semua Bulan</option>
 
-                                <option value="1">
-                                    Januari
-                                </option>
-
-                                <option value="2">
-                                    Februari
-                                </option>
-
-                                <option value="3">
-                                    Maret
-                                </option>
-
-                                <option value="4">
-                                    April
-                                </option>
-
-                                <option value="5">
-                                    Mei
-                                </option>
-
-                                <option value="6">
-                                    Juni
-                                </option>
-
-                                <option value="7">
-                                    Juli
-                                </option>
-
-                                <option value="8">
-                                    Agustus
-                                </option>
-
-                                <option value="9">
-                                    September
-                                </option>
-
-                                <option value="10">
-                                    Oktober
-                                </option>
-
-                                <option value="11">
-                                    November
-                                </option>
-
-                                <option value="12">
-                                    Desember
-                                </option>
+                                <option value="1" <?= $bulan == '1' ? 'selected' : ''; ?>>Januari</option>
+                                <option value="2" <?= $bulan == '2' ? 'selected' : ''; ?>>Februari</option>
+                                <option value="3" <?= $bulan == '3' ? 'selected' : ''; ?>>Maret</option>
+                                <option value="4" <?= $bulan == '4' ? 'selected' : ''; ?>>April</option>
+                                <option value="5" <?= $bulan == '5' ? 'selected' : ''; ?>>Mei</option>
+                                <option value="6" <?= $bulan == '6' ? 'selected' : ''; ?>>Juni</option>
+                                <option value="7" <?= $bulan == '7' ? 'selected' : ''; ?>>Juli</option>
+                                <option value="8" <?= $bulan == '8' ? 'selected' : ''; ?>>Agustus</option>
+                                <option value="9" <?= $bulan == '9' ? 'selected' : ''; ?>>September</option>
+                                <option value="10" <?= $bulan == '10' ? 'selected' : ''; ?>>Oktober</option>
+                                <option value="11" <?= $bulan == '11' ? 'selected' : ''; ?>>November</option>
+                                <option value="12" <?= $bulan == '12' ? 'selected' : ''; ?>>Desember</option>
 
                             </select>
 
@@ -366,18 +329,14 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                        focus:outline-none focus:ring-2
                                        focus:ring-green-500">
 
-                                <option value="">
-                                    Semua Siswa
-                                </option>
+                                <option value="">Semua Siswa</option>
 
                                 <?php foreach ($data_siswa as $s) : ?>
-
-                                    <option value="<?= $s->id_siswa; ?>">
-
+                                    <option
+                                        value="<?= $s->id_siswa; ?>"
+                                        <?= $id_siswa == $s->id_siswa ? 'selected' : ''; ?>>
                                         <?= htmlspecialchars($s->nama_siswa); ?>
-
                                     </option>
-
                                 <?php endforeach; ?>
 
                             </select>
@@ -404,13 +363,11 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                 </option>
 
                                 <?php foreach ($data_kategori as $k) : ?>
-
-                                    <option value="<?= $k->id_kategori; ?>">
-
+                                    <option
+                                        value="<?= $k->id_kategori; ?>"
+                                        <?= $id_kategori == $k->id_kategori ? 'selected' : ''; ?>>
                                         <?= htmlspecialchars($k->nama_kategori); ?>
-
                                     </option>
-
                                 <?php endforeach; ?>
 
                             </select>
@@ -519,7 +476,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                             <?php if (!empty($aspirasis)) : ?>
 
                                 <?php
-                                $no = 1;
+                                $no = (($halaman - 1) * 10) + 1;
 
                                 while ($data = mysqli_fetch_object($aspirasis)) :
                                 ?>
@@ -618,7 +575,22 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                         <!-- Status -->
                                         <td class="px-6 py-4">
 
-                                            <?php if ($data->status == 'diproses') : ?>
+                                            <?php if ($data->status == 'menunggu') : ?>
+
+                                                <span
+                                                    class="inline-flex items-center
+                                                           px-3 py-1
+                                                           rounded-full
+                                                           bg-gray-100
+                                                           text-gray-700
+                                                           text-xs
+                                                           font-medium">
+
+                                                    Menunggu
+
+                                                </span>
+
+                                            <?php elseif ($data->status == 'diproses') : ?>
 
                                                 <span
                                                     class="inline-flex items-center
@@ -633,20 +605,6 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                                 </span>
 
-                                            <?php elseif ($data->status == 'diperbaiki') : ?>
-
-                                                <span
-                                                    class="inline-flex items-center
-                                                           px-3 py-1
-                                                           rounded-full
-                                                           bg-orange-100
-                                                           text-orange-700
-                                                           text-xs
-                                                           font-medium">
-
-                                                    Diperbaiki
-
-                                                </span>
 
                                             <?php elseif ($data->status == 'selesai') : ?>
 
@@ -663,6 +621,21 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                                 </span>
 
+                                            <?php elseif ($data->status == 'ditolak') : ?>
+
+                                                <span
+                                                    class="inline-flex items-center
+                                                           px-3 py-1
+                                                           rounded-full
+                                                           bg-red-100
+                                                           text-red-700
+                                                           text-xs
+                                                           font-medium">
+
+                                                    Ditolak
+
+                                                </span>
+
                                             <?php endif; ?>
 
                                         </td>
@@ -671,23 +644,89 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                         <!-- Aksi -->
                                         <td class="px-6 py-4 text-center">
 
-                                            <a
-                                                href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
-                                                class="inline-flex items-center gap-2
-                                                       px-4 py-2
-                                                       bg-green-600
-                                                       hover:bg-green-700
-                                                       text-white
-                                                       rounded-lg
-                                                       text-sm
-                                                       font-medium
-                                                       transition">
+                                            <?php if ($data->status == 'menunggu') : ?>
 
-                                                <i class="fa-solid fa-reply"></i>
+                                                <div class="flex flex-col items-center gap-2">
 
-                                                Tanggapi
+                                                    <!-- Tanggapi -->
+                                                    <a
+                                                        href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
+                                                        class="inline-flex items-center justify-center gap-2
+                       w-28
+                       px-3 py-2
+                       bg-green-600
+                       hover:bg-green-700
+                       text-white
+                       rounded-lg
+                       text-sm
+                       font-medium
+                       transition">
 
-                                            </a>
+                                                        <i class="fa-solid fa-reply"></i>
+
+                                                        Tanggapi
+
+                                                    </a>
+
+
+                                                    <!-- Tolak -->
+                                                    <form
+                                                        action="../../Controllers/c_aspirasi.php?aksi=tolak"
+                                                        method="POST">
+
+                                                        <input
+                                                            type="hidden"
+                                                            name="id_aspirasi"
+                                                            value="<?= $data->id_aspirasi; ?>">
+
+                                                        <button
+                                                            type="submit"
+                                                            onclick="return confirm('Yakin ingin menolak aspirasi ini?')"
+                                                            class="inline-flex items-center justify-center gap-2
+                           w-28
+                           px-3 py-2
+                           bg-red-600
+                           hover:bg-red-700
+                           text-white
+                           rounded-lg
+                           text-sm
+                           font-medium
+                           transition">
+
+                                                            <i class="fa-solid fa-xmark"></i>
+
+                                                            Tolak
+
+                                                        </button>
+
+                                                    </form>
+
+                                                </div>
+
+
+                                            <?php elseif ($data->status == 'diproses') : ?>
+
+                                                <!-- Tanggapi -->
+                                                <a
+                                                    href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
+                                                    class="inline-flex items-center justify-center gap-2
+                   w-28
+                   px-3 py-2
+                   bg-green-600
+                   hover:bg-green-700
+                   text-white
+                   rounded-lg
+                   text-sm
+                   font-medium
+                   transition">
+
+                                                    <i class="fa-solid fa-reply"></i>
+
+                                                    Tanggapi
+
+                                                </a>
+
+                                            <?php endif; ?>
 
                                         </td>
 
@@ -748,6 +787,73 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                     </table>
 
                 </div>
+
+
+                <!-- ================= PAGINATION ================= -->
+                <?php if (isset($total_halaman) && $total_halaman > 1) : ?>
+
+                    <div class="px-6 py-5 border-t flex items-center justify-between">
+
+                        <!-- Informasi halaman -->
+                        <p class="text-sm text-gray-500">
+                            Halaman <?= $halaman; ?> dari <?= $total_halaman; ?>
+                        </p>
+
+                        <!-- Tombol pagination -->
+                        <div class="flex items-center gap-2">
+
+                            <!-- Sebelumnya -->
+                            <?php if ($halaman > 1) : ?>
+
+                                <a
+                                    href="?halaman=<?= $halaman - 1; ?>&tanggal=<?= urlencode($tanggal); ?>&bulan=<?= urlencode($bulan); ?>&id_siswa=<?= urlencode($id_siswa); ?>&id_kategori=<?= urlencode($id_kategori); ?>"
+                                    class="px-3 py-2 rounded-lg border border-gray-300
+                           text-gray-600 hover:bg-gray-100 transition">
+
+                                    <i class="fa-solid fa-chevron-left"></i>
+
+                                </a>
+
+                            <?php endif; ?>
+
+
+                            <!-- Nomor halaman -->
+                            <?php for ($i = 1; $i <= $total_halaman; $i++) : ?>
+
+                                <a
+                                    href="?halaman=<?= $i; ?>&tanggal=<?= urlencode($tanggal); ?>&bulan=<?= urlencode($bulan); ?>&id_siswa=<?= urlencode($id_siswa); ?>&id_kategori=<?= urlencode($id_kategori); ?>"
+                                    class="px-3 py-2 rounded-lg border transition
+                                    <?= $i == $halaman
+                                        ? 'bg-green-600 text-white border-green-600'
+                                        : 'border-gray-300 text-gray-600 hover:bg-gray-100'; ?>">
+
+                                    <?= $i; ?>
+
+                                </a>
+
+                            <?php endfor; ?>
+
+
+                            <!-- Berikutnya -->
+                            <?php if ($halaman < $total_halaman) : ?>
+
+                                <a
+                                    href="?halaman=<?= $halaman + 1; ?>&tanggal=<?= urlencode($tanggal); ?>&bulan=<?= urlencode($bulan); ?>&id_siswa=<?= urlencode($id_siswa); ?>&id_kategori=<?= urlencode($id_kategori); ?>"
+                                    class="px-3 py-2 rounded-lg border border-gray-300
+                           text-gray-600 hover:bg-gray-100 transition">
+
+                                    <i class="fa-solid fa-chevron-right"></i>
+
+                                </a>
+
+                            <?php endif; ?>
+
+                        </div>
+
+                    </div>
+
+                <?php endif; ?>
+
 
             </div>
 
