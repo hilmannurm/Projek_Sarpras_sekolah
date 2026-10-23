@@ -3,7 +3,6 @@ require_once __DIR__ . '/m_koneksi.php';
 
 class m_siswa
 {
-    // properties and methods
 
     public function tampil_siswa($limit = null, $offset = null)
     {
