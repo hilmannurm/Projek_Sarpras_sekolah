@@ -1,6 +1,8 @@
 <?php
+// memanggil controller histori: mengambil data histori aspirasi ($historis) dan data pagination dari database
 require_once '../../Controllers/c_histori.php';
 
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 <!DOCTYPE html>
@@ -266,14 +268,17 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                         <tbody class="divide-y divide-gray-200">
 
                             <?php
+                            // nomor urut disesuaikan dengan halaman (10 data per halaman)
                             $no = (($halaman - 1) * 10) + 1;
 
+                            // perulangan: ambil data histori satu per satu dari hasil query sampai habis, setiap data menjadi satu baris tabel
                             while ($data = mysqli_fetch_object($historis)) {
                             ?>
 
                                 <tr class="hover:bg-gray-50">
 
                                     <td class="px-6 py-4 text-sm text-gray-600">
+                                        <!-- tampilkan nomor urut, lalu tambah 1 untuk baris berikutnya -->
                                         <?php echo $no++; ?>
                                     </td>
 
@@ -346,6 +351,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                     <td class="px-6 py-4">
 
+                                    <!-- tombol detail: membuka detail_aspirasi.php dengan membawa id aspirasi -->
                                         <a href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
                                             class="inline-flex items-center justify-center
                                                 w-9 h-9 rounded-lg

@@ -13,7 +13,7 @@ class m_koneksi{
     public $koneksi;
 
     // constructor: otomatis dijalankan setiap kali ada new m_koneksi()
-    function __construct()
+    public function __construct()
     {
         // membuka koneksi ke MySQL memakai host, username, password, dan nama database di atas
         $this->koneksi = mysqli_connect(

@@ -1,7 +1,10 @@
 <?php
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
+// jika variabel $siswas belum ada (halaman dibuka langsung, bukan lewat controller)
 if (!isset($siswas)) {
+    // panggil controller c_siswa agar data siswa dan data pagination diambil dari database
     require_once __DIR__ . '/../../Controllers/c_siswa.php';
 }
 ?>
@@ -250,6 +253,7 @@ if (!isset($siswas)) {
             <!-- SEARCH -->
             <div class="mb-6">
 
+            <!-- form pencarian: dikirim ke halaman ini sendiri (daftar_siswa.php) dengan kata kunci pada kolom search -->
                 <form action="daftar_siswa.php"
                     method="GET"
                     class="flex items-center gap-2">
@@ -262,6 +266,7 @@ if (!isset($siswas)) {
                                   text-gray-400">
                         </i>
 
+                         <!-- mengisi kembali kolom pencarian dengan kata kunci sebelumnya (kosong jika belum mencari) -->
                         <input
                             type="text"
                             name="search"
@@ -296,6 +301,7 @@ if (!isset($siswas)) {
 
 
                     <!-- RESET -->
+                     <!-- jika sedang ada pencarian, tampilkan tombol Reset untuk kembali ke daftar lengkap -->
                     <?php if (!empty($_GET['search'])): ?>
 
                         <a href="daftar_siswa.php"
@@ -376,8 +382,10 @@ if (!isset($siswas)) {
                              * Halaman 1 = 1, 2, 3, ...
                              * Halaman 2 = 11, 12, 13, ...
                              */
+                             // nomor urut disesuaikan dengan halaman: halaman 1 mulai dari 1, halaman 2 mulai dari 11, dan seterusnya (10 data per halaman)
                             $no = isset($halaman) ? (($halaman - 1) * 10) + 1 : 1;
 
+                            // perulangan: setiap siswa di $siswas ditampilkan sebagai satu baris tabel
                             foreach ($siswas as $data) {
 
                             ?>
@@ -426,6 +434,7 @@ if (!isset($siswas)) {
 
 
                                             <!-- EDIT -->
+                                            <!-- tombol edit: membuka form_edit_siswa.php dengan membawa id siswa yang dipilih -->
                                             <a href="form_edit_siswa.php?aksi=edit&id_siswa=<?= $data->id_siswa; ?>"
                                                 class="text-blue-600 hover:text-blue-800"
                                                 title="Edit">
@@ -436,6 +445,7 @@ if (!isset($siswas)) {
 
 
                                             <!-- HAPUS -->
+                                             <!-- tombol hapus: mengirim id siswa ke c_siswa.php dengan aksi hapus (ada konfirmasi sebelum menghapus) -->
                                             <a href="../../Controllers/c_siswa.php?aksi=hapus&id_siswa=<?= $data->id_siswa; ?>"
                                                 onclick="return confirm('Yakin ingin menghapus data siswa ini?')"
                                                 class="text-red-600 hover:text-red-800"

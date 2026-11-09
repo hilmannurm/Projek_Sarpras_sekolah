@@ -1,6 +1,8 @@
 <?php
+// memanggil controller siswa: mengambil data siswa yang akan diedit ($siswas)
 require_once '../../Controllers/c_siswa.php';
 
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
@@ -216,12 +218,13 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
                     <!-- FORM -->
+                     <!-- form edit siswa: data yang diisi dikirim ke c_siswa.php dengan aksi update -->
                     <form action="/Projek_Sapras_hilman/Controllers/c_siswa.php?aksi=update"
                         method="POST"
                         class="p-6"
                         onsubmit="return validasiForm()">
 
-
+                         <!-- mengisi id siswa pada input tersembunyi agar ikut terkirim saat form disimpan -->
                         <input
                             type="hidden"
                             name="id_siswa"

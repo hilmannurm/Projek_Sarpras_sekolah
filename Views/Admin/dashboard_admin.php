@@ -1,6 +1,8 @@
 <?php
+// memanggil controller dashboard admin: mengambil data statistik aspirasi ($statistik) yang ditampilkan di halaman ini
 require_once '../../Controllers/c_dashboard_admin.php';
 
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
@@ -191,6 +193,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
+                         <!-- menampilkan username admin yang sedang login dari session (htmlspecialchars mencegah kode HTML/script berbahaya ikut tampil) -->
                         <?= htmlspecialchars($_SESSION['username']); ?>
                     </p>
 
@@ -229,6 +232,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
                 <h1 class="text-2xl font-bold mb-2">
+                    <!-- menampilkan sapaan dengan username admin dari session -->
                     Selamat Datang, <?= htmlspecialchars($_SESSION['username']); ?>
                 </h1>
 
@@ -266,6 +270,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             <h3 class="text-3xl font-bold
                                        text-gray-800 mt-2">
+                                <!-- menampilkan total aspirasi dari $statistik; jika data belum ada, tampilkan 0 (operator ??)  -->
                                 <?= $statistik->total ?? 0 ?>
                             </h3>
 
@@ -304,6 +309,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
             <h3 class="text-3xl font-bold
                        text-gray-800 mt-2">
+                <!-- menampilkan jumlah aspirasi berstatus menunggu (0 jika belum ada) -->
                 <?= $statistik->menunggu ?? 0 ?>
             </h3>
 
@@ -345,6 +351,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             <h3 class="text-3xl font-bold
                                        text-gray-800 mt-2">
+                                 <!-- menampilkan jumlah aspirasi berstatus diproses (0 jika belum ada) -->
                                 <?= $statistik->diproses ?? 0 ?>
                             </h3>
 
@@ -387,6 +394,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             <h3 class="text-3xl font-bold
                                        text-gray-800 mt-2">
+                                <!-- menampilkan jumlah aspirasi berstatus selesai (0 jika belum ada) -->
                                 <?= $statistik->selesai ?? 0 ?>
                             </h3>
 
@@ -425,6 +433,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
             <h3 class="text-3xl font-bold
                        text-gray-800 mt-2">
+                <!-- menampilkan jumlah aspirasi berstatus ditolak (0 jika belum ada) -->
                 <?= $statistik->ditolak ?? 0 ?>
             </h3>
 

@@ -1,6 +1,8 @@
 <?php
+// memanggil controller dashboard siswa: mengambil statistik aspirasi ($statistik) dan daftar aspirasi berjalan ($aspirasis) milik siswa yang login
 require_once '../../Controllers/c_dashboard_siswa.php';
 
+// memanggil file auth_siswa: memastikan hanya siswa yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 ?>
 
@@ -194,6 +196,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                             </p>
 
                             <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                                <!-- menampilkan total aspirasi milik siswa dari $statistik; jika belum ada, tampilkan 0 (operator ??) -->
                                 <?= $statistik->total ?? 0; ?>
                             </h3>
 
@@ -222,6 +225,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
             </p>
 
             <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                <!-- menampilkan jumlah aspirasi berstatus menunggu (0 jika belum ada) -->
                 <?= $statistik->menunggu ?? 0; ?>
             </h3>
 
@@ -250,6 +254,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                             </p>
 
                             <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                                <!-- menampilkan jumlah aspirasi berstatus diproses (0 jika belum ada) -->
                                 <?= $statistik->diproses ?? 0; ?>
                             </h3>
 
@@ -279,6 +284,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                             </p>
 
                             <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                                <!-- menampilkan jumlah aspirasi berstatus selesai (0 jika belum ada) -->
                                 <?= $statistik->selesai ?? 0; ?>
                             </h3>
 
@@ -307,6 +313,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
             </p>
 
             <h3 class="text-2xl font-bold text-gray-800 mt-2">
+                <!-- menampilkan jumlah aspirasi berstatus ditolak (0 jika belum ada) -->
                 <?= $statistik->ditolak ?? 0; ?>
             </h3>
 
@@ -382,6 +389,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
                             <?php
                             $no = 1;
+                            // perulangan: ambil aspirasi satu per satu dari hasil query sampai habis, setiap data menjadi satu baris tabel
                             while ($data = mysqli_fetch_object($aspirasis)) :
                             ?>
 
@@ -410,30 +418,27 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                                     <td class="px-6 py-4">
 
                                         <?php if ($data->status == 'menunggu') : ?>
-
+        <!-- jika status aspirasi menunggu, tampilkan label Menunggu -->
     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
         Menunggu
     </span>
 
 <?php elseif ($data->status == 'diproses') : ?>
+    <!-- jika status aspirasi diproses, tampilkan label Diproses -->
 
     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700">
         Diproses
     </span>
 
-<?php elseif ($data->status == 'diperbaiki') : ?>
-
-    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
-        Diperbaiki
-    </span>
-
 <?php elseif ($data->status == 'selesai') : ?>
+    <!-- jika status aspirasi selesai, tampilkan label Selesai -->
 
     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
         Selesai
     </span>
 
 <?php elseif ($data->status == 'ditolak') : ?>
+    <!-- jika status aspirasi ditolak, tampilkan label Ditolak -->
 
     <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
         Ditolak

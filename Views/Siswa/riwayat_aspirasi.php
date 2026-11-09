@@ -1,6 +1,8 @@
 <?php
+// memanggil controller riwayat aspirasi: mengambil riwayat aspirasi ($riwayat) yang sudah selesai atau ditolak, beserta data pagination
 require_once '../../Controllers/c_riwayat_aspirasi.php';
 
+// memanggil file auth_siswa: memastikan hanya siswa yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 ?>
 
@@ -191,8 +193,10 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                         <tbody>
 
                             <?php
+                            // nomor urut disesuaikan dengan halaman (10 data per halaman)
                             $no = (($halaman - 1) * 10) + 1;
 
+                            // perulangan: ambil riwayat satu per satu dari hasil query sampai habis, setiap data menjadi satu baris tabel
                             while ($data = mysqli_fetch_object($riwayat)) {
                             ?>
 
@@ -228,13 +232,14 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
 
                                     <td class="px-4 py-4">
-
+                                        <!-- jika status aspirasi selesai, tampilkan label Selesai -->
                                         <?php if ($data->status == 'selesai') : ?>
 
                                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
                                                 Selesai
                                             </span>
 
+                                        <!-- jika status aspirasi ditolak, tampilkan label Ditolak -->
                                         <?php elseif ($data->status == 'ditolak') : ?>
 
                                             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
@@ -246,8 +251,8 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                                     </td>
 
 
+                                    <!-- tombol detail: membuka detail_aspirasi_siswa.php dengan membawa id aspirasi -->
                                     <td class="px-4 py-4">
-
                                         <a href="detail_aspirasi_siswa.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
                                             class="text-green-600 hover:text-green-800"
                                             title="Lihat detail">

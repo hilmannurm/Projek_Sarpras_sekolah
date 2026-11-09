@@ -1,6 +1,8 @@
 <?php
+// memulai session agar data login admin bisa dibaca
 session_start();
 
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
@@ -216,6 +218,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
                     <!-- FORM -->
+                     <!-- form tambah siswa: data yang diisi dikirim ke c_siswa.php dengan aksi tambah -->
                     <form action="../../Controllers/c_siswa.php?aksi=tambah"
                         method="POST"
                         class="p-6"

@@ -1,6 +1,8 @@
 <?php
+// memanggil controller kategori: mengambil data kategori yang akan diedit ($kategoris)
 require_once '../../Controllers/c_kategori.php';
 
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
@@ -139,6 +141,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
+                         <!-- menampilkan username admin yang sedang login dari session (htmlspecialchars mencegah kode HTML/script berbahaya ikut tampil) -->
                         <?= htmlspecialchars($_SESSION['username']); ?>
                     </p>
 
@@ -183,10 +186,12 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
                 <!-- FORM -->
+                 <!-- form edit kategori: data yang diisi dikirim ke c_kategori.php dengan aksi update -->
                 <form action="../../Controllers/c_kategori.php?aksi=update"
                     method="POST"
                     onsubmit="kunciTombol(this)">
 
+                    <!-- mengisi id kategori pada input tersembunyi agar ikut terkirim saat form disimpa -->
                     <input type="hidden"
                         name="id_kategori"
                         value="<?php echo $kategoris->id_kategori; ?>">

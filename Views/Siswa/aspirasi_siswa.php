@@ -1,6 +1,8 @@
 <?php
+// memanggil controller aspirasi siswa: mengambil daftar aspirasi ($aspirasis) dan data pagination milik siswa yang login
 require_once '../../Controllers/c_aspirasi_siswa.php';
 
+// memanggil file auth_siswa: memastikan hanya siswa yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 ?>
 
@@ -111,10 +113,12 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
+                         <!-- menampilkan nama siswa yang sedang login dari session (htmlspecialchars mencegah kode HTML/script berbahaya ikut tampil) -->
                         <?= htmlspecialchars($_SESSION['nama_siswa']); ?>
                     </p>
 
                     <p class="text-xs text-gray-400">
+                         <!-- menampilkan NIS siswa yang sedang login dari session -->
                         Nis <?= htmlspecialchars($_SESSION['nis']); ?>
                     </p>
 
@@ -207,14 +211,17 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                         <tbody>
 
                             <?php
+                             // nomor urut disesuaikan dengan halaman (10 data per halaman)
                             $no = (($halaman - 1) * 10) + 1;
 
+                            // perulangan: ambil aspirasi satu per satu dari hasil query sampai habis, setiap data menjadi satu baris tabel
                             while ($data = mysqli_fetch_object($aspirasis)) {
                             ?>
 
                                 <tr class="border-b hover:bg-gray-50">
 
                                     <td class="px-4 py-4 text-sm text-gray-700">
+                                        <!-- tampilkan nomor urut, lalu tambah 1 untuk baris berikutnya -->
                                         <?php echo $no++; ?>
                                     </td>
 
@@ -306,21 +313,23 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
 
                 <!-- ================= PAGINATION ================= -->
-                <?php if (isset($total_halaman) && $total_halaman > 1) : ?>
+                 
+                <?php if (isset($total_halaman) && $total_halaman > 1) : ?>  <!-- tampilkan navigasi halaman (pagination) hanya jika total halaman lebih dari 1 -->
 
                     <div class="px-6 py-5 border-t flex items-center justify-between">
 
                         <!-- Informasi halaman -->
                         <p class="text-sm text-gray-500">
-                            Halaman <?= $halaman; ?> dari <?= $total_halaman; ?>
+                            Halaman <?= $halaman; ?> dari <?= $total_halaman; ?>  <!--tampilkan keterangan halaman yang sedang dibuka dari total halaman -->
                         </p>
 
                         <!-- Tombol pagination -->
                         <div class="flex items-center gap-2">
 
                             <!-- Sebelumnya -->
-                            <?php if ($halaman > 1) : ?>
+                            <?php if ($halaman > 1) : ?>  <!-- jika bukan halaman pertama, tampilkan tombol sebelumnya -->
 
+                                <!-- tombol sebelumnya: pindah ke halaman sebelumnya -->
                                 <a
                                     href="?halaman=<?= $halaman - 1; ?>"
                                     class="px-3 py-2 rounded-lg border border-gray-300
@@ -333,7 +342,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                             <?php endif; ?>
 
                             <!-- Nomor halaman -->
-                            <?php for ($i = 1; $i <= $total_halaman; $i++) : ?>
+                            <?php for ($i = 1; $i <= $total_halaman; $i++) : ?>  <!-- perulangan: tampilkan tombol nomor halaman dari 1 sampai total halaman -->
 
                                 <a
                                     href="?halaman=<?= $i; ?>"

@@ -1,6 +1,8 @@
 <?php
+// memanggil controller pilih kategori: mengambil daftar kategori ($kategoris) untuk pilihan pada form
 require_once '../../Controllers/c_pilih_kategori.php';
 
+// memanggil file auth_siswa: memastikan hanya siswa yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 ?>
 
@@ -197,10 +199,11 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                                 Pilih kategori
                             </option>
 
+                            <!-- perulangan: tampilkan setiap kategori sebagai pilihan pada kolom kategori -->
                             <?php foreach ($kategoris as $kategori) { ?>
 
-                                <option value="<?php echo $kategori->id_kategori; ?>">
-                                    <?php echo htmlspecialchars($kategori->nama_kategori); ?>
+                                <option value="<?php echo $kategori->id_kategori; ?>">  <!-- nilai pilihan adalah id kategori yang akan dikirim ke controller -->
+                                    <?php echo htmlspecialchars($kategori->nama_kategori); ?>  <!-- tampilkan nama kategori sebagai teks pilihan -->
                                 </option>
 
                             <?php } ?>

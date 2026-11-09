@@ -1,6 +1,8 @@
 <?php
+// memanggil controller aspirasi: mengambil detail aspirasi ($data_aspirasi), progres, histori, dan status form tanggapan
 require_once '../../Controllers/c_aspirasi.php';
 
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
@@ -298,6 +300,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                     <div class="bg-gray-50 rounded-xl p-4 text-gray-700">
 
+                    <!-- tampilkan keterangan; nl2br mengubah baris baru menjadi enter agar paragraf tetap rapi -->
                         <?= nl2br(
                             htmlspecialchars($data_aspirasi->keterangan)
                         ); ?>
@@ -314,6 +317,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                         Bukti Foto
                     </p>
 
+                    <!-- tampilkan foto bukti dari folder Upload sesuai nama file yang tersimpan di database  -->
                     <img
                         src="../../Upload/<?= htmlspecialchars($data_aspirasi->bukti_foto); ?>"
                         alt="Bukti foto"
@@ -335,25 +339,28 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                     <div class="w-3 h-3 rounded-full bg-green-500"></div>
 
+                    <!-- jika status aspirasi menunggu, tampilkan label Menunggu -->
                     <?php if ($data_aspirasi->status == 'menunggu') : ?>
 
                         <p class="font-medium text-gray-600 mt-1">
                             Menunggu
                         </p>
 
+                        <!-- jika status aspirasi diproses, tampilkan label Diproses -->
                     <?php elseif ($data_aspirasi->status == 'diproses') : ?>
 
                         <p class="font-medium text-yellow-600 mt-1">
                             Diproses
                         </p>
 
-
+                        <!-- jika status aspirasi selesai, tampilkan label Selesai -->
                     <?php elseif ($data_aspirasi->status == 'selesai') : ?>
 
                         <p class="font-medium text-green-600 mt-1">
                             Selesai
                         </p>
 
+                        <!-- jika status aspirasi ditolak, tampilkan label Ditolak -->
                     <?php elseif ($data_aspirasi->status == 'ditolak') : ?>
 
                         <p class="font-medium text-red-600 mt-1">
@@ -396,6 +403,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <div class="space-y-4">
 
+                <!-- perulangan: tampilkan semua progres aspirasi satu per satu dari hasil query -->
                     <?php while ($data = mysqli_fetch_object($data_progres)) : ?>
 
                         <div class="border rounded-xl p-4">
@@ -433,6 +441,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                     Foto Bukti Progres
                                 </p>
 
+                                <!-- tampilkan foto bukti progres dari folder Upload -->
                                 <img
                                     src="../../Upload/<?= htmlspecialchars($data->foto_bukti); ?>"
                                     alt="Foto bukti progres"
@@ -478,6 +487,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                 <div class="space-y-4">
 
+                 <!-- perulangan: tampilkan semua histori perubahan status satu per satu dari hasil query -->
                     <?php while ($data = mysqli_fetch_object($data_histori)) : ?>
 
                         <div class="border rounded-xl p-4">
@@ -499,6 +509,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                     <p class="text-sm text-gray-500 mt-1">
 
+                                    <!-- tampilkan nama admin yang mengubah status -->
                                         Oleh
                                         <?= htmlspecialchars($data->nama_lengkap); ?>
 
@@ -529,6 +540,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
             <!-- TANGGAPAN ADMIN -->
 
+            <!-- jika form tanggapan boleh ditampilkan (aspirasi belum selesai atau ditolak), tampilkan form tanggapan admin -->
             <?php if ($form_tanggapan) : ?>
 
                 <div class="bg-white rounded-2xl shadow-sm p-6">
@@ -556,7 +568,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                     </div>
 
-
+                    <!-- form tanggapan: data dikirim ke c_aspirasi.php dengan aksi tanggapi -->
                     <form
                         action="../../Controllers/c_aspirasi.php?aksi=tanggapi"
                         method="POST"
@@ -564,6 +576,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                         onsubmit="kunciTombol(this)">
 
 
+                        <!-- id aspirasi dikirim lewat input tersembunyi -->
                         <input
                             type="hidden"
                             name="id_aspirasi"
@@ -581,6 +594,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                             </label>
 
+                             <!-- menampilkan status berikutnya (menunggu menjadi diproses, diproses menjadi selesai) pada kolom yang tidak bisa diubah -->
                             <input
                                 type="text"
                                 value="<?= htmlspecialchars($status_berikutnya); ?>"
@@ -589,6 +603,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                            bg-gray-100 rounded-lg px-4 py-3
                            text-gray-700">
 
+                            <!-- status berikutnya ikut dikirim lewat input tersembunyi -->
                             <input
                                 type="hidden"
                                 name="status"
@@ -616,7 +631,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                            rounded-lg px-4 py-3
                            resize-none
                            focus:outline-none
-                           focus:ring-2 focus:ring-green-500"><?= htmlspecialchars($data_aspirasi->umpan_balik ?? ''); ?></textarea>
+                           focus:ring-2 focus:ring-green-500"><?= htmlspecialchars($data_aspirasi->umpan_balik ?? ''); ?></textarea> <!--mengisi kolom umpan balik dengan umpan balik yang sudah ada (kosong jika belum ada) -->
 
                         </div>
 
@@ -682,6 +697,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
             <?php else : ?>
 
+                 <!-- bagian ini tampil jika form tanggapan tidak ditampilkan (aspirasi sudah selesai atau ditolak) -->
                 <div class="bg-white rounded-2xl shadow-sm p-6">
 
                     <div class="flex items-center gap-3">

@@ -1,6 +1,8 @@
 <?php
+// memanggil controller kategori: mengambil daftar kategori ($kategoris) dari database
 require_once '../../Controllers/c_kategori.php';
 
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
@@ -101,6 +103,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
             <!-- LOGOUT -->
+             <!-- tombol logout: menampilkan konfirmasi; jika setuju, pengguna diarahkan ke c_logout.php yang menghapus session -->
             <a href="../../Controllers/c_logout.php"
                 onclick="return confirm('Yakin ingin logout?')"
                 class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-red-50 hover:text-red-600 mt-8">
@@ -227,20 +230,24 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                         <tbody>
 
                             <?php
+                              // nomor urut baris dimulai dari 1
                             $no = 1;
 
+                             // perulangan: setiap kategori di $kategoris ditampilkan sebagai satu baris tabel
                             foreach ($kategoris as $kategori) {
                             ?>
 
                                 <tr class="border-b hover:bg-gray-50">
 
                                     <td class="px-4 py-4 text-sm text-gray-700">
+                                        <!-- tampilkan nomor urut, lalu tambah 1 untuk baris berikutnya -->
                                         <?php echo $no++; ?>
                                     </td>
 
 
                                     <td class="px-4 py-4 text-sm text-gray-700">
 
+                                    <!-- tampilkan nama kategori -->
                                         <?php echo htmlspecialchars($kategori->nama_kategori); ?>
 
                                     </td>
@@ -249,6 +256,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                     <td class="px-4 py-4">
 
                                         <!-- EDIT -->
+                                         <!-- tombol edit: membuka form_edit_kategori.php dengan membawa id kategori yang dipilih -->
                                         <a href="form_edit_kategori.php?aksi=edit&id=<?php echo $kategori->id_kategori; ?>"
                                             class="text-blue-600 hover:text-blue-800 mr-4"
                                             title="Edit">
@@ -259,6 +267,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
                                         <!-- HAPUS -->
+                                         <!-- tombol hapus: mengirim id kategori ke c_kategori.php dengan aksi hapus (ada konfirmasi sebelum menghapus) -->
                                         <a href="../../Controllers/c_kategori.php?aksi=hapus&id=<?php echo $kategori->id_kategori; ?>"
                                             class="text-red-600 hover:text-red-800"
                                             title="Hapus"

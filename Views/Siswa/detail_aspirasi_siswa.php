@@ -1,6 +1,8 @@
 <?php
+// memanggil controller aspirasi siswa: mengambil detail aspirasi ($data_aspirasi), progres, dan histori milik siswa yang login
 require_once '../../Controllers/c_aspirasi_siswa.php';
 
+// memanggil file auth_siswa: memastikan hanya siswa yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 ?>
 
@@ -311,7 +313,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                     </p>
 
                     <div class="bg-gray-50 rounded-xl p-4 text-gray-700">
-
+                         <!-- tampilkan keterangan; nl2br mengubah baris baru menjadi enter agar paragraf tetap rapi -->
                         <?= nl2br(
                             htmlspecialchars($data_aspirasi->keterangan)
                         ); ?>
@@ -328,6 +330,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                         Bukti Foto
                     </p>
 
+                     <!-- tampilkan foto bukti dari folder Upload sesuai nama file yang tersimpan di database -->
                     <img
                         src="../../Upload/<?= htmlspecialchars($data_aspirasi->bukti_foto); ?>"
                         alt="Bukti foto"
@@ -370,7 +373,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
                 <div class="space-y-4">
 
-
+                <!-- perulangan: tampilkan semua progres aspirasi satu per satu dari hasil query -->
                     <?php while ($data = mysqli_fetch_object($data_progres)) : ?>
 
 
@@ -493,7 +496,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
                                     <p class="text-sm text-gray-500 mt-1">
 
                                         Oleh
-                                        <?= htmlspecialchars($data->nama_lengkap); ?>
+                                        <?= htmlspecialchars($data->nama_lengkap); ?>  <!-- tampilkan nama admin yang mengubah status -->
 
                                     </p>
 
@@ -504,7 +507,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
                                     <?= date(
                                         'd-m-Y H:i',
-                                        strtotime($data->tanggal_perubahan)
+                                        strtotime($data->tanggal_perubahan)  // tampilkan tanggal dan jam perubahan status -->
                                     ); ?>
 
                                 </p>
@@ -554,6 +557,7 @@ require_once __DIR__ . '/../../Controllers/auth_siswa.php';
 
                 <div class="bg-gray-50 rounded-xl p-4 text-gray-700">
 
+                <!-- tampilkan umpan balik dari admin; nl2br mengubah baris baru menjadi enter, kosong jika belum ada umpan balik (operator ??) -->
                     <?= nl2br(
                         htmlspecialchars($data_aspirasi->umpan_balik ?? '')
                     ); ?>

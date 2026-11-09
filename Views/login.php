@@ -51,10 +51,11 @@
 
 
         <!-- FORM LOGIN -->
+
+          <!-- form login: username atau NIS dan password dikirim ke c_login.php untuk diproses -->
         <form action="../Controllers/c_login.php"
             method="POST"
             onsubmit="kunciTombol(this)">
-
 
             <!-- USERNAME / NIS -->
             <div class="mb-5">

@@ -1,6 +1,8 @@
 <?php
+// memanggil controller aspirasi: mengambil daftar aspirasi ($aspirasis), data filter, dan data pagination dari database
 require_once '../../Controllers/c_aspirasi.php';
 
+// memanggil file auth_admin: memastikan hanya admin yang sudah login yang bisa membuka halaman ini
 require_once __DIR__ . '/../../Controllers/auth_admin.php';
 ?>
 
@@ -175,6 +177,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                 <div class="text-right">
 
                     <p class="font-semibold text-gray-700">
+                        <!-- menampilkan username admin yang sedang login dari session (htmlspecialchars mencegah kode HTML/script berbahaya ikut tampil) -->
                         <?= htmlspecialchars($_SESSION['username']); ?>
                     </p>
 
@@ -257,6 +260,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
                 <!-- Form Filter -->
+                 <!-- form filter: dikirim ke halaman ini sendiri (daftar_aspirasi.php) dengan metode GET -->
                 <form action="daftar_aspirasi.php" method="GET">
 
                     <div class="flex items-end gap-4">
@@ -269,6 +273,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                 Tanggal
                             </label>
 
+                            <!-- mengisi kembali kolom tanggal dengan filter tanggal sebelumnya -->
                             <input
                                 type="date"
                                 name="tanggal"
@@ -297,6 +302,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                 <option value="">Semua Bulan</option>
 
+                                <!-- pilihan bulan: bulan yang sedang difilter diberi atribut selected agar langsung terpilih -->
                                 <option value="1" <?= $bulan == '1' ? 'selected' : ''; ?>>Januari</option>
                                 <option value="2" <?= $bulan == '2' ? 'selected' : ''; ?>>Februari</option>
                                 <option value="3" <?= $bulan == '3' ? 'selected' : ''; ?>>Maret</option>
@@ -331,11 +337,12 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                 <option value="">Semua Siswa</option>
 
+                                <!-- perulangan: tampilkan semua siswa sebagai pilihan filter siswa -->
                                 <?php foreach ($data_siswa as $s) : ?>
                                     <option
                                         value="<?= $s->id_siswa; ?>"
-                                        <?= $id_siswa == $s->id_siswa ? 'selected' : ''; ?>>
-                                        <?= htmlspecialchars($s->nama_siswa); ?>
+                                        <?= $id_siswa == $s->id_siswa ? 'selected' : ''; ?>>  <!-- siswa yang sedang difilter diberi atribut selected agar langsung terpilih -->
+                                        <?= htmlspecialchars($s->nama_siswa); ?>  <!-- tampilkan nama siswa sebagai teks pilihan -->
                                     </option>
                                 <?php endforeach; ?>
 
@@ -362,11 +369,12 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                     Semua Kategori
                                 </option>
 
+                                <!-- perulangan: tampilkan semua kategori sebagai pilihan filter kategori -->
                                 <?php foreach ($data_kategori as $k) : ?>
                                     <option
                                         value="<?= $k->id_kategori; ?>"
-                                        <?= $id_kategori == $k->id_kategori ? 'selected' : ''; ?>>
-                                        <?= htmlspecialchars($k->nama_kategori); ?>
+                                        <?= $id_kategori == $k->id_kategori ? 'selected' : ''; ?>>  <!-- kategori yang sedang difilter diberi atribut selected agar langsung terpilih -->
+                                        <?= htmlspecialchars($k->nama_kategori); ?>  <!--  tampilkan nama kategori sebagai teks pilihan -->
                                     </option>
                                 <?php endforeach; ?>
 
@@ -473,11 +481,14 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                         <tbody class="divide-y">
 
+                        <!-- jika ada data aspirasi, tampilkan barisnya satu per satu; jika kosong, tampilkan pesan data kosong (di bagian else bawah) -->
                             <?php if (!empty($aspirasis)) : ?>
 
                                 <?php
+                                // nomor urut disesuaikan dengan halaman (10 data per halaman)
                                 $no = (($halaman - 1) * 10) + 1;
 
+                                // perulangan: ambil aspirasi satu per satu dari hasil query sampai habis, setiap data menjadi satu baris tabel
                                 while ($data = mysqli_fetch_object($aspirasis)) :
                                 ?>
 
@@ -577,6 +588,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                             <?php if ($data->status == 'menunggu') : ?>
 
+                                                <!-- jika status aspirasi menunggu, tampilkan label Menunggu -->
                                                 <span
                                                     class="inline-flex items-center
                                                            px-3 py-1
@@ -592,6 +604,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                             <?php elseif ($data->status == 'diproses') : ?>
 
+                                                 <!-- jika status aspirasi diproses, tampilkan label Diproses -->
                                                 <span
                                                     class="inline-flex items-center
                                                            px-3 py-1
@@ -608,6 +621,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                             <?php elseif ($data->status == 'selesai') : ?>
 
+                                               <!-- jika status aspirasi selesai, tampilkan label Selesai -->
                                                 <span
                                                     class="inline-flex items-center
                                                            px-3 py-1
@@ -623,6 +637,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
                                             <?php elseif ($data->status == 'ditolak') : ?>
 
+                                                <!-- jika status aspirasi ditolak, tampilkan label Ditolak -->
                                                 <span
                                                     class="inline-flex items-center
                                                            px-3 py-1
@@ -644,23 +659,25 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                         <!-- Aksi -->
                                         <td class="px-6 py-4 text-center">
 
+                                        <!-- kolom aksi: jika status masih menunggu, tampilkan tombol detail dan tombol tolak -->
                                             <?php if ($data->status == 'menunggu') : ?>
 
                                                 <div class="flex flex-col items-center gap-2">
 
                                                     <!-- Tanggapi -->
+                                                     <!-- tombol detail: membuka detail_aspirasi.php dengan membawa id aspirasi (untuk menanggapi) -->
                                                     <a
                                                         href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
                                                         class="inline-flex items-center justify-center gap-2
-                       w-28
-                       px-3 py-2
-                       bg-green-600
-                       hover:bg-green-700
-                       text-white
-                       rounded-lg
-                       text-sm
-                       font-medium
-                       transition">
+                                                            w-28
+                                                            px-3 py-2
+                                                            bg-green-600
+                                                            hover:bg-green-700
+                                                            text-white
+                                                            rounded-lg
+                                                            text-sm
+                                                            font-medium
+                                                            transition">
 
                                                         <i class="fa-solid fa-reply"></i>
 
@@ -670,10 +687,12 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
 
 
                                                     <!-- Tolak -->
+                                                     <!-- form tombol tolak: mengirim id aspirasi ke c_aspirasi.php dengan aksi tolak -->
                                                     <form
                                                         action="../../Controllers/c_aspirasi.php?aksi=tolak"
                                                         method="POST">
 
+                                                        <!-- id aspirasi dikirim lewat input tersembunyi -->
                                                         <input
                                                             type="hidden"
                                                             name="id_aspirasi"
@@ -683,15 +702,15 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                                             type="submit"
                                                             onclick="return confirm('Yakin ingin menolak aspirasi ini?')"
                                                             class="inline-flex items-center justify-center gap-2
-                           w-28
-                           px-3 py-2
-                           bg-red-600
-                           hover:bg-red-700
-                           text-white
-                           rounded-lg
-                           text-sm
-                           font-medium
-                           transition">
+                                                                w-28
+                                                                px-3 py-2
+                                                                bg-red-600
+                                                                hover:bg-red-700
+                                                                text-white
+                                                                rounded-lg
+                                                                text-sm
+                                                                font-medium
+                                                                transition">
 
                                                             <i class="fa-solid fa-xmark"></i>
 
@@ -704,21 +723,23 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                                                 </div>
 
 
+                                            <!-- jika status diproses, hanya tampilkan tombol detail (untuk menanggapi ke tahap selesai) -->
                                             <?php elseif ($data->status == 'diproses') : ?>
 
                                                 <!-- Tanggapi -->
+                                                 <!-- tombol detail: membuka detail_aspirasi.php dengan membawa id aspirasi -->
                                                 <a
                                                     href="detail_aspirasi.php?id_aspirasi=<?= $data->id_aspirasi; ?>"
                                                     class="inline-flex items-center justify-center gap-2
-                   w-28
-                   px-3 py-2
-                   bg-green-600
-                   hover:bg-green-700
-                   text-white
-                   rounded-lg
-                   text-sm
-                   font-medium
-                   transition">
+                                                        w-28
+                                                        px-3 py-2
+                                                        bg-green-600
+                                                        hover:bg-green-700
+                                                        text-white
+                                                        rounded-lg
+                                                        text-sm
+                                                        font-medium
+                                                        transition">
 
                                                     <i class="fa-solid fa-reply"></i>
 
@@ -820,6 +841,7 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
                             <!-- Nomor halaman -->
                             <?php for ($i = 1; $i <= $total_halaman; $i++) : ?>
 
+                                 <!-- tombol nomor halaman: pindah ke halaman tersebut dan tetap membawa semua filter -->
                                 <a
                                     href="?halaman=<?= $i; ?>&tanggal=<?= urlencode($tanggal); ?>&bulan=<?= urlencode($bulan); ?>&id_siswa=<?= urlencode($id_siswa); ?>&id_kategori=<?= urlencode($id_kategori); ?>"
                                     class="px-3 py-2 rounded-lg border transition
