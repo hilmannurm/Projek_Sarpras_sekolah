@@ -39,7 +39,8 @@ require_once __DIR__ . '/../../Controllers/auth_admin.php';
             <div class="w-11 h-11 bg-green-100 rounded-xl
                         flex items-center justify-center mr-3">
 
-                <i class="fa-solid fa-bullhorn text-xl text-green-600"></i>
+                        <!-- <img src="/Projek_Sapras_hilman/Assets/logo_smk_sangkuriang_cimahi_square.png";> -->
+               <i class="fa-solid fa-bullhorn text-xl text-green-600"></i>
 
             </div>
 
